@@ -90,7 +90,7 @@ export function PortfolioChartLightweight({ initialData, timeRange }: PortfolioC
     allAgents.forEach((agent) => {
       const series = chart.addLineSeries({
         color: agent.color,
-        lineWidth: 1.5,
+        lineWidth: 2,
         crosshairMarkerVisible: true,
         crosshairMarkerRadius: 4,
         crosshairMarkerBorderColor: agent.color,
@@ -207,3 +207,4 @@ export function PortfolioChartLightweight({ initialData, timeRange }: PortfolioC
     </div>
   );
 }
+

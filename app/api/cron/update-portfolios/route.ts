@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseServer } from '@/lib/supabase-server';
 import {
   getSolPrice,
   getWalletPortfolio,
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     console.log(`[CRON] SOL Price: $${solPriceUsd}`);
 
     // Step 2: Store SOL price in database
-    const { error: solPriceError } = await supabase
+    const { error: solPriceError } = await supabaseServer
       .from('sol_price_history')
       .insert({
         timestamp,
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
       snapshots.push(snapshot);
 
       // Insert snapshot first to get snapshot_id
-      const { data: snapshotData, error: snapshotError } = await supabase
+      const { data: snapshotData, error: snapshotError } = await supabaseServer
         .from('portfolio_snapshots')
         .insert(snapshot)
         .select('id')
@@ -166,7 +166,7 @@ export async function GET(request: NextRequest) {
 
     // Bulk insert holdings if any
     if (holdings.length > 0) {
-      const { error: holdingsError } = await supabase
+      const { error: holdingsError } = await supabaseServer
         .from('portfolio_holdings')
         .insert(holdings);
 
@@ -220,3 +220,5 @@ function getWalletAddress(model: string): string {
 
   return wallets[model] || '';
 }
+
+

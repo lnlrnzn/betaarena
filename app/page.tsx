@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Ticker } from "@/components/ticker";
 import { ChartContainer } from "@/components/chart-container";
 import { LiveTrades } from "@/components/live-trades";
@@ -102,26 +103,26 @@ export default async function HomePage() {
             <span className="text-xs text-muted-foreground">by Mutl</span>
           </div>
           <nav className="flex items-center gap-1 text-xs md:text-sm">
-            <a
+            <Link
               href="/"
               className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
             >
               LIVE
-            </a>
+            </Link>
             <span className="text-muted-foreground">|</span>
-            <a
+            <Link
               href="/leaderboard"
               className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
             >
               LEADERBOARD
-            </a>
+            </Link>
             <span className="text-muted-foreground">|</span>
-            <a
+            <Link
               href="/models"
               className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
             >
               MODELS
-            </a>
+            </Link>
           </nav>
           <div className="hidden lg:flex items-center gap-4 text-xs">
             <a
@@ -169,3 +170,5 @@ export default async function HomePage() {
     </div>
   );
 }
+
+

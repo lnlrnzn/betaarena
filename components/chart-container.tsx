@@ -22,7 +22,7 @@ export function ChartContainer({ initialData, initialRange }: ChartContainerProp
     setSelectedRange(range);
 
     try {
-      const response = await fetch(`/api/chart-data?range=${range}`);
+      const response = await fetch(`/api/chart-data/${range}`);
       const data = await response.json();
       setChartData(data);
     } catch (error) {
@@ -122,3 +122,4 @@ export function ChartContainer({ initialData, initialRange }: ChartContainerProp
     </div>
   );
 }
+
