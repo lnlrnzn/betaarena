@@ -1,16 +1,57 @@
 // SolanaTracker API Client
 const BASE_URL = 'https://data.solanatracker.io';
-const API_KEY = process.env.SOLANATRACKER_API_KEY!;
-
 const WSOL_MINT = 'So11111111111111111111111111111111111111112';
 
-// Headers for all requests
-const headers = {
-  'x-api-key': API_KEY,
-  'Content-Type': 'application/json',
-};
+// Get API key dynamically
+function getHeaders() {
+  const API_KEY = process.env.SOLANATRACKER_API_KEY;
+  if (!API_KEY) {
+    throw new Error('SOLANATRACKER_API_KEY environment variable is not set');
+  }
+  return {
+    'x-api-key': API_KEY,
+    'Content-Type': 'application/json',
+  };
+}
 
-// Types
+// API Response Types (raw from SolanaTracker)
+interface ApiTokenPriceResponse {
+  price: number;
+  priceQuote: number;
+  liquidity: number;
+  marketCap: number;
+  lastUpdated: number;
+  priceChanges?: any;
+}
+
+interface ApiWalletTokenResponse {
+  token: {
+    name: string;
+    symbol: string;
+    mint: string;
+    image: string;
+    decimals: number;
+    uri?: string;
+    description?: string;
+  };
+  pools: Array<{
+    liquidity: { quote: number; usd: number };
+    price: { quote: number; usd: number };
+    marketCap: { quote: number; usd: number };
+    poolId: string;
+    market: string;
+  }>;
+  balance: number;
+  value: number;
+}
+
+interface ApiWalletPortfolioResponse {
+  tokens: ApiWalletTokenResponse[];
+  total: number;
+  totalSol: number;
+}
+
+// Public Types (what we return to consumers)
 export interface TokenPrice {
   token: string;
   priceUsd: number;
@@ -96,7 +137,7 @@ async function fetchWithRetry<T>(
     try {
       const response = await fetch(url, {
         ...options,
-        headers: { ...headers, ...options.headers },
+        headers: { ...getHeaders(), ...options.headers },
       });
 
       if (response.status === 429) {
@@ -130,7 +171,16 @@ async function fetchWithRetry<T>(
  */
 export async function getSolPrice(): Promise<TokenPrice> {
   const url = `${BASE_URL}/price?token=${WSOL_MINT}&priceChanges=false`;
-  return fetchWithRetry<TokenPrice>(url);
+  const response = await fetchWithRetry<ApiTokenPriceResponse>(url);
+
+  // Transform API response to our format
+  return {
+    token: WSOL_MINT,
+    priceUsd: response.price,
+    liquidityUsd: response.liquidity,
+    marketCapUsd: response.marketCap,
+    lastUpdated: response.lastUpdated,
+  };
 }
 
 /**
@@ -140,7 +190,29 @@ export async function getWalletPortfolio(
   walletAddress: string
 ): Promise<WalletPortfolio> {
   const url = `${BASE_URL}/wallet/${walletAddress}`;
-  return fetchWithRetry<WalletPortfolio>(url);
+  const response = await fetchWithRetry<ApiWalletPortfolioResponse>(url);
+
+  // Transform API response to our format
+  const tokens: WalletToken[] = response.tokens.map((apiToken) => ({
+    mint: apiToken.token.mint,
+    name: apiToken.token.name,
+    symbol: apiToken.token.symbol,
+    image: apiToken.token.image,
+    decimals: apiToken.token.decimals,
+    balance: apiToken.balance,
+    valueUsd: apiToken.value,
+    priceUsd: apiToken.pools?.[0]?.price?.usd || apiToken.value / apiToken.balance,
+  }));
+
+  return {
+    owner: walletAddress,
+    tokens,
+    summary: {
+      totalUsd: response.total,
+      totalSol: response.totalSol,
+      timestamp: new Date().toISOString(),
+    },
+  };
 }
 
 /**
@@ -150,7 +222,29 @@ export async function getWalletPortfolioBasic(
   walletAddress: string
 ): Promise<WalletPortfolio> {
   const url = `${BASE_URL}/wallet/${walletAddress}/basic`;
-  return fetchWithRetry<WalletPortfolio>(url);
+  const response = await fetchWithRetry<ApiWalletPortfolioResponse>(url);
+
+  // Transform API response to our format
+  const tokens: WalletToken[] = response.tokens.map((apiToken) => ({
+    mint: apiToken.token.mint,
+    name: apiToken.token.name,
+    symbol: apiToken.token.symbol,
+    image: apiToken.token.image,
+    decimals: apiToken.token.decimals,
+    balance: apiToken.balance,
+    valueUsd: apiToken.value,
+    priceUsd: apiToken.pools?.[0]?.price?.usd || apiToken.value / apiToken.balance,
+  }));
+
+  return {
+    owner: walletAddress,
+    tokens,
+    summary: {
+      totalUsd: response.total,
+      totalSol: response.totalSol,
+      timestamp: new Date().toISOString(),
+    },
+  };
 }
 
 /**
