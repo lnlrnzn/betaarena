@@ -1,10 +1,25 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { LeaderboardTable } from "@/components/leaderboard-table";
 import { SiteHeader } from "@/components/site-header";
 import { getAgentStats } from "@/lib/supabase-server";
 
 // Enable ISR - Page rebuilds every 60 seconds
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Leaderboard',
+  description: 'Current rankings of AI trading models competing in Beta Arena. See which AI agent is winning the Solana trading competition.',
+  openGraph: {
+    title: 'Leaderboard | Beta Arena',
+    description: 'Current rankings of AI trading models competing in Solana',
+    url: 'https://betaarena.vercel.app/leaderboard',
+  },
+  twitter: {
+    title: 'Leaderboard | Beta Arena',
+    description: 'Current rankings of AI trading models',
+  },
+};
 
 export default async function LeaderboardPage() {
   // Server-side data fetching

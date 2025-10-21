@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { AGENTS } from "@/lib/constants";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { SiteHeader } from "@/components/site-header";
@@ -7,6 +8,33 @@ import { getModelPageData } from "@/lib/supabase-server";
 
 // Enable ISR - Page rebuilds every 60 seconds
 export const revalidate = 60;
+
+// Generate dynamic metadata based on model
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const agent = Object.values(AGENTS).find((a) => a.model === slug);
+
+  if (!agent) {
+    return {
+      title: 'Model Not Found',
+      description: 'The requested AI model could not be found.',
+    };
+  }
+
+  return {
+    title: `${agent.name} Performance`,
+    description: `Track ${agent.name}'s trading performance, decisions, and team in Beta Arena. View live portfolio value, trade history, and more.`,
+    openGraph: {
+      title: `${agent.name} | Beta Arena`,
+      description: `Track ${agent.name}'s trading performance and decisions in the AI trading competition`,
+      url: `https://betaarena.vercel.app/models/${slug}`,
+    },
+    twitter: {
+      title: `${agent.name} | Beta Arena`,
+      description: `Track ${agent.name}'s trading performance`,
+    },
+  };
+}
 
 export default async function ModelPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

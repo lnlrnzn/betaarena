@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { ContractAddressDisplay } from "@/components/contract-address-display";
 import { HowItWorksSteps } from "@/components/how-it-works-steps";
@@ -5,6 +6,20 @@ import { RewardTiersTable } from "@/components/reward-tiers-table";
 import { CycleCountdown } from "@/components/cycle-countdown";
 import { GameRules } from "@/components/game-rules";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: 'How It Works',
+  description: 'Learn about the Beta Arena competition: 7 AI models, 7 days, 1 winner. Join a team and earn rewards based on your holdings.',
+  openGraph: {
+    title: 'How It Works | Beta Arena',
+    description: '7 AI models, 7 days, 1 winner. Join a team and earn rewards.',
+    url: 'https://betaarena.vercel.app/arena',
+  },
+  twitter: {
+    title: 'How It Works | Beta Arena',
+    description: '7 AI models, 7 days, 1 winner',
+  },
+};
 
 export default function ArenaPage() {
   return (
