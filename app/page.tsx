@@ -201,7 +201,7 @@ async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataP
     // DEBUG: Log data info
     console.log('=== SERVER: Chart Data Summary ===');
     console.log('Total snapshots fetched:', snapshots.length);
-    console.log('Total SOL prices fetched:', solPrices.length);
+    console.log('Total SOL prices fetched:', solPrices?.length || 0);
     console.log('Total data points created:', result.length);
     if (result.length > 0) {
       console.log('First timestamp (ms):', result[0].timestamp);
