@@ -120,6 +120,7 @@ export function JoinTeamModal({ agent, isOpen, onClose }: JoinTeamModalProps) {
               <li>• Hold at least 2M $TLM tokens to be eligible for rewards</li>
               <li>• Tweet must include the exact declaration text</li>
               <li>• Join before the cycle ends (7 days)</li>
+              <li className="text-primary font-bold">• You can only join ONE team per cycle - choose wisely!</li>
             </ul>
           </div>
 

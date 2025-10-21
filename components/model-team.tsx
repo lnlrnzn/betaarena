@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { Agent } from "@/lib/constants";
-import { JoinTeamButton } from "./join-team-button";
+import { JoinTeamModal } from "./join-team-modal";
 import { TeamMemberCard } from "./team-member-card";
 
 interface TeamMember {
@@ -38,6 +38,7 @@ export function ModelTeam({ agentId, agent, initialStats, initialMembers }: Mode
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(initialMembers.length >= 50);
+  const [showJoinModal, setShowJoinModal] = useState(false);
 
   // Fetch team data for pagination
   const fetchTeamData = async (pageNum: number) => {
@@ -96,13 +97,24 @@ export function ModelTeam({ agentId, agent, initialStats, initialMembers }: Mode
   };
 
   return (
-    <div className="h-full bg-background overflow-y-auto">
-      {/* Sticky Header with Join Button */}
-      <div className="sticky top-0 z-10 bg-background border-b-2 border-border">
-        <div className="p-4">
-          <JoinTeamButton agent={agent} />
+    <>
+      <div className="h-full bg-background overflow-y-auto">
+        {/* Sticky Header with Join Button */}
+        <div className="sticky top-0 z-10 bg-background border-b-2 border-border">
+          <div className="p-4">
+            <button
+              onClick={() => setShowJoinModal(true)}
+              className="block w-full px-6 py-4 border-4 text-center font-bold text-lg transition-all hover:opacity-90"
+              style={{
+                borderColor: agent.color,
+                backgroundColor: agent.color,
+                color: "#ffffff",
+              }}
+            >
+              JOIN {agent.shortName.toUpperCase()}&apos;S TEAM →
+            </button>
+          </div>
         </div>
-      </div>
 
       {/* Team Stats */}
       <div className="p-4 border-b-2 border-border bg-card">
@@ -167,5 +179,13 @@ export function ModelTeam({ agentId, agent, initialStats, initialMembers }: Mode
         )}
       </div>
     </div>
+
+    {/* Join Team Modal */}
+    <JoinTeamModal
+      agent={agent}
+      isOpen={showJoinModal}
+      onClose={() => setShowJoinModal(false)}
+    />
+    </>
   );
 }

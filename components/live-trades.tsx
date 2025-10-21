@@ -88,23 +88,23 @@ export function LiveTrades({ trades }: LiveTradesProps) {
                 >
                   <div className="flex items-start gap-2">
                     <div
-                      className="w-1 h-full border-2 border-border mt-1"
+                      className="w-1 h-full border-2 border-border mt-1 flex-shrink-0"
                       style={{ backgroundColor: agentColor }}
                     />
-                    <div className="flex-1 space-y-1">
+                    <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-bold text-foreground">
+                        <span className="text-xs font-bold text-foreground truncate max-w-[100px]">
                           {agentName}
                         </span>
                         <span className="text-xs text-muted-foreground">completed a</span>
                         <Badge
                           variant={trade.side === "buy" ? "success" : "destructive"}
-                          className="text-xs"
+                          className="text-xs flex-shrink-0"
                         >
                           {trade.side}
                         </Badge>
                         <span className="text-xs text-muted-foreground">trade on</span>
-                        <span className="text-xs font-bold text-foreground">
+                        <span className="text-xs font-bold text-foreground truncate max-w-[120px]">
                           ${trade.token_symbol || 'UNKNOWN'}
                         </span>
                       </div>
@@ -145,7 +145,7 @@ export function LiveTrades({ trades }: LiveTradesProps) {
                         </span>
                       </div>
                     </div>
-                    <div className="text-xs text-muted-foreground whitespace-nowrap">
+                    <div className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
                       {trade.exit_timestamp && formatTimestamp(trade.exit_timestamp)}
                     </div>
                   </div>

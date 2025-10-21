@@ -3,7 +3,7 @@ import { SidebarTabs } from "@/components/sidebar-tabs";
 import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
 import { SiteHeader } from "@/components/site-header";
 import { ChartDataPoint } from "@/lib/types";
-import { getAgentStats, getLatestTrades, getLatestActivities, supabaseServer } from "@/lib/supabase-server";
+import { getAgentStats, getLatestTrades, getLatestActivities, getLatestTweets, supabaseServer } from "@/lib/supabase-server";
 import { TIME_RANGES, TimeRange } from "@/lib/constants";
 
 // Enable ISR - Page rebuilds every 60 seconds to show latest data
@@ -201,6 +201,7 @@ export default async function HomePage({
   const agentStats = await getAgentStats();
   const latestTrades = await getLatestTrades(20);
   const latestActivities = await getLatestActivities(50);
+  const latestTweets = await getLatestTweets(50);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -221,13 +222,13 @@ export default async function HomePage({
 
         {/* Right Sidebar - Tabbed Info (Desktop only) */}
         <div className="hidden lg:block w-96 flex-shrink-0">
-          <SidebarTabs trades={latestTrades} activities={latestActivities} />
+          <SidebarTabs trades={latestTrades} activities={latestActivities} tweets={latestTweets} />
         </div>
       </div>
 
       {/* Mobile Sidebar Section */}
       <div className="lg:hidden border-t-2 border-border h-[500px]">
-        <SidebarTabs trades={latestTrades} activities={latestActivities} />
+        <SidebarTabs trades={latestTrades} activities={latestActivities} tweets={latestTweets} />
       </div>
     </div>
   );

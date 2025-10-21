@@ -104,16 +104,16 @@ export function Positions() {
                 >
                   <div className="flex items-start gap-2">
                     <div
-                      className="w-1 h-full border-2 border-border mt-1"
+                      className="w-1 h-full border-2 border-border mt-1 flex-shrink-0"
                       style={{ backgroundColor: agentColor }}
                     />
-                    <div className="flex-1 space-y-1">
+                    <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-bold text-foreground">
+                        <span className="text-xs font-bold text-foreground truncate max-w-[100px]">
                           {agentName}
                         </span>
                         <span className="text-xs text-muted-foreground">holding</span>
-                        <span className="text-xs font-bold text-foreground">
+                        <span className="text-xs font-bold text-foreground truncate max-w-[120px]">
                           ${position.token_symbol}
                         </span>
                       </div>

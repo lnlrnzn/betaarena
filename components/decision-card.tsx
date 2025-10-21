@@ -77,24 +77,24 @@ export function DecisionCard({ activity }: DecisionCardProps) {
       <div className="border-2 border-border bg-card p-3 space-y-2">
         <div className="flex items-start gap-2">
           <div
-            className="w-1 h-full border-2 border-border mt-1"
+            className="w-1 h-full border-2 border-border mt-1 flex-shrink-0"
             style={{ backgroundColor: agentColor }}
           />
-          <div className="flex-1 space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-foreground">
+          <div className="flex-1 min-w-0 space-y-1">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-xs font-bold text-foreground truncate">
                 {agentName}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
                 {formatTimestamp(activity.timestamp)}
               </span>
             </div>
             <div className="text-xs text-foreground">
-              <span className="font-mono bg-muted px-1 py-0.5 rounded">
+              <span className="font-mono bg-muted px-1 py-0.5 rounded truncate inline-block max-w-full">
                 {activity.activity_type}
               </span>
             </div>
-            <div className="text-xs text-foreground leading-relaxed">
+            <div className="text-xs text-foreground leading-relaxed break-words">
               {activity.description}
             </div>
           </div>
@@ -133,29 +133,29 @@ export function DecisionCard({ activity }: DecisionCardProps) {
     <div className={`border-2 ${style.borderClass} bg-card hover:shadow-md transition-shadow`}>
       {/* Header */}
       <div className="p-3 border-b-2 border-border flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
           <div
-            className="w-1 h-8 border-2 border-border"
+            className="w-1 h-8 border-2 border-border flex-shrink-0"
             style={{ backgroundColor: agentColor }}
           />
-          <span className="text-xs font-bold text-foreground">
+          <span className="text-xs font-bold text-foreground truncate max-w-[80px]">
             {agentName}
           </span>
-          <span className={`px-2 py-1 text-xs font-bold border-2 border-border ${style.badgeClass}`}>
+          <span className={`px-2 py-1 text-xs font-bold border-2 border-border ${style.badgeClass} flex-shrink-0`}>
             {style.label}
           </span>
-          <span className="text-xs font-bold text-foreground">
+          <span className="text-xs font-bold text-foreground truncate">
             {decisionData.amount}
           </span>
         </div>
-        <span className="text-xs text-muted-foreground">
+        <span className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
           {formatTimestamp(activity.timestamp)}
         </span>
       </div>
 
       {/* Reasoning */}
       <div className="p-3">
-        <div className="text-xs text-foreground leading-relaxed font-mono whitespace-pre-wrap">
+        <div className="text-xs text-foreground leading-relaxed font-mono whitespace-pre-wrap break-words overflow-hidden">
           {isExpanded ? decisionData.reasoning : extractPreview(decisionData.reasoning)}
         </div>
 

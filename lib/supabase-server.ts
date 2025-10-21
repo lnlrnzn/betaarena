@@ -183,6 +183,33 @@ export async function getLatestActivities(limit: number = 50) {
 }
 
 /**
+ * Get latest tweets (contract recommendations from Airtable)
+ */
+export async function getLatestTweets(limit: number = 50) {
+  const { data: tweets, error } = await supabaseServer
+    .from('tweets')
+    .select(`
+      id,
+      tweet_id,
+      username,
+      tweet_text,
+      token_address,
+      tweet_url,
+      submitted_at,
+      created_at
+    `)
+    .order('submitted_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching tweets:', error);
+    return [];
+  }
+
+  return tweets || [];
+}
+
+/**
  * Get statistics for a single agent
  * Optimized to batch queries instead of making 4 separate queries
  */

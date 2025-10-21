@@ -4,23 +4,24 @@ import { useState } from "react";
 import { LiveTrades } from "./live-trades";
 import { ModelChat } from "./model-chat";
 import { Positions } from "./positions";
-import { ReadmeText } from "./readme-text";
+import { LiveTweets } from "./live-tweets";
 
-type TabType = "trades" | "modelchat" | "positions" | "readme";
+type TabType = "trades" | "modelchat" | "positions" | "tweets";
 
 interface SidebarTabsProps {
   trades: any[];
   activities: any[];
+  tweets: any[];
 }
 
-export function SidebarTabs({ trades, activities }: SidebarTabsProps) {
+export function SidebarTabs({ trades, activities, tweets }: SidebarTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("trades");
 
   const tabs = [
     { id: "trades" as const, label: "Trades" },
     { id: "modelchat" as const, label: "Modelchat" },
     { id: "positions" as const, label: "Positions" },
-    { id: "readme" as const, label: "Readme.txt" },
+    { id: "tweets" as const, label: "Tweets" },
   ];
 
   return (
@@ -61,9 +62,9 @@ export function SidebarTabs({ trades, activities }: SidebarTabsProps) {
             <Positions />
           </div>
         )}
-        {activeTab === "readme" && (
+        {activeTab === "tweets" && (
           <div className="absolute inset-0">
-            <ReadmeText />
+            <LiveTweets initialTweets={tweets} />
           </div>
         )}
       </div>
