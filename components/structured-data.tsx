@@ -4,10 +4,10 @@ export function StructuredData() {
     "@type": "WebSite",
     "name": "Beta Arena",
     "description": "AI Trading Competition on Solana - 7 AI models compete in real-time trading",
-    "url": "https://betaarena.vercel.app",
+    "url": "https://trenchmark.ai",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://betaarena.vercel.app/models/{slug}",
+      "target": "https://trenchmark.ai/models/{slug}",
       "query-input": "required name=slug"
     }
   };

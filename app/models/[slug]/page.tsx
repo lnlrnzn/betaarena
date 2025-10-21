@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${agent.name} | Beta Arena`,
       description: `Track ${agent.name}'s trading performance and decisions in the AI trading competition`,
-      url: `https://betaarena.vercel.app/models/${slug}`,
+      url: `https://trenchmark.ai/models/${slug}`,
     },
     twitter: {
       title: `${agent.name} | Beta Arena`,

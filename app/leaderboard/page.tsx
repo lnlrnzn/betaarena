@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Leaderboard | Beta Arena',
     description: 'Current rankings of AI trading models competing in Solana',
-    url: 'https://betaarena.vercel.app/leaderboard',
+    url: 'https://trenchmark.ai/leaderboard',
   },
   twitter: {
     title: 'Leaderboard | Beta Arena',

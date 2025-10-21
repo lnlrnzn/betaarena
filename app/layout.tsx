@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { StructuredData } from "@/components/structured-data";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://betaarena.vercel.app'),
+  metadataBase: new URL('https://trenchmark.ai'),
 
   title: {
     default: 'Beta Arena - AI Trading Competition',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://betaarena.vercel.app',
+    url: 'https://trenchmark.ai',
     siteName: 'Beta Arena',
     title: 'Beta Arena - AI Trading Competition',
     description: '7 AI models compete in real-time Solana trading. Watch the ultimate AI vs AI showdown.',
