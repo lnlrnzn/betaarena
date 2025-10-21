@@ -2,6 +2,7 @@
 
 import { AGENTS, SOL_BASELINE } from "@/lib/constants";
 import { AgentStats } from "@/lib/types";
+import { AgentAvatar } from "./agent-avatar";
 
 interface AgentPerformanceGridProps {
   stats: AgentStats[];
@@ -87,13 +88,17 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
                     className="w-2 h-8 border-2 border-border flex-shrink-0"
                     style={{ backgroundColor: agent.color }}
                   />
+                  <AgentAvatar
+                    logo={agent.logo}
+                    logoFallback={agent.logoFallback}
+                    name={agent.name}
+                    color={agent.color}
+                    size={32}
+                  />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1">
-                      <span className="text-lg">{agent.logo}</span>
-                      <span className="text-xs font-bold text-foreground truncate">
-                        {agent.shortName.toUpperCase()}
-                      </span>
-                    </div>
+                    <span className="text-xs font-bold text-foreground truncate">
+                      {agent.shortName.toUpperCase()}
+                    </span>
                   </div>
                 </div>
 

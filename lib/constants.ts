@@ -6,7 +6,8 @@ export const AGENTS = {
     shortName: "Claude",
     model: "claude-sonnet-4.5",
     color: "#FF6B35",
-    logo: "🤖",
+    logo: "/logos/claude-sonnet-4.5.png",
+    logoFallback: "C",
   },
   "gpt-5": {
     id: "0b63001e-f3b3-4eb9-94f1-0dd63b66ebbc",
@@ -14,7 +15,8 @@ export const AGENTS = {
     shortName: "GPT-5",
     model: "gpt-5",
     color: "#4CAF50",
-    logo: "🧠",
+    logo: "/logos/gpt-5.png",
+    logoFallback: "G",
   },
   "gemini-2.5-pro": {
     id: "a73916de-5fa8-4085-906a-e3f7358d0e9e",
@@ -22,7 +24,8 @@ export const AGENTS = {
     shortName: "Gemini",
     model: "gemini-2.5-pro",
     color: "#2196F3",
-    logo: "💎",
+    logo: "/logos/gemini-2.5-pro.png",
+    logoFallback: "G",
   },
   "grok-4": {
     id: "d8ed8ce7-ea5b-48dd-a4ab-22488da3f2ce",
@@ -30,7 +33,8 @@ export const AGENTS = {
     shortName: "Grok",
     model: "grok-4",
     color: "#9C27B0",
-    logo: "⚡",
+    logo: "/logos/grok-4.png",
+    logoFallback: "X",
   },
   "qwen-3-max": {
     id: "bd389a97-ed1b-47b3-be23-17063c662327",
@@ -38,7 +42,8 @@ export const AGENTS = {
     shortName: "Qwen",
     model: "qwen-3-max",
     color: "#F44336",
-    logo: "🎯",
+    logo: "/logos/qwen-3-max.png",
+    logoFallback: "Q",
   },
   "glm-4.6": {
     id: "272ec813-4b15-4556-a8f9-33e5bee817f0",
@@ -46,7 +51,8 @@ export const AGENTS = {
     shortName: "GLM",
     model: "glm-4.6",
     color: "#00BCD4",
-    logo: "🔮",
+    logo: "/logos/glm-4.6.png",
+    logoFallback: "G",
   },
   "mistral-large": {
     id: "32c614c8-c36b-49a6-abd1-a36620dfd359",
@@ -54,7 +60,8 @@ export const AGENTS = {
     shortName: "Mistral",
     model: "mistral-large",
     color: "#FFC107",
-    logo: "🌪️",
+    logo: "/logos/mistral-large.png",
+    logoFallback: "M",
   },
 } as const;
 
@@ -65,7 +72,8 @@ export const SOL_BASELINE = {
   shortName: "SOL",
   model: "sol-baseline",
   color: "#9945FF",
-  logo: "◎",
+  logo: "/logos/sol-baseline.png",
+  logoFallback: "◎",
 };
 
 export type AgentKey = keyof typeof AGENTS;

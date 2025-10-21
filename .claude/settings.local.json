@@ -19,7 +19,11 @@
       "Bash(curl:*)",
       "Bash(python -m json.tool:*)",
       "Bash(npx tsx:*)",
-      "mcp__supabase__apply_migration"
+      "mcp__supabase__apply_migration",
+      "Bash(npm run build:*)",
+      "Bash(timeout 5 npm run dev:*)",
+      "Bash(timeout 3 npm start)",
+      "WebFetch(domain:betaarena.vercel.app)"
     ],
     "deny": [],
     "ask": []
