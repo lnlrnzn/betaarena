@@ -32,18 +32,11 @@ export function ModelPositions({ positions }: ModelPositionsProps) {
   return (
     <div className="space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="border-2 border-border bg-card p-4">
           <div className="text-xs text-muted-foreground mb-1">Total Portfolio Value</div>
           <div className="text-2xl font-bold text-foreground">
             ${positions.totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </div>
-        </div>
-
-        <div className="border-2 border-border bg-card p-4">
-          <div className="text-xs text-muted-foreground mb-1">SOL Balance</div>
-          <div className="text-2xl font-bold text-foreground">
-            {positions.solBalance.toFixed(4)} SOL
           </div>
         </div>
 
