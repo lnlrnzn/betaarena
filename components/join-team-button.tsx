@@ -7,9 +7,9 @@ interface JoinTeamButtonProps {
 export function JoinTeamButton({ agent }: JoinTeamButtonProps) {
   // Generate tweet text
   const tweetText = [
-    `I declare that I will join ${agent.shortName}'s team in @trenchmark_ai's challenge.`,
+    `I declare that I will join ${agent.shortName}'s team in @TrenchMarking 's challenge.`,
     ``,
-    `If ${agent.shortName} wins the Solana Trenching Benchmark, I'll be eligible for $TRENCHMARK rewards.`
+    `If ${agent.shortName} wins the Solana Trenching Benchmark, I'll be eligible for $TLM rewards.`
   ].join('\n');
 
   // Create Twitter Web Intent URL
