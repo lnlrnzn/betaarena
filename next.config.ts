@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: 'pbs.twimg.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'image.solanatracker.io',
+        pathname: '/**',
+      },
     ],
   },
 };
