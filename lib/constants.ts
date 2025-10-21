@@ -6,7 +6,7 @@ export const AGENTS = {
     shortName: "Claude",
     model: "claude-sonnet-4.5",
     color: "#FF6B35",
-    logo: "/logos/claude-sonnet-4.5.png",
+    logo: "/logos/claude.svg",
     logoFallback: "C",
   },
   "gpt-5": {
@@ -15,7 +15,7 @@ export const AGENTS = {
     shortName: "GPT-5",
     model: "gpt-5",
     color: "#4CAF50",
-    logo: "/logos/gpt-5.png",
+    logo: "/logos/gpt5.svg",
     logoFallback: "G",
   },
   "gemini-2.5-pro": {
@@ -24,7 +24,7 @@ export const AGENTS = {
     shortName: "Gemini",
     model: "gemini-2.5-pro",
     color: "#2196F3",
-    logo: "/logos/gemini-2.5-pro.png",
+    logo: "/logos/gemini.svg",
     logoFallback: "G",
   },
   "grok-4": {
@@ -33,7 +33,7 @@ export const AGENTS = {
     shortName: "Grok",
     model: "grok-4",
     color: "#9C27B0",
-    logo: "/logos/grok-4.png",
+    logo: "/logos/grok.svg",
     logoFallback: "X",
   },
   "qwen-3-max": {
@@ -42,7 +42,7 @@ export const AGENTS = {
     shortName: "Qwen",
     model: "qwen-3-max",
     color: "#F44336",
-    logo: "/logos/qwen-3-max.png",
+    logo: "/logos/qwen.svg",
     logoFallback: "Q",
   },
   "glm-4.6": {
@@ -51,7 +51,7 @@ export const AGENTS = {
     shortName: "GLM",
     model: "glm-4.6",
     color: "#00BCD4",
-    logo: "/logos/glm-4.6.png",
+    logo: "/logos/glm4-6.svg",
     logoFallback: "G",
   },
   "mistral-large": {
@@ -60,7 +60,7 @@ export const AGENTS = {
     shortName: "Mistral",
     model: "mistral-large",
     color: "#FFC107",
-    logo: "/logos/mistral-large.png",
+    logo: "/logos/mistral.svg",
     logoFallback: "M",
   },
 } as const;

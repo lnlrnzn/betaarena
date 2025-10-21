@@ -23,7 +23,8 @@
       "Bash(npm run build:*)",
       "Bash(timeout 5 npm run dev:*)",
       "Bash(timeout 3 npm start)",
-      "WebFetch(domain:betaarena.vercel.app)"
+      "WebFetch(domain:betaarena.vercel.app)",
+      "mcp__supabase__search_docs"
     ],
     "deny": [],
     "ask": []

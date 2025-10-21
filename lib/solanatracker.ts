@@ -99,6 +99,45 @@ export interface TokenMetadata {
   }>;
 }
 
+// Raw API response from SolanaTracker
+interface ApiTradeResponse {
+  tx: string;
+  from: {
+    address: string;
+    amount: number;
+    token: {
+      name: string;
+      symbol: string;
+      image: string;
+      decimals: number;
+    };
+    priceUsd: number;
+  };
+  to: {
+    address: string;
+    amount: number;
+    token: {
+      name: string;
+      symbol: string;
+      image: string;
+      decimals: number;
+    };
+    priceUsd: number;
+  };
+  price: {
+    usd: number;
+    sol: string;
+  };
+  volume: {
+    usd: number;
+    sol: number;
+  };
+  wallet: string;
+  program: string;
+  time: number;
+}
+
+// Public interface (transformed)
 export interface Trade {
   signature: string;
   type: 'buy' | 'sell';
@@ -109,12 +148,14 @@ export interface Trade {
     amount: number;
     name?: string;
     symbol?: string;
+    image?: string;
   };
   to: {
     mint: string;
     amount: number;
     name?: string;
     symbol?: string;
+    image?: string;
   };
   priceUsd: number;
   volumeUsd: number;
@@ -297,7 +338,45 @@ export async function getWalletTrades(
   });
 
   const url = `${BASE_URL}/wallet/${walletAddress}/trades?${params}`;
-  return fetchWithRetry<TradesResponse>(url);
+  const response = await fetchWithRetry<{ trades: ApiTradeResponse[]; nextCursor: string | null; hasNextPage: boolean }>(url);
+
+  // Transform API response to our public interface
+  const WSOL_MINT = 'So11111111111111111111111111111111111111112';
+
+  const transformedTrades: Trade[] = response.trades.map((apiTrade) => {
+    // Determine if this is a buy or sell
+    const isBuy = apiTrade.from.address === WSOL_MINT;
+
+    return {
+      signature: apiTrade.tx,
+      type: isBuy ? 'buy' : 'sell',
+      program: apiTrade.program,
+      timestamp: apiTrade.time, // Already in milliseconds
+      from: {
+        mint: apiTrade.from.address,
+        amount: apiTrade.from.amount,
+        name: apiTrade.from.token.name,
+        symbol: apiTrade.from.token.symbol,
+        image: apiTrade.from.token.image,
+      },
+      to: {
+        mint: apiTrade.to.address,
+        amount: apiTrade.to.amount,
+        name: apiTrade.to.token.name,
+        symbol: apiTrade.to.token.symbol,
+        image: apiTrade.to.token.image,
+      },
+      priceUsd: apiTrade.price.usd,
+      volumeUsd: apiTrade.volume.usd,
+      volumeSol: apiTrade.volume.sol,
+    };
+  });
+
+  return {
+    trades: transformedTrades,
+    hasNextPage: response.hasNextPage,
+    nextCursor: response.nextCursor || undefined,
+  };
 }
 
 /**

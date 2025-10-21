@@ -1,145 +1,111 @@
-import Link from "next/link";
 import { Ticker } from "@/components/ticker";
 import { ChartContainer } from "@/components/chart-container";
-import { LiveTrades } from "@/components/live-trades";
+import { SidebarTabs } from "@/components/sidebar-tabs";
 import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
-import { ChartDataPoint, AgentStats } from "@/lib/types";
+import { SiteHeader } from "@/components/site-header";
+import { ChartDataPoint } from "@/lib/types";
+import { getAgentStats, getLatestTrades, getLatestActivities, supabaseServer } from "@/lib/supabase-server";
+import { SOL_BASELINE, TIME_RANGES } from "@/lib/constants";
 
-// Mock data for initial render - replace with actual Supabase fetch
+// Initial chart data - fetch server-side for faster initial render
 async function getInitialChartData(): Promise<ChartDataPoint[]> {
-  // TODO: Replace with actual API call
-  // For now, return empty array - will be populated by client-side fetch
-  return [];
-}
+  try {
+    const range = "24H";
+    const timeRange = TIME_RANGES[range];
 
-async function getAgentStats(): Promise<AgentStats[]> {
-  // TODO: Replace with actual Supabase query
-  // Mock stats for demonstration
-  return [
-    {
-      agent_id: "d8d17db6-eab8-4400-8632-1a549b3cb290",
-      currentValue: 12481.27,
-      startingValue: 10000,
-      change: 2481.27,
-      changePercent: 24.81,
-      totalTrades: 12,
-      winRate: 68,
-      avgHoldTime: "2h 15m",
-    },
-    {
-      agent_id: "0b63001e-f3b3-4eb9-94f1-0dd63b66ebbc",
-      currentValue: 11890.45,
-      startingValue: 10000,
-      change: 1890.45,
-      changePercent: 18.90,
-      totalTrades: 15,
-      winRate: 72,
-      avgHoldTime: "1h 45m",
-    },
-    {
-      agent_id: "a73916de-5fa8-4085-906a-e3f7358d0e9e",
-      currentValue: 8567.32,
-      startingValue: 10000,
-      change: -1432.68,
-      changePercent: -14.33,
-      totalTrades: 18,
-      winRate: 45,
-      avgHoldTime: "3h 20m",
-    },
-    {
-      agent_id: "d8ed8ce7-ea5b-48dd-a4ab-22488da3f2ce",
-      currentValue: 10980.12,
-      startingValue: 10000,
-      change: 980.12,
-      changePercent: 9.80,
-      totalTrades: 9,
-      winRate: 58,
-      avgHoldTime: "2h 30m",
-    },
-    {
-      agent_id: "bd389a97-ed1b-47b3-be23-17063c662327",
-      currentValue: 9321.88,
-      startingValue: 10000,
-      change: -678.12,
-      changePercent: -6.78,
-      totalTrades: 11,
-      winRate: 48,
-      avgHoldTime: "1h 50m",
-    },
-    {
-      agent_id: "272ec813-4b15-4556-a8f9-33e5bee817f0",
-      currentValue: 10340.55,
-      startingValue: 10000,
-      change: 340.55,
-      changePercent: 3.41,
-      totalTrades: 8,
-      winRate: 52,
-      avgHoldTime: "2h 5m",
-    },
-    {
-      agent_id: "32c614c8-c36b-49a6-abd1-a36620dfd359",
-      currentValue: 11210.67,
-      startingValue: 10000,
-      change: 1210.67,
-      changePercent: 12.11,
-      totalTrades: 14,
-      winRate: 61,
-      avgHoldTime: "2h 40m",
-    },
-  ];
+    const hoursAgo = new Date();
+    hoursAgo.setHours(hoursAgo.getHours() - timeRange.hours);
+
+    // Fetch portfolio snapshots for all agents
+    const { data: snapshots } = await supabaseServer
+      .from("portfolio_snapshots")
+      .select("agent_id, timestamp, total_portfolio_value_usd")
+      .gte("timestamp", hoursAgo.toISOString())
+      .order("timestamp", { ascending: true });
+
+    // Fetch SOL price history
+    const { data: solPrices } = await supabaseServer
+      .from("sol_price_history")
+      .select("timestamp, price_usd")
+      .gte("timestamp", hoursAgo.toISOString())
+      .order("timestamp", { ascending: true });
+
+    if (!snapshots || snapshots.length === 0) {
+      return [];
+    }
+
+    // Aggregate data
+    const startingSolBalance = 1.0;
+    const aggregationMinutes = timeRange.aggregation;
+    const buckets = new Map<number, Map<string, number>>();
+
+    // Process snapshots
+    snapshots.forEach((snapshot) => {
+      const timestamp = new Date(snapshot.timestamp).getTime();
+      const bucketTime = Math.floor(timestamp / (aggregationMinutes * 60 * 1000)) * (aggregationMinutes * 60 * 1000);
+
+      if (!buckets.has(bucketTime)) {
+        buckets.set(bucketTime, new Map());
+      }
+
+      const bucket = buckets.get(bucketTime)!;
+      bucket.set(snapshot.agent_id, snapshot.total_portfolio_value_usd);
+    });
+
+    // Process SOL prices for baseline
+    const solPriceMap = new Map<number, number>();
+    if (solPrices) {
+      solPrices.forEach((price) => {
+        const timestamp = new Date(price.timestamp).getTime();
+        const bucketTime = Math.floor(timestamp / (aggregationMinutes * 60 * 1000)) * (aggregationMinutes * 60 * 1000);
+        solPriceMap.set(bucketTime, price.price_usd);
+      });
+    }
+
+    // Convert to chart data points
+    const dataPoints: ChartDataPoint[] = [];
+
+    buckets.forEach((agentValues, bucketTime) => {
+      const point: ChartDataPoint = {
+        timestamp: bucketTime,
+        date: new Date(bucketTime).toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+
+      // Add agent values
+      agentValues.forEach((value, agentId) => {
+        point[agentId] = value;
+      });
+
+      // Add SOL baseline
+      const solPrice = solPriceMap.get(bucketTime);
+      if (solPrice) {
+        point[SOL_BASELINE.id] = startingSolBalance * solPrice;
+      }
+
+      dataPoints.push(point);
+    });
+
+    return dataPoints.sort((a, b) => a.timestamp - b.timestamp);
+  } catch (error) {
+    console.error("Error fetching initial chart data:", error);
+    return [];
+  }
 }
 
 export default async function HomePage() {
   const initialData = await getInitialChartData();
   const agentStats = await getAgentStats();
+  const latestTrades = await getLatestTrades(20);
+  const latestActivities = await getLatestActivities(50);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* Header */}
-      <header className="border-b-2 border-border bg-card">
-        <div className="px-4 md:px-6 py-4 flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-4 md:gap-6">
-            <h1 className="text-xl md:text-2xl font-bold text-primary">Alpha Arena</h1>
-            <span className="text-xs text-muted-foreground">by Mutl</span>
-          </div>
-          <nav className="flex items-center gap-1 text-xs md:text-sm">
-            <Link
-              href="/"
-              className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
-            >
-              LIVE
-            </Link>
-            <span className="text-muted-foreground">|</span>
-            <Link
-              href="/leaderboard"
-              className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
-            >
-              LEADERBOARD
-            </Link>
-            <span className="text-muted-foreground">|</span>
-            <Link
-              href="/models"
-              className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
-            >
-              MODELS
-            </Link>
-          </nav>
-          <div className="hidden lg:flex items-center gap-4 text-xs">
-            <a
-              href="#"
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              JOIN THE PLATFORM WAITLIST →
-            </a>
-            <a
-              href="#"
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              ABOUT NOFIS →
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader agentStats={agentStats} />
 
       {/* Ticker */}
       <Ticker />
@@ -157,15 +123,15 @@ export default async function HomePage() {
           <AgentPerformanceGrid stats={agentStats} />
         </div>
 
-        {/* Right Sidebar - Live Trades (Desktop only) */}
+        {/* Right Sidebar - Tabbed Info (Desktop only) */}
         <div className="hidden lg:block w-96 flex-shrink-0">
-          <LiveTrades />
+          <SidebarTabs trades={latestTrades} activities={latestActivities} />
         </div>
       </div>
 
-      {/* Mobile Trades Section */}
+      {/* Mobile Sidebar Section */}
       <div className="lg:hidden border-t-2 border-border">
-        <LiveTrades />
+        <SidebarTabs trades={latestTrades} activities={latestActivities} />
       </div>
     </div>
   );

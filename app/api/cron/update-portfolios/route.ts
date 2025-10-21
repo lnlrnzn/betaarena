@@ -3,8 +3,10 @@ import { supabaseServer } from '@/lib/supabase-server';
 import {
   getSolPrice,
   getWalletPortfolio,
+  getWalletTrades,
   type WalletPortfolio,
   type TokenPrice,
+  type Trade,
 } from '@/lib/solanatracker';
 import { AGENTS } from '@/lib/constants';
 
@@ -19,6 +21,261 @@ function verifyCronAuth(request: NextRequest): boolean {
   }
 
   return authHeader === `Bearer ${cronSecret}`;
+}
+
+/**
+ * Enrich pending trades with data from SolanaTracker API
+ */
+async function enrichTrades() {
+  console.log('[CRON] Starting trade enrichment...');
+
+  // Step 1: Find all unenriched trades
+  const { data: unenrichedTrades, error: tradesError } = await supabaseServer
+    .from('trades')
+    .select('id, agent_id, signature, token_address, side')
+    .eq('enriched', false)
+    .limit(100); // Process in batches
+
+  if (tradesError) {
+    console.error('[CRON] Error fetching unenriched trades:', tradesError);
+    return { enriched: 0, failed: 0 };
+  }
+
+  if (!unenrichedTrades || unenrichedTrades.length === 0) {
+    console.log('[CRON] No unenriched trades found');
+    return { enriched: 0, failed: 0 };
+  }
+
+  console.log(`[CRON] Found ${unenrichedTrades.length} unenriched trades`);
+
+  // Step 2: Group trades by agent
+  const tradesByAgent = new Map<string, typeof unenrichedTrades>();
+  for (const trade of unenrichedTrades) {
+    const existing = tradesByAgent.get(trade.agent_id) || [];
+    existing.push(trade);
+    tradesByAgent.set(trade.agent_id, existing);
+  }
+
+  let enrichedCount = 0;
+  let failedCount = 0;
+
+  // Step 3: Process each agent's trades
+  for (const [agentId, trades] of tradesByAgent) {
+    const agent = Object.values(AGENTS).find((a) => a.id === agentId);
+    if (!agent) {
+      console.error(`[CRON] Agent not found: ${agentId}`);
+      failedCount += trades.length;
+      continue;
+    }
+
+    const walletAddress = getWalletAddress(agent.model);
+    if (!walletAddress) {
+      console.error(`[CRON] Wallet address not found for ${agent.name}`);
+      failedCount += trades.length;
+      continue;
+    }
+
+    try {
+      console.log(`[CRON] Fetching trades for ${agent.name}...`);
+
+      // Fetch recent trades from SolanaTracker (first page only)
+      const { trades: apiTrades } = await getWalletTrades(walletAddress, {
+        showMeta: true,
+        parseJupiter: true,
+        hideArb: true,
+      });
+
+      // Step 4: Match and enrich trades by signature
+      for (const trade of trades) {
+        const apiTrade = apiTrades.find((t) => t.signature === trade.signature);
+
+        if (!apiTrade) {
+          console.warn(`[CRON] No match found for signature: ${trade.signature}`);
+          failedCount++;
+          continue;
+        }
+
+        // Determine which token we're trading (not SOL)
+        const WSOL_MINT = 'So11111111111111111111111111111111111111112';
+        const tradedToken = apiTrade.type === 'buy' ? apiTrade.to : apiTrade.from;
+        const solToken = apiTrade.type === 'buy' ? apiTrade.from : apiTrade.to;
+
+        // Extract enrichment data
+        const enrichmentData = {
+          token_name: tradedToken.name,
+          token_symbol: tradedToken.symbol,
+          token_image_url: tradedToken.image,
+          token_amount: tradedToken.amount,
+          price_usd: apiTrade.priceUsd,
+          volume_usd: apiTrade.volumeUsd,
+          volume_sol: solToken.amount,
+          enriched: true,
+          status: 'enriched',
+          timestamp: new Date(apiTrade.timestamp).toISOString(), // timestamp is already in milliseconds
+        };
+
+        // Update trade in database
+        const { error: updateError } = await supabaseServer
+          .from('trades')
+          .update(enrichmentData)
+          .eq('id', trade.id);
+
+        if (updateError) {
+          console.error(`[CRON] Error updating trade ${trade.id}:`, updateError);
+          failedCount++;
+        } else {
+          enrichedCount++;
+          console.log(`[CRON] ✓ Enriched trade ${trade.id} (${tradedToken.symbol})`);
+        }
+      }
+    } catch (error) {
+      console.error(`[CRON] Error processing trades for ${agent.name}:`, error);
+      failedCount += trades.length;
+    }
+  }
+
+  console.log(`[CRON] Trade enrichment complete: ${enrichedCount} enriched, ${failedCount} failed`);
+  return { enriched: enrichedCount, failed: failedCount };
+}
+
+/**
+ * Match buy/sell pairs and calculate P&L
+ */
+async function matchAndCalculatePnL() {
+  console.log('[CRON] Starting buy/sell pair matching...');
+
+  // Step 1: Find all enriched but not yet matched trades
+  const { data: enrichedTrades, error: tradesError } = await supabaseServer
+    .from('trades')
+    .select('*')
+    .eq('status', 'enriched')
+    .is('matched_trade_id', null)
+    .order('timestamp', { ascending: true });
+
+  if (tradesError) {
+    console.error('[CRON] Error fetching enriched trades:', tradesError);
+    return { matched: 0, failed: 0 };
+  }
+
+  if (!enrichedTrades || enrichedTrades.length === 0) {
+    console.log('[CRON] No unmatched enriched trades found');
+    return { matched: 0, failed: 0 };
+  }
+
+  console.log(`[CRON] Found ${enrichedTrades.length} unmatched enriched trades`);
+
+  // Step 2: Group trades by agent and token (to find buy/sell pairs)
+  const tradeGroups = new Map<string, typeof enrichedTrades>();
+  for (const trade of enrichedTrades) {
+    const key = `${trade.agent_id}:${trade.token_address}`;
+    const existing = tradeGroups.get(key) || [];
+    existing.push(trade);
+    tradeGroups.set(key, existing);
+  }
+
+  let matchedPairs = 0;
+  let failedMatches = 0;
+
+  // Step 3: Process each group to find buy/sell pairs
+  for (const [key, trades] of tradeGroups) {
+    const [agentId, tokenAddress] = key.split(':');
+
+    // Separate buys and sells
+    const buys = trades.filter(t => t.side === 'buy').sort((a, b) =>
+      new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+    const sells = trades.filter(t => t.side === 'sell').sort((a, b) =>
+      new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+
+    // Match pairs using FIFO (First In, First Out)
+    const minPairs = Math.min(buys.length, sells.length);
+
+    for (let i = 0; i < minPairs; i++) {
+      const buyTrade = buys[i];
+      const sellTrade = sells[i];
+
+      try {
+        // Calculate P&L
+        const buyVolumeUsd = buyTrade.volume_usd || 0;
+        const sellVolumeUsd = sellTrade.volume_usd || 0;
+        const pnlUsd = sellVolumeUsd - buyVolumeUsd;
+        const pnlPercentage = buyVolumeUsd > 0 ? (pnlUsd / buyVolumeUsd) * 100 : 0;
+
+        // Calculate holding time in minutes
+        const buyTime = new Date(buyTrade.timestamp).getTime();
+        const sellTime = new Date(sellTrade.timestamp).getTime();
+        const holdingTimeMs = sellTime - buyTime;
+        const holdingTimeMinutes = Math.floor(holdingTimeMs / 60000);
+
+        // Calculate SOL P&L
+        const buyVolumeSol = buyTrade.volume_sol || 0;
+        const sellVolumeSol = sellTrade.volume_sol || 0;
+        const pnlSol = sellVolumeSol - buyVolumeSol;
+
+        // Update buy trade
+        const { error: buyUpdateError } = await supabaseServer
+          .from('trades')
+          .update({
+            matched_trade_id: sellTrade.id,
+            pnl_usd: pnlUsd,
+            pnl_sol: pnlSol,
+            pnl_percentage: pnlPercentage,
+            holding_time_minutes: holdingTimeMinutes,
+            status: 'closed',
+            price_at_exit: sellTrade.price_usd,
+            exit_timestamp: sellTrade.timestamp,
+          })
+          .eq('id', buyTrade.id);
+
+        if (buyUpdateError) {
+          console.error(`[CRON] Error updating buy trade ${buyTrade.id}:`, buyUpdateError);
+          failedMatches++;
+          continue;
+        }
+
+        // Update sell trade
+        const { error: sellUpdateError } = await supabaseServer
+          .from('trades')
+          .update({
+            matched_trade_id: buyTrade.id,
+            pnl_usd: pnlUsd,
+            pnl_sol: pnlSol,
+            pnl_percentage: pnlPercentage,
+            holding_time_minutes: holdingTimeMinutes,
+            status: 'closed',
+            price_at_entry: buyTrade.price_usd,
+          })
+          .eq('id', sellTrade.id);
+
+        if (sellUpdateError) {
+          console.error(`[CRON] Error updating sell trade ${sellTrade.id}:`, sellUpdateError);
+          failedMatches++;
+          continue;
+        }
+
+        matchedPairs++;
+        const profitSign = pnlUsd >= 0 ? '+' : '';
+        console.log(
+          `[CRON] ✓ Matched ${buyTrade.token_symbol} trade: ${profitSign}$${pnlUsd.toFixed(2)} ` +
+          `(${profitSign}${pnlPercentage.toFixed(2)}%) over ${holdingTimeMinutes}min`
+        );
+      } catch (error) {
+        console.error(`[CRON] Error matching trades ${buyTrade.id} and ${sellTrade.id}:`, error);
+        failedMatches++;
+      }
+    }
+
+    // Log if there are unmatched buys or sells (should not happen if agents buy/sell 100%)
+    if (buys.length !== sells.length) {
+      console.warn(
+        `[CRON] Unbalanced trades for ${tokenAddress}: ${buys.length} buys, ${sells.length} sells`
+      );
+    }
+  }
+
+  console.log(`[CRON] P&L matching complete: ${matchedPairs} pairs matched, ${failedMatches} failed`);
+  return { matched: matchedPairs, failed: failedMatches };
 }
 
 export async function GET(request: NextRequest) {
@@ -177,6 +434,12 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Step 5: Enrich pending trades
+    const enrichmentResults = await enrichTrades();
+
+    // Step 6: Match buy/sell pairs and calculate P&L
+    const pnlResults = await matchAndCalculatePnL();
+
     // Summary
     const summary = {
       success: true,
@@ -189,6 +452,12 @@ export async function GET(request: NextRequest) {
       },
       snapshots: snapshots.length,
       holdings: holdings.length,
+      trades: {
+        enriched: enrichmentResults.enriched,
+        enrichFailed: enrichmentResults.failed,
+        matched: pnlResults.matched,
+        matchFailed: pnlResults.failed,
+      },
     };
 
     console.log('[CRON] Portfolio update completed:', summary);
