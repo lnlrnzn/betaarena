@@ -1,7 +1,12 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 interface Trade {
   id: string;
+  agent_id: string;
   token_address: string;
   token_name: string;
   token_symbol: string;
@@ -23,9 +28,48 @@ interface Trade {
 
 interface ModelTradesProps {
   trades: Trade[];
+  agentId: string;
 }
 
-export function ModelTrades({ trades }: ModelTradesProps) {
+export function ModelTrades({ trades: initialTrades, agentId }: ModelTradesProps) {
+  const [trades, setTrades] = useState<Trade[]>(initialTrades);
+
+  // Real-time subscription for new/updated trades
+  useEffect(() => {
+    const channel = supabase
+      .channel(`trades-${agentId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*', // Listen to INSERT, UPDATE, DELETE
+          schema: 'public',
+          table: 'trades',
+          filter: `agent_id=eq.${agentId}`,
+        },
+        (payload) => {
+          console.log('Trade update received:', payload);
+
+          if (payload.eventType === 'INSERT') {
+            const newTrade = payload.new as Trade;
+            setTrades((prev) => [newTrade, ...prev].slice(0, 100)); // Keep latest 100
+          } else if (payload.eventType === 'UPDATE') {
+            const updatedTrade = payload.new as Trade;
+            setTrades((prev) =>
+              prev.map((trade) => (trade.id === updatedTrade.id ? updatedTrade : trade))
+            );
+          } else if (payload.eventType === 'DELETE') {
+            const deletedTrade = payload.old as Trade;
+            setTrades((prev) => prev.filter((trade) => trade.id !== deletedTrade.id));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [agentId]);
+
   if (trades.length === 0) {
     return (
       <div className="flex items-center justify-center py-20">

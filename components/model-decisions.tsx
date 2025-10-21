@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 import { DecisionCard } from "./decision-card";
 
 interface Activity {
@@ -13,9 +17,47 @@ interface Activity {
 
 interface ModelDecisionsProps {
   activities: Activity[];
+  agentId: string;
 }
 
-export function ModelDecisions({ activities }: ModelDecisionsProps) {
+export function ModelDecisions({ activities: initialActivities, agentId }: ModelDecisionsProps) {
+  const [activities, setActivities] = useState<Activity[]>(initialActivities);
+
+  // Real-time subscription for new activities/decisions
+  useEffect(() => {
+    const channel = supabase
+      .channel(`activities-${agentId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*', // Listen to INSERT, UPDATE, DELETE
+          schema: 'public',
+          table: 'agent_activities',
+          filter: `agent_id=eq.${agentId}`,
+        },
+        (payload) => {
+          console.log('Activity update received:', payload);
+
+          if (payload.eventType === 'INSERT') {
+            const newActivity = payload.new as Activity;
+            setActivities((prev) => [newActivity, ...prev].slice(0, 100)); // Keep latest 100
+          } else if (payload.eventType === 'UPDATE') {
+            const updatedActivity = payload.new as Activity;
+            setActivities((prev) =>
+              prev.map((activity) => (activity.id === updatedActivity.id ? updatedActivity : activity))
+            );
+          } else if (payload.eventType === 'DELETE') {
+            const deletedActivity = payload.old as Activity;
+            setActivities((prev) => prev.filter((activity) => activity.id !== deletedActivity.id));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [agentId]);
 
   if (activities.length === 0) {
     return (

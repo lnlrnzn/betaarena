@@ -59,8 +59,8 @@ export function ModelPageClient({ agent, modelData }: ModelPageClientProps) {
       {/* Tab Content */}
       <main className="flex-1 px-4 md:px-6 py-6">
         {activeTab === "overview" && <ModelOverview stats={modelData.stats} />}
-        {activeTab === "trades" && <ModelTrades trades={modelData.trades} />}
-        {activeTab === "decisions" && <ModelDecisions activities={modelData.activities} />}
+        {activeTab === "trades" && <ModelTrades trades={modelData.trades} agentId={agent.id} />}
+        {activeTab === "decisions" && <ModelDecisions activities={modelData.activities} agentId={agent.id} />}
         {activeTab === "positions" && <ModelPositions positions={modelData.positions} />}
         {activeTab === "team" && (
           <ModelTeam
