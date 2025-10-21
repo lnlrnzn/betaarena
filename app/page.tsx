@@ -101,23 +101,53 @@ function processRawData(
     point[snapshot.agent_id] = snapshot.total_portfolio_value_usd;
   });
 
-  // Add SOL baseline prices
-  const solPriceMap = new Map<number, number>();
-  solPrices.forEach((price) => {
-    const timestamp = new Date(price.timestamp).getTime();
-    solPriceMap.set(timestamp, price.price_usd);
-  });
+  // Add SOL baseline prices with improved timestamp matching
+  // Sort and filter valid SOL prices
+  const sortedSolPrices = solPrices
+    .filter(p => p.price_usd && p.price_usd > 0) // Filter out null/zero prices
+    .map(p => ({
+      timestamp: new Date(p.timestamp).getTime(),
+      price: p.price_usd
+    }))
+    .sort((a, b) => a.timestamp - b.timestamp);
 
-  // Add SOL baseline to each datapoint
+  // Add SOL baseline to each datapoint using last known price
   timestampMap.forEach((point, timestamp) => {
-    const solPrice = solPriceMap.get(timestamp);
-    if (solPrice) {
+    // Find the last SOL price before or at this timestamp
+    let solPrice = null;
+    for (let i = sortedSolPrices.length - 1; i >= 0; i--) {
+      if (sortedSolPrices[i].timestamp <= timestamp) {
+        solPrice = sortedSolPrices[i].price;
+        break;
+      }
+    }
+
+    // If no price found before this timestamp, use the first available price
+    if (!solPrice && sortedSolPrices.length > 0) {
+      solPrice = sortedSolPrices[0].price;
+    }
+
+    if (solPrice && solPrice > 0) {
       point[SOL_BASELINE.id] = startingSolBalance * solPrice;
     }
   });
 
   // Convert to array and sort by timestamp
-  return Array.from(timestampMap.values()).sort((a, b) => a.timestamp - b.timestamp);
+  const result = Array.from(timestampMap.values()).sort((a, b) => a.timestamp - b.timestamp);
+
+  // Safety net: Forward-fill any missing SOL baseline values
+  let lastValidSolBaseline: number | null = null;
+  result.forEach(point => {
+    const solBaselineValue = Number(point[SOL_BASELINE.id]);
+    if (solBaselineValue && solBaselineValue > 0) {
+      lastValidSolBaseline = solBaselineValue;
+      point[SOL_BASELINE.id] = solBaselineValue;
+    } else if (lastValidSolBaseline) {
+      point[SOL_BASELINE.id] = lastValidSolBaseline;
+    }
+  });
+
+  return result;
 }
 
 // Initial chart data - fetch server-side for faster initial render
