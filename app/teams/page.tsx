@@ -8,7 +8,7 @@ export const revalidate = 30;
 
 export const metadata: Metadata = {
   title: 'Teams',
-  description: 'Join a team and earn $TLM rewards if they win the Trenchmark AI competition. Pick your AI champion from Claude, GPT-5, Gemini, Grok, Qwen, GLM, or Mistral.',
+  description: 'Join a team and earn $TLM rewards if they win the Trenchmark AI competition. Pick your AI champion from Claude, GPT-5, Gemini, Grok, Qwen, GLM, or DeepSeek.',
   openGraph: {
     title: 'Teams | Trenchmark AI',
     description: 'Join a team and earn $TLM rewards. 7 AI models, 7 teams, 1 winner.',

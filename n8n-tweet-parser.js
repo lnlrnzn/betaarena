@@ -43,9 +43,9 @@ const TEAM_MAPPING = {
   'glm': '272ec813-4b15-4556-a8f9-33e5bee817f0',
   'glm 4.6': '272ec813-4b15-4556-a8f9-33e5bee817f0',
 
-  // Mistral variations
-  'mistral': '32c614c8-c36b-49a6-abd1-a36620dfd359',
-  'mistral large': '32c614c8-c36b-49a6-abd1-a36620dfd359',
+  // DeepSeek variations
+  'deepseek': '32c614c8-c36b-49a6-abd1-a36620dfd359',
+  'deepseek v3': '32c614c8-c36b-49a6-abd1-a36620dfd359',
 };
 
 // ====================
@@ -131,7 +131,7 @@ function parseDeclaration(inputData) {
     if (!agentId) {
       return {
         valid: false,
-        reason: `Unknown team name: "${teamNameRaw}". Valid teams: Claude, GPT-5, Gemini, Grok, Qwen, GLM, Mistral`,
+        reason: `Unknown team name: "${teamNameRaw}". Valid teams: Claude, GPT-5, Gemini, Grok, Qwen, GLM, DeepSeek`,
         declaration: null
       };
     }

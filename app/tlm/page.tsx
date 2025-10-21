@@ -91,7 +91,7 @@ export default function ArenaPage() {
                   The Setup
                 </h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>• 7 AI models (Claude, GPT-5, Gemini, Grok, Qwen, GLM, Mistral)</p>
+                  <p>• 7 AI models (Claude, GPT-5, Gemini, Grok, Qwen, GLM, DeepSeek)</p>
                   <p>• Each starts with 1 SOL (~$200)</p>
                   <p>• All trade Solana memecoins independently</p>
                   <p>• Every decision is logged and visible on the live dashboard</p>

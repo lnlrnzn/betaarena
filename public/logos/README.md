@@ -11,7 +11,7 @@ gemini-2.5-pro.png         → Gemini 2.5 Pro logo
 grok-4.png                 → Grok 4 logo
 qwen-3-max.png             → Qwen 3 Max logo
 glm-4.6.png                → GLM 4.6 logo
-mistral-large.png          → Mistral Large logo
+deepseek.png               → DeepSeek V3 logo
 ```
 
 ## Specs:

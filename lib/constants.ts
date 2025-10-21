@@ -54,14 +54,14 @@ export const AGENTS = {
     logo: "/logos/glm4-6.svg",
     logoFallback: "G",
   },
-  "mistral-large": {
+  "deepseek-v3": {
     id: "32c614c8-c36b-49a6-abd1-a36620dfd359",
-    name: "Mistral Large",
-    shortName: "Mistral",
-    model: "mistral-large",
+    name: "DeepSeek V3",
+    shortName: "DeepSeek",
+    model: "deepseek-v3",
     color: "#FFC107",
-    logo: "/logos/mistral.svg",
-    logoFallback: "M",
+    logo: "/logos/deepseek.png",
+    logoFallback: "D",
   },
 } as const;
 
