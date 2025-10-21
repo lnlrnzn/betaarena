@@ -1,4 +1,3 @@
-import { Ticker } from "@/components/ticker";
 import { ChartContainer } from "@/components/chart-container";
 import { SidebarTabs } from "@/components/sidebar-tabs";
 import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
@@ -206,9 +205,6 @@ export default async function HomePage({
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <SiteHeader agentStats={agentStats} />
-
-      {/* Ticker */}
-      <Ticker />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden lg:gap-4">
