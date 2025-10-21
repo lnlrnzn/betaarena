@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
 
-export const revalidate = 30; // Cache for 30 seconds
+// Enable ISR caching - revalidate every 60 seconds
+export const revalidate = 60;
 
 export async function GET(
   request: Request,
@@ -72,17 +73,24 @@ export async function GET(
     const totalCount = count || 0;
     const totalPages = Math.ceil(totalCount / limit);
 
-    return NextResponse.json({
-      agent_id: agentId,
-      stats: teamStats,
-      members: members || [],
-      pagination: {
-        page,
-        limit,
-        total_pages: totalPages,
-        total_count: totalCount,
+    return NextResponse.json(
+      {
+        agent_id: agentId,
+        stats: teamStats,
+        members: members || [],
+        pagination: {
+          page,
+          limit,
+          total_pages: totalPages,
+          total_count: totalCount,
+        },
       },
-    });
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+        },
+      }
+    );
   } catch (error) {
     console.error("Error fetching team data:", error);
     return NextResponse.json(

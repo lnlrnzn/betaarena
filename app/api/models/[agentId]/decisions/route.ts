@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getAgentActivities } from "@/lib/supabase-server";
 
+// Enable ISR caching - revalidate every 60 seconds
+export const revalidate = 60;
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ agentId: string }> }
@@ -10,7 +13,11 @@ export async function GET(
 
     const activities = await getAgentActivities(agentId, 100);
 
-    return NextResponse.json(activities);
+    return NextResponse.json(activities, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+      },
+    });
   } catch (error) {
     console.error("Error fetching agent decisions:", error);
     return NextResponse.json(

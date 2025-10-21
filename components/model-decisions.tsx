@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { DecisionCard } from "./decision-card";
 
 interface Activity {
@@ -15,39 +12,10 @@ interface Activity {
 }
 
 interface ModelDecisionsProps {
-  agentId: string;
+  activities: Activity[];
 }
 
-export function ModelDecisions({ agentId }: ModelDecisionsProps) {
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetchActivities();
-  }, [agentId]);
-
-  const fetchActivities = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/models/${agentId}/decisions`);
-      if (response.ok) {
-        const data = await response.json();
-        setActivities(data);
-      }
-    } catch (error) {
-      console.error('Error fetching model decisions:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-muted-foreground">Loading decisions...</p>
-      </div>
-    );
-  }
+export function ModelDecisions({ activities }: ModelDecisionsProps) {
 
   if (activities.length === 0) {
     return (

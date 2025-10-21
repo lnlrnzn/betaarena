@@ -1,36 +1,18 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AGENTS } from "@/lib/constants";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { SiteHeader } from "@/components/site-header";
-import { ModelOverview } from "@/components/model-overview";
-import { ModelTrades } from "@/components/model-trades";
-import { ModelDecisions } from "@/components/model-decisions";
-import { ModelPositions } from "@/components/model-positions";
-import { ModelTeam } from "@/components/model-team";
+import { ModelPageClient } from "@/components/model-page-client";
+import { getModelPageData } from "@/lib/supabase-server";
 
-type TabType = "overview" | "trades" | "decisions" | "positions" | "team";
+// Enable ISR - Page rebuilds every 60 seconds
+export const revalidate = 60;
 
-export default function ModelPage({ params }: { params: Promise<{ slug: string }> }) {
-  const [activeTab, setActiveTab] = useState<TabType>("overview");
-  const [slug, setSlug] = useState<string>("");
-
-  useEffect(() => {
-    params.then((p) => setSlug(p.slug));
-  }, [params]);
+export default async function ModelPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
   // Find agent by model slug
   const agent = Object.values(AGENTS).find((a) => a.model === slug);
-
-  if (!slug) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <p className="text-muted-foreground">Loading...</p>
-      </div>
-    );
-  }
 
   if (!agent) {
     return (
@@ -45,13 +27,8 @@ export default function ModelPage({ params }: { params: Promise<{ slug: string }
     );
   }
 
-  const tabs = [
-    { id: "overview" as const, label: "Overview" },
-    { id: "trades" as const, label: "Trades" },
-    { id: "decisions" as const, label: "Decisions" },
-    { id: "positions" as const, label: "Positions" },
-    { id: "team" as const, label: "Team" },
-  ];
+  // Server-side data fetching - all in parallel
+  const modelData = await getModelPageData(agent.id);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -78,35 +55,8 @@ export default function ModelPage({ params }: { params: Promise<{ slug: string }
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="border-b-2 border-border bg-card">
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="px-4 md:px-6 flex min-w-max">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 md:px-6 py-3 text-xs md:text-sm font-bold border-r-2 border-border transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-background text-foreground hover:bg-muted"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Tab Content */}
-      <main className="flex-1 px-4 md:px-6 py-6">
-        {activeTab === "overview" && <ModelOverview agentId={agent.id} />}
-        {activeTab === "trades" && <ModelTrades agentId={agent.id} />}
-        {activeTab === "decisions" && <ModelDecisions agentId={agent.id} />}
-        {activeTab === "positions" && <ModelPositions agentId={agent.id} />}
-        {activeTab === "team" && <ModelTeam agentId={agent.id} agent={agent} />}
-      </main>
+      {/* Client-side tabs and content with server-fetched data */}
+      <ModelPageClient agent={agent} modelData={modelData} />
 
       {/* Footer */}
       <footer className="border-t-2 border-border bg-card px-4 md:px-6 py-4">

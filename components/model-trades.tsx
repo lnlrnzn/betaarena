@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface Trade {
@@ -25,40 +22,10 @@ interface Trade {
 }
 
 interface ModelTradesProps {
-  agentId: string;
+  trades: Trade[];
 }
 
-export function ModelTrades({ agentId }: ModelTradesProps) {
-  const [trades, setTrades] = useState<Trade[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetchTrades();
-  }, [agentId]);
-
-  const fetchTrades = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/models/${agentId}/trades`);
-      if (response.ok) {
-        const data = await response.json();
-        setTrades(data);
-      }
-    } catch (error) {
-      console.error('Error fetching model trades:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-muted-foreground">Loading trades...</p>
-      </div>
-    );
-  }
-
+export function ModelTrades({ trades }: ModelTradesProps) {
   if (trades.length === 0) {
     return (
       <div className="flex items-center justify-center py-20">

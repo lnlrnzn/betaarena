@@ -21,59 +21,71 @@ export const supabaseServer = createClient(supabaseUrl, serviceRoleKey, {
 
 /**
  * Get real-time agent statistics from Supabase
+ * Optimized to batch queries instead of making 4 queries per agent
  */
 export async function getAgentStats(): Promise<AgentStats[]> {
   const agentIds = Object.values(AGENTS).map((a) => a.id);
 
-  // Get latest and first snapshot for each agent
-  const statsPromises = agentIds.map(async (agentId) => {
-    // Get latest snapshot
-    const { data: latestSnapshot } = await supabaseServer
-      .from('portfolio_snapshots')
-      .select('total_portfolio_value_usd, timestamp')
-      .eq('agent_id', agentId)
-      .order('timestamp', { ascending: false })
-      .limit(1)
-      .single();
+  // Batch query 1: Get all latest snapshots in a single query
+  const { data: allSnapshots } = await supabaseServer
+    .from('portfolio_snapshots')
+    .select('agent_id, total_portfolio_value_usd, timestamp')
+    .in('agent_id', agentIds)
+    .order('timestamp', { ascending: false });
 
-    // Get first snapshot (starting value)
-    const { data: firstSnapshot } = await supabaseServer
-      .from('portfolio_snapshots')
-      .select('total_portfolio_value_usd, timestamp')
-      .eq('agent_id', agentId)
-      .order('timestamp', { ascending: true })
-      .limit(1)
-      .single();
+  // Batch query 2: Get trade statistics using aggregation
+  const { data: tradeStats } = await supabaseServer
+    .from('trades')
+    .select('agent_id, status, pnl_usd')
+    .in('agent_id', agentIds);
 
-    // Get trade count
-    const { count: totalTrades } = await supabaseServer
-      .from('trades')
-      .select('*', { count: 'exact', head: true })
-      .eq('agent_id', agentId);
+  // Process snapshots to find latest and first for each agent
+  const latestSnapshots = new Map<string, { value: number; timestamp: string }>();
+  const firstSnapshots = new Map<string, { value: number; timestamp: string }>();
 
-    // Get winning trades (where pnl_usd > 0)
-    const { count: winningTrades } = await supabaseServer
-      .from('trades')
-      .select('*', { count: 'exact', head: true })
-      .eq('agent_id', agentId)
-      .eq('status', 'closed')
-      .gt('pnl_usd', 0);
+  agentIds.forEach((agentId) => {
+    const agentSnapshots = (allSnapshots || []).filter((s) => s.agent_id === agentId);
 
-    const currentValue = latestSnapshot?.total_portfolio_value_usd
-      ? parseFloat(latestSnapshot.total_portfolio_value_usd)
-      : 0;
+    if (agentSnapshots.length > 0) {
+      // Sort by timestamp to get first and latest
+      const sorted = agentSnapshots.sort(
+        (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+      );
 
-    const startingValue = firstSnapshot?.total_portfolio_value_usd
-      ? parseFloat(firstSnapshot.total_portfolio_value_usd)
-      : 0;
+      firstSnapshots.set(agentId, {
+        value: parseFloat(sorted[0].total_portfolio_value_usd),
+        timestamp: sorted[0].timestamp,
+      });
 
+      latestSnapshots.set(agentId, {
+        value: parseFloat(sorted[sorted.length - 1].total_portfolio_value_usd),
+        timestamp: sorted[sorted.length - 1].timestamp,
+      });
+    }
+  });
+
+  // Process trade statistics for each agent
+  const agentTradeStats = new Map<string, { total: number; wins: number }>();
+
+  agentIds.forEach((agentId) => {
+    const agentTrades = (tradeStats || []).filter((t) => t.agent_id === agentId);
+    const totalTrades = agentTrades.length;
+    const winningTrades = agentTrades.filter(
+      (t) => t.status === 'closed' && parseFloat(t.pnl_usd || '0') > 0
+    ).length;
+
+    agentTradeStats.set(agentId, { total: totalTrades, wins: winningTrades });
+  });
+
+  // Build stats array for each agent
+  const stats = agentIds.map((agentId) => {
+    const currentValue = latestSnapshots.get(agentId)?.value || 0;
+    const startingValue = firstSnapshots.get(agentId)?.value || 0;
     const change = currentValue - startingValue;
     const changePercent = startingValue > 0 ? (change / startingValue) * 100 : 0;
 
-    const winRate =
-      totalTrades && totalTrades > 0 && winningTrades
-        ? (winningTrades / totalTrades) * 100
-        : 0;
+    const trades = agentTradeStats.get(agentId) || { total: 0, wins: 0 };
+    const winRate = trades.total > 0 ? (trades.wins / trades.total) * 100 : 0;
 
     return {
       agent_id: agentId,
@@ -81,13 +93,12 @@ export async function getAgentStats(): Promise<AgentStats[]> {
       startingValue,
       change,
       changePercent,
-      totalTrades: totalTrades || 0,
+      totalTrades: trades.total,
       winRate,
       avgHoldTime: '0m', // TODO: Calculate from trades
     };
   });
 
-  const stats = await Promise.all(statsPromises);
   return stats;
 }
 
@@ -159,52 +170,41 @@ export async function getLatestActivities(limit: number = 50) {
 
 /**
  * Get statistics for a single agent
+ * Optimized to batch queries instead of making 4 separate queries
  */
 export async function getSingleAgentStats(agentId: string): Promise<AgentStats | null> {
-  // Get latest snapshot
-  const { data: latestSnapshot } = await supabaseServer
+  // Batch query 1: Get all snapshots for this agent
+  const { data: snapshots } = await supabaseServer
     .from('portfolio_snapshots')
     .select('total_portfolio_value_usd, timestamp')
     .eq('agent_id', agentId)
-    .order('timestamp', { ascending: false })
-    .limit(1)
-    .single();
+    .order('timestamp', { ascending: true });
 
-  // Get first snapshot (starting value)
-  const { data: firstSnapshot } = await supabaseServer
-    .from('portfolio_snapshots')
-    .select('total_portfolio_value_usd, timestamp')
-    .eq('agent_id', agentId)
-    .order('timestamp', { ascending: true })
-    .limit(1)
-    .single();
-
-  // Get trade count
-  const { count: totalTrades } = await supabaseServer
+  // Batch query 2: Get all trades for this agent
+  const { data: trades } = await supabaseServer
     .from('trades')
-    .select('*', { count: 'exact', head: true })
+    .select('status, pnl_usd')
     .eq('agent_id', agentId);
 
-  // Get winning trades (where pnl_usd > 0)
-  const { count: winningTrades } = await supabaseServer
-    .from('trades')
-    .select('*', { count: 'exact', head: true })
-    .eq('agent_id', agentId)
-    .eq('status', 'closed')
-    .gt('pnl_usd', 0);
-
-  if (!latestSnapshot || !firstSnapshot) {
+  if (!snapshots || snapshots.length === 0) {
     return null;
   }
+
+  // Extract first and latest snapshots
+  const firstSnapshot = snapshots[0];
+  const latestSnapshot = snapshots[snapshots.length - 1];
+
+  // Calculate trade statistics
+  const totalTrades = trades?.length || 0;
+  const winningTrades = trades?.filter(
+    (t) => t.status === 'closed' && parseFloat(t.pnl_usd || '0') > 0
+  ).length || 0;
 
   const currentValue = parseFloat(latestSnapshot.total_portfolio_value_usd);
   const startingValue = parseFloat(firstSnapshot.total_portfolio_value_usd);
   const change = currentValue - startingValue;
   const changePercent = startingValue > 0 ? (change / startingValue) * 100 : 0;
-  const winRate =
-    totalTrades && totalTrades > 0 && winningTrades
-      ? (winningTrades / totalTrades) * 100
-      : 0;
+  const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
 
   return {
     agent_id: agentId,
@@ -212,7 +212,7 @@ export async function getSingleAgentStats(agentId: string): Promise<AgentStats |
     startingValue,
     change,
     changePercent,
-    totalTrades: totalTrades || 0,
+    totalTrades,
     winRate,
     avgHoldTime: '0m', // TODO: Calculate from trades
   };
@@ -390,4 +390,29 @@ export async function getTeamMembers(agentId: string, page: number = 1, limit: n
     .range(offset, offset + limit - 1);
 
   return members || [];
+}
+
+/**
+ * Get all model page data in a single server fetch
+ * Optimized to prevent client-side waterfalls
+ */
+export async function getModelPageData(agentId: string) {
+  // Fetch all data in parallel
+  const [stats, trades, activities, positions, teamStats, teamMembers] = await Promise.all([
+    getSingleAgentStats(agentId),
+    getAgentTrades(agentId, 100),
+    getAgentActivities(agentId, 100),
+    getAgentPositions(agentId),
+    getTeamStats(agentId),
+    getTeamMembers(agentId, 1, 50),
+  ]);
+
+  return {
+    stats,
+    trades,
+    activities,
+    positions,
+    teamStats,
+    teamMembers,
+  };
 }

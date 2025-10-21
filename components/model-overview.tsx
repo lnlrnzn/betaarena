@@ -1,43 +1,10 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { AgentStats } from "@/lib/types";
 
 interface ModelOverviewProps {
-  agentId: string;
+  stats: AgentStats | null;
 }
 
-export function ModelOverview({ agentId }: ModelOverviewProps) {
-  const [stats, setStats] = useState<AgentStats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetchStats();
-  }, [agentId]);
-
-  const fetchStats = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/models/${agentId}/stats`);
-      if (response.ok) {
-        const data = await response.json();
-        setStats(data);
-      }
-    } catch (error) {
-      console.error('Error fetching model stats:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <p className="text-muted-foreground">Loading overview...</p>
-      </div>
-    );
-  }
-
+export function ModelOverview({ stats }: ModelOverviewProps) {
   if (!stats) {
     return (
       <div className="flex items-center justify-center py-20">

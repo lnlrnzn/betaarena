@@ -26,34 +26,27 @@ interface TeamStats {
 interface ModelTeamProps {
   agentId: string;
   agent: Agent;
+  initialStats: TeamStats | null;
+  initialMembers: TeamMember[];
 }
 
-export function ModelTeam({ agentId, agent }: ModelTeamProps) {
-  const [stats, setStats] = useState<TeamStats>({
-    total_members: 0,
-    total_followers: 0,
-    total_following: 0,
-  });
-  const [members, setMembers] = useState<TeamMember[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export function ModelTeam({ agentId, agent, initialStats, initialMembers }: ModelTeamProps) {
+  const [stats, setStats] = useState<TeamStats>(
+    initialStats || { total_members: 0, total_followers: 0, total_following: 0 }
+  );
+  const [members, setMembers] = useState<TeamMember[]>(initialMembers);
+  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(false);
+  const [hasMore, setHasMore] = useState(initialMembers.length >= 50);
 
-  // Fetch team data
-  const fetchTeamData = async (pageNum: number = 1) => {
+  // Fetch team data for pagination
+  const fetchTeamData = async (pageNum: number) => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/teams/${agentId}?page=${pageNum}&limit=50`);
       if (response.ok) {
         const data = await response.json();
-
-        if (pageNum === 1) {
-          setMembers(data.members);
-        } else {
-          setMembers((prev) => [...prev, ...data.members]);
-        }
-
-        setStats(data.stats);
+        setMembers((prev) => [...prev, ...data.members]);
         setHasMore(data.pagination.page < data.pagination.total_pages);
         setPage(pageNum);
       }
@@ -63,11 +56,6 @@ export function ModelTeam({ agentId, agent }: ModelTeamProps) {
       setIsLoading(false);
     }
   };
-
-  // Initial fetch
-  useEffect(() => {
-    fetchTeamData(1);
-  }, [agentId]);
 
   // Subscribe to real-time updates
   useEffect(() => {
