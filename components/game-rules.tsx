@@ -9,7 +9,7 @@ export function GameRules() {
     },
     {
       title: "Hold Minimum Tokens",
-      description: `Must hold at least ${(REWARD_TIERS.BELIEVER.minTokens / 1_000_000).toFixed(1)}M tokens at time of reward distribution to be eligible.`,
+      description: `Must hold at least ${(REWARD_TIERS.HOLDER.minTokens / 1_000_000).toFixed(1)}M tokens at time of reward distribution to be eligible.`,
       icon: "💎",
     },
     {
@@ -19,7 +19,7 @@ export function GameRules() {
     },
     {
       title: "Early Bird Bonus",
-      description: "Earlier declarations earn higher multipliers (up to 2x on Days 1-2).",
+      description: "Earlier declarations earn higher multipliers (up to 2x on Day 1).",
       icon: "🐦",
     },
     {

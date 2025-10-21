@@ -73,75 +73,54 @@ export const TLM_TOKEN = {
   name: "$TLM",
   symbol: "TLM",
   totalSupply: 1_000_000_000, // 1 billion tokens
-  contractAddress: null, // Will be set after deployment
+  contractAddress: "3XAWJDr47NPzUfFgj3M6TamhRkJJQzgR86gizssBpump",
   decimals: 9,
 } as const;
 
-// Reward Tier System (Whale-Skewed Distribution)
+// Reward Tier System (3-Tier Distribution)
 export const REWARD_TIERS = {
-  MEGA_WHALE: {
-    name: "MEGA WHALE",
-    minTokens: 15_000_000, // 1.5% of supply
-    maxTokens: null,
-    poolShare: 0.50, // 50% of reward pool
-    description: "1.5%+ of supply",
-  },
   WHALE: {
     name: "WHALE",
-    minTokens: 10_000_000, // 1% of supply
-    maxTokens: 15_000_000,
-    poolShare: 0.25, // 25% of reward pool
+    minTokens: 10_000_000, // 1.0% of supply
+    maxTokens: 15_000_000, // 1.5% of supply
+    poolShare: 0.50, // 50% of reward pool
     description: "1.0% - 1.5% of supply",
   },
   BIG_BAG: {
     name: "BIG BAG",
-    minTokens: 6_000_000, // 0.6% of supply
-    maxTokens: 10_000_000,
-    poolShare: 0.12, // 12% of reward pool
-    description: "0.6% - 1.0% of supply",
+    minTokens: 5_000_000, // 0.5% of supply
+    maxTokens: 10_000_000, // 1.0% of supply
+    poolShare: 0.35, // 35% of reward pool
+    description: "0.5% - 1.0% of supply",
   },
   HOLDER: {
     name: "HOLDER",
-    minTokens: 4_000_000, // 0.4% of supply
-    maxTokens: 6_000_000,
-    poolShare: 0.07, // 7% of reward pool
-    description: "0.4% - 0.6% of supply",
-  },
-  DEGEN: {
-    name: "DEGEN",
-    minTokens: 2_500_000, // 0.25% of supply
-    maxTokens: 4_000_000,
-    poolShare: 0.04, // 4% of reward pool
-    description: "0.25% - 0.4% of supply",
-  },
-  BELIEVER: {
-    name: "BELIEVER",
-    minTokens: 2_000_000, // 0.2% of supply (minimum eligibility)
-    maxTokens: 2_500_000,
-    poolShare: 0.02, // 2% of reward pool
-    description: "0.2% - 0.25% of supply",
+    minTokens: 1_000_000, // 0.1% of supply (minimum eligibility)
+    maxTokens: 5_000_000, // 0.5% of supply
+    poolShare: 0.15, // 15% of reward pool
+    description: "0.1% - 0.5% of supply",
   },
 } as const;
 
 // Early Declaration Multipliers
 export const DECLARATION_MULTIPLIERS = {
-  DAYS_1_2: {
-    days: [1, 2],
+  DAY_1: {
+    days: [1],
     multiplier: 2.0,
     label: "ULTRA EARLY",
   },
-  DAYS_3_4: {
-    days: [3, 4],
+  DAYS_2_3: {
+    days: [2, 3],
     multiplier: 1.5,
     label: "EARLY",
   },
-  DAYS_5_6: {
-    days: [5, 6],
+  DAYS_4_5: {
+    days: [4, 5],
     multiplier: 1.25,
     label: "LATE",
   },
-  DAY_7: {
-    days: [7],
+  DAYS_6_7: {
+    days: [6, 7],
     multiplier: 1.0,
     label: "LAST MINUTE",
   },

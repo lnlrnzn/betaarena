@@ -13,6 +13,19 @@ interface SiteHeaderProps {
 export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const [copied, setCopied] = useState(false);
+  const contractAddress = "3XAWJDr47NPzUfFgj3M6TamhRkJJQzgR86gizssBpump";
+
+  const handleCopyContract = async () => {
+    try {
+      await navigator.clipboard.writeText(contractAddress);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
   return (
     <header className="border-b-2 border-border bg-card">
       <div className="px-4 md:px-6 py-4">
@@ -23,6 +36,23 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
               Alpha Arena
             </Link>
             <span className="hidden sm:inline text-xs text-muted-foreground">by Mutl</span>
+          </div>
+
+          {/* Contract Address - Desktop Center */}
+          <div className="hidden lg:flex items-center gap-2 text-xs">
+            <span className="text-muted-foreground">CA:</span>
+            <button
+              onClick={handleCopyContract}
+              className="font-mono text-foreground hover:text-primary transition-colors relative group"
+              title="Click to copy"
+            >
+              {contractAddress.slice(0, 8)}...{contractAddress.slice(-6)}
+              {copied && (
+                <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-2 py-1 text-xs font-bold whitespace-nowrap">
+                  COPIED!
+                </span>
+              )}
+            </button>
           </div>
 
           {/* Desktop Navigation */}
@@ -94,6 +124,25 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
         {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
           <nav className="md:hidden mt-4 pt-4 border-t-2 border-border space-y-2">
+            {/* Contract Address - Mobile */}
+            <div className="px-4 py-2 border-2 border-border bg-background">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs text-muted-foreground">CA:</span>
+                <button
+                  onClick={handleCopyContract}
+                  className="font-mono text-xs text-foreground hover:text-primary transition-colors relative flex-1 text-right"
+                  title="Click to copy"
+                >
+                  {contractAddress.slice(0, 8)}...{contractAddress.slice(-6)}
+                  {copied && (
+                    <span className="absolute -top-8 right-0 bg-primary text-primary-foreground px-2 py-1 text-xs font-bold whitespace-nowrap">
+                      COPIED!
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}

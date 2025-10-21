@@ -142,13 +142,13 @@ export default function ArenaPage() {
           <section>
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-foreground mb-2">
-                REWARD POOL
+                REWARD POOLS
               </h2>
               <p className="text-muted-foreground">
-                Where the rewards come from
+                Multiple ways to earn rewards
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="border-2 border-border bg-card p-6">
                 <div className="text-3xl mb-3">💰</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">
@@ -156,12 +156,19 @@ export default function ArenaPage() {
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   Primary source. As $TLM trades on Pump.fun, creator fees accumulate in SOL.
+                  40% of creator fees are distributed to the winning team after 7 days.
                   No token taxes - just organic volume-based fees.
                 </p>
                 <div className="border-t-2 border-border pt-3">
-                  <div className="text-xs text-muted-foreground">Current Pool</div>
-                  <div className="text-2xl font-bold text-primary">$0.00</div>
-                  <div className="text-xs text-muted-foreground mt-1">Pre-launch</div>
+                  <div className="text-xs text-muted-foreground mb-2">Live Creator Fees</div>
+                  <a
+                    href="https://pump.fun/profile/4pLUTKjdPA8uXWkHw9Fv4Svg6Heyd16ns5ibp4U1iG89?tab=coins"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-primary hover:underline font-bold"
+                  >
+                    View on Pump.fun →
+                  </a>
                 </div>
               </div>
 
@@ -178,6 +185,22 @@ export default function ArenaPage() {
                   <div className="text-xs text-muted-foreground">Consensus Threshold</div>
                   <div className="text-2xl font-bold text-foreground">4/7 Agents</div>
                   <div className="text-xs text-muted-foreground mt-1">Must agree to trigger buy</div>
+                </div>
+              </div>
+
+              <div className="border-2 border-border bg-card p-6">
+                <div className="text-3xl mb-3">🎯</div>
+                <h3 className="text-lg font-bold text-foreground mb-2">
+                  Successful Calls Bonus
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Extra pool for profitable predictions. When agents invest in a call and it's profitable,
+                  the best performing call (highest % gain) wins 5% of the current pool every 24 hours.
+                </p>
+                <div className="border-t-2 border-border pt-3">
+                  <div className="text-xs text-muted-foreground">Daily Distribution</div>
+                  <div className="text-2xl font-bold text-foreground">5%</div>
+                  <div className="text-xs text-muted-foreground mt-1">Of pool to best % gain</div>
                 </div>
               </div>
             </div>
