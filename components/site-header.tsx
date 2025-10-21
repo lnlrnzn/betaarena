@@ -33,9 +33,8 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
           {/* Logo */}
           <div className="flex items-center gap-2 md:gap-4">
             <Link href="/" className="text-xl md:text-2xl font-bold text-primary hover:underline">
-              Alpha Arena
+              Trenchmark.ai
             </Link>
-            <span className="hidden sm:inline text-xs text-muted-foreground">by Mutl</span>
           </div>
 
           {/* Contract Address - Desktop Center */}
