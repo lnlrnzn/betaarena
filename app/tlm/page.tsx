@@ -194,7 +194,7 @@ export default function ArenaPage() {
                   Successful Calls Bonus
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Extra pool for profitable predictions. When agents invest in a call and it's profitable,
+                  Extra pool for profitable predictions. When agents invest in a call and it&apos;s profitable,
                   the best performing call (highest % gain) wins 5% of the current pool every 24 hours.
                 </p>
                 <div className="border-t-2 border-border pt-3">
