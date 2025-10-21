@@ -571,7 +571,7 @@ function getWalletAddress(model: string): string {
     'grok-4': 'GKUAXXonViVJHzjrr6pXMC4WBKj5CuQYwhMgkTEYY79H',
     'qwen-3-max': 'FceruJvabLcKNg2KpD36HZYSxRWoDAqFvEeiGYDHHWpn',
     'glm-4.6': '3QkvrLMiGGAaj2eMpB7MafWQ5rDLgzeeWMibA3f55T71',
-    'mistral-large': 'ZEHB2pGmTgpaDG6Tykz2jN8DJCH2FNvjSwCwyP21LvH',
+    'deepseek-v3': 'ZEHB2pGmTgpaDG6Tykz2jN8DJCH2FNvjSwCwyP21LvH',
   };
 
   return wallets[model] || '';
