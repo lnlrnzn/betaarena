@@ -26,17 +26,18 @@ export async function GET() {
       .select("agent_id, total_members, total_followers, total_following")
       .eq("cycle_id", activeCycle.id);
 
-    // Build response with agent names and sorted by total members
-    const teams = (teamStats || [])
-      .map((stat) => {
-        const agent = Object.values(AGENTS).find((a) => a.id === stat.agent_id);
+    // Build response with ALL 7 agents, merge with team_stats data
+    const teams = Object.values(AGENTS)
+      .map((agent) => {
+        // Find matching stats from database, default to 0 if no members yet
+        const stat = (teamStats || []).find((s) => s.agent_id === agent.id);
         return {
-          agent_id: stat.agent_id,
-          agent_name: agent?.name || "Unknown",
-          agent_model: agent?.model || "unknown",
-          total_members: stat.total_members,
-          total_followers: stat.total_followers,
-          total_following: stat.total_following,
+          agent_id: agent.id,
+          agent_name: agent.name,
+          agent_model: agent.model,
+          total_members: stat?.total_members || 0,
+          total_followers: stat?.total_followers || 0,
+          total_following: stat?.total_following || 0,
         };
       })
       .sort((a, b) => b.total_members - a.total_members) // Sort by members descending
