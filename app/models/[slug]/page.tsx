@@ -9,8 +9,9 @@ import { ModelOverview } from "@/components/model-overview";
 import { ModelTrades } from "@/components/model-trades";
 import { ModelDecisions } from "@/components/model-decisions";
 import { ModelPositions } from "@/components/model-positions";
+import { ModelTeam } from "@/components/model-team";
 
-type TabType = "overview" | "trades" | "decisions" | "positions";
+type TabType = "overview" | "trades" | "decisions" | "positions" | "team";
 
 export default function ModelPage({ params }: { params: Promise<{ slug: string }> }) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
@@ -49,6 +50,7 @@ export default function ModelPage({ params }: { params: Promise<{ slug: string }
     { id: "trades" as const, label: "Trades" },
     { id: "decisions" as const, label: "Decisions" },
     { id: "positions" as const, label: "Positions" },
+    { id: "team" as const, label: "Team" },
   ];
 
   return (
@@ -101,6 +103,7 @@ export default function ModelPage({ params }: { params: Promise<{ slug: string }
         {activeTab === "trades" && <ModelTrades agentId={agent.id} />}
         {activeTab === "decisions" && <ModelDecisions agentId={agent.id} />}
         {activeTab === "positions" && <ModelPositions agentId={agent.id} />}
+        {activeTab === "team" && <ModelTeam agentId={agent.id} agent={agent} />}
       </main>
 
       {/* Footer */}

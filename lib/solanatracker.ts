@@ -214,6 +214,16 @@ export async function getSolPrice(): Promise<TokenPrice> {
   const url = `${BASE_URL}/price?token=${WSOL_MINT}&priceChanges=false`;
   const response = await fetchWithRetry<ApiTokenPriceResponse>(url);
 
+  // Validate price data
+  if (!response.price || response.price <= 0) {
+    throw new Error(`Invalid SOL price received: ${response.price}`);
+  }
+
+  // Sanity check: SOL price should be between $10 and $10,000
+  if (response.price < 10 || response.price > 10000) {
+    throw new Error(`SOL price out of expected range: $${response.price}`);
+  }
+
   // Transform API response to our format
   return {
     token: WSOL_MINT,
@@ -232,6 +242,24 @@ export async function getWalletPortfolio(
 ): Promise<WalletPortfolio> {
   const url = `${BASE_URL}/wallet/${walletAddress}`;
   const response = await fetchWithRetry<ApiWalletPortfolioResponse>(url);
+
+  // Validate portfolio data
+  if (!response.tokens || !Array.isArray(response.tokens)) {
+    throw new Error(`Invalid portfolio response: missing or invalid tokens array`);
+  }
+
+  if (response.total === null || response.total === undefined) {
+    throw new Error(`Invalid portfolio response: missing total value`);
+  }
+
+  if (response.totalSol === null || response.totalSol === undefined) {
+    throw new Error(`Invalid portfolio response: missing totalSol value`);
+  }
+
+  // Allow 0 values (wallet might be empty), but not negative
+  if (response.total < 0 || response.totalSol < 0) {
+    throw new Error(`Invalid portfolio values: total=$${response.total}, totalSol=${response.totalSol}`);
+  }
 
   // Transform API response to our format
   const tokens: WalletToken[] = response.tokens.map((apiToken) => ({
@@ -264,6 +292,24 @@ export async function getWalletPortfolioBasic(
 ): Promise<WalletPortfolio> {
   const url = `${BASE_URL}/wallet/${walletAddress}/basic`;
   const response = await fetchWithRetry<ApiWalletPortfolioResponse>(url);
+
+  // Validate portfolio data
+  if (!response.tokens || !Array.isArray(response.tokens)) {
+    throw new Error(`Invalid portfolio response: missing or invalid tokens array`);
+  }
+
+  if (response.total === null || response.total === undefined) {
+    throw new Error(`Invalid portfolio response: missing total value`);
+  }
+
+  if (response.totalSol === null || response.totalSol === undefined) {
+    throw new Error(`Invalid portfolio response: missing totalSol value`);
+  }
+
+  // Allow 0 values (wallet might be empty), but not negative
+  if (response.total < 0 || response.totalSol < 0) {
+    throw new Error(`Invalid portfolio values: total=$${response.total}, totalSol=${response.totalSol}`);
+  }
 
   // Transform API response to our format
   const tokens: WalletToken[] = response.tokens.map((apiToken) => ({

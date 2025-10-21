@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ModelsDropdown } from "./models-dropdown";
+import { ThemeToggle } from "./theme-toggle";
 import { AgentStats } from "@/lib/types";
 
 interface SiteHeaderProps {
@@ -39,6 +40,8 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
           >
             $ARENA
           </Link>
+          <span className="text-muted-foreground">|</span>
+          <ThemeToggle />
         </nav>
       </div>
     </header>

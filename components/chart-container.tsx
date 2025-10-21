@@ -1,85 +1,64 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect, useTransition } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PortfolioChartLightweight } from "./portfolio-chart-lightweight";
 import { ChartDataPoint } from "@/lib/types";
-import { TIME_RANGES, TimeRange } from "@/lib/constants";
 import { supabase } from "@/lib/supabase";
+import { TIME_RANGES, TimeRange } from "@/lib/constants";
 
 interface ChartContainerProps {
   initialData: ChartDataPoint[];
-  initialRange: TimeRange;
+  activeRange: TimeRange;
 }
 
-export function ChartContainer({ initialData, initialRange }: ChartContainerProps) {
-  const [chartData, setChartData] = useState<ChartDataPoint[]>(initialData);
-  const [selectedRange, setSelectedRange] = useState<TimeRange>(initialRange);
+export function ChartContainer({ initialData, activeRange }: ChartContainerProps) {
+  const chartRef = useRef<any>(null);
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
+  const [chartData, setChartData] = useState<ChartDataPoint[]>(initialData);
 
-  // Handle time range changes
-  const handleRangeChange = async (range: TimeRange) => {
-    setIsLoading(true);
-    setSelectedRange(range);
-
-    try {
-      const response = await fetch(`/api/chart-data/${range}`);
-      const data = await response.json();
-      setChartData(data);
-    } catch (error) {
-      console.error("Error fetching chart data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Subscribe to real-time updates
+  // Real-time subscription for live updates
   useEffect(() => {
     const channel = supabase
-      .channel("portfolio_updates")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "portfolio_snapshots",
-        },
-        (payload) => {
-          console.log("New snapshot:", payload);
-          // Append new data point to chart
-          const newSnapshot = payload.new as any;
+      .channel("live-portfolio")
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'portfolio_snapshots',
+      }, (payload) => {
+        console.log('New snapshot received:', payload.new);
+        const newSnapshot = payload.new as any;
 
-          setChartData((prev) => {
-            const lastPoint = prev[prev.length - 1] || { timestamp: 0 };
-            const newTimestamp = new Date(newSnapshot.timestamp).getTime();
+        setChartData(prev => {
+          const timestamp = new Date(newSnapshot.timestamp).getTime();
+          const existingIndex = prev.findIndex(p => p.timestamp === timestamp);
 
-            // Only update if it's a newer timestamp
-            if (newTimestamp <= lastPoint.timestamp) return prev;
-
-            // Find or create data point for this timestamp
-            const existingPointIndex = prev.findIndex(
-              (p) => p.timestamp === newTimestamp
-            );
-
-            if (existingPointIndex >= 0) {
-              // Update existing point
-              const updated = [...prev];
-              updated[existingPointIndex] = {
-                ...updated[existingPointIndex],
-                [newSnapshot.agent_id]: newSnapshot.total_portfolio_value_usd,
-              };
-              return updated;
-            } else {
-              // Add new point
-              const newPoint: ChartDataPoint = {
-                timestamp: newTimestamp,
-                date: new Date(newTimestamp).toLocaleString(),
-                [newSnapshot.agent_id]: newSnapshot.total_portfolio_value_usd,
-              };
-              return [...prev, newPoint];
-            }
-          });
-        }
-      )
+          if (existingIndex >= 0) {
+            // Update existing point
+            const updated = [...prev];
+            updated[existingIndex] = {
+              ...updated[existingIndex],
+              [newSnapshot.agent_id]: newSnapshot.total_portfolio_value_usd,
+            };
+            return updated;
+          } else {
+            // Add new point
+            return [...prev, {
+              timestamp,
+              date: new Date(timestamp).toLocaleString("en-US", {
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              }),
+              [newSnapshot.agent_id]: newSnapshot.total_portfolio_value_usd,
+            }].sort((a, b) => a.timestamp - b.timestamp);
+          }
+        });
+      })
       .subscribe();
 
     return () => {
@@ -87,37 +66,108 @@ export function ChartContainer({ initialData, initialRange }: ChartContainerProp
     };
   }, []);
 
+  const handleZoomIn = () => {
+    if (chartRef.current) {
+      chartRef.current.zoomIn();
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (chartRef.current) {
+      chartRef.current.zoomOut();
+    }
+  };
+
+  const handleResetView = () => {
+    if (chartRef.current) {
+      chartRef.current.resetView();
+    }
+  };
+
+  const handleRangeChange = (range: TimeRange) => {
+    setIsLoading(true);
+    startTransition(() => {
+      router.push(`/?range=${range.toLowerCase()}`);
+    });
+  };
+
+  // Reset loading state when data changes
+  useEffect(() => {
+    setIsLoading(false);
+  }, [initialData]);
+
   return (
     <div className="flex flex-col h-full">
-      {/* Time Range Selector */}
+      {/* Timeframe Selector */}
       <div className="bg-background border-2 border-b-0 border-border px-6 py-3">
         <div className="flex items-center gap-2">
-          {Object.keys(TIME_RANGES).map((range) => (
+          <span className="text-xs font-bold text-muted-foreground mr-2">TIMEFRAME:</span>
+          {(Object.keys(TIME_RANGES) as TimeRange[]).map((range) => (
             <button
               key={range}
-              onClick={() => handleRangeChange(range as TimeRange)}
-              disabled={isLoading}
-              className={`px-4 py-1.5 text-xs font-bold border-2 border-border transition-colors ${
-                selectedRange === range
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background text-foreground hover:bg-muted"
-              } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+              onClick={() => handleRangeChange(range)}
+              className={`px-4 py-1.5 text-xs font-bold border-2 transition-colors ${
+                activeRange === range
+                  ? "border-border bg-primary text-primary-foreground"
+                  : "border-border bg-background text-foreground hover:bg-muted"
+              }`}
             >
               {range}
             </button>
           ))}
-          {isLoading && (
-            <span className="text-xs text-muted-foreground ml-2">Loading...</span>
-          )}
+        </div>
+      </div>
+
+      {/* Zoom Controls */}
+      <div className="bg-background border-2 border-b-0 border-border px-6 py-3">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleZoomIn}
+            className="px-4 py-1.5 text-xs font-bold border-2 border-border bg-background text-foreground hover:bg-muted transition-colors"
+            title="Zoom In"
+          >
+            ZOOM IN +
+          </button>
+          <button
+            onClick={handleZoomOut}
+            className="px-4 py-1.5 text-xs font-bold border-2 border-border bg-background text-foreground hover:bg-muted transition-colors"
+            title="Zoom Out"
+          >
+            ZOOM OUT −
+          </button>
+          <button
+            onClick={handleResetView}
+            className="px-4 py-1.5 text-xs font-bold border-2 border-border bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            title="Reset to full view"
+          >
+            RESET VIEW
+          </button>
+          <span className="text-xs text-muted-foreground ml-2">
+            Use mouse wheel to zoom, drag to pan
+          </span>
         </div>
       </div>
 
       {/* Chart */}
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 relative">
         <PortfolioChartLightweight
+          ref={chartRef}
           initialData={chartData}
-          timeRange={selectedRange}
         />
+
+        {/* Loading Overlay */}
+        {isLoading && (
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300">
+            <div className="flex flex-col items-center gap-4">
+              {/* Spinner */}
+              <div className="w-12 h-12 border-4 border-border border-t-primary rounded-full animate-spin" />
+              {/* Loading Text */}
+              <div className="text-sm font-bold text-foreground">
+                Loading {TIME_RANGES[activeRange].label} data...
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

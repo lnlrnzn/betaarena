@@ -36,12 +36,11 @@ export function ModelsDropdown({ agentStats = [] }: ModelsDropdownProps) {
       onMouseLeave={() => setIsOpen(false)}
     >
       {/* Trigger */}
-      <Link
-        href="/models"
-        className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors block"
+      <button
+        className="px-3 md:px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
       >
         MODELS
-      </Link>
+      </button>
 
       {/* Dropdown */}
       {isOpen && (

@@ -5,100 +5,233 @@ import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
 import { SiteHeader } from "@/components/site-header";
 import { ChartDataPoint } from "@/lib/types";
 import { getAgentStats, getLatestTrades, getLatestActivities, supabaseServer } from "@/lib/supabase-server";
-import { SOL_BASELINE, TIME_RANGES } from "@/lib/constants";
+import { SOL_BASELINE, TIME_RANGES, TimeRange } from "@/lib/constants";
+
+// Enable ISR - Page rebuilds every 60 seconds to show latest data
+export const revalidate = 60;
+
+// Forward-fill utility to handle zero/missing values in time series data
+function forwardFillTimeSeries<T extends Record<string, any>>(
+  data: T[],
+  timestampKey: keyof T,
+  valueKey: keyof T
+): { filled: T[]; zeroCount: number; filledCount: number } {
+  if (!data || data.length === 0) {
+    return { filled: [], zeroCount: 0, filledCount: 0 };
+  }
+
+  // Sort by timestamp to ensure proper forward-fill
+  const sorted = [...data].sort((a, b) => {
+    const timeA = new Date(a[timestampKey] as any).getTime();
+    const timeB = new Date(b[timestampKey] as any).getTime();
+    return timeA - timeB;
+  });
+
+  let zeroCount = 0;
+  let filledCount = 0;
+  let lastValidValue: number | null = null;
+
+  // First pass: count zeros and forward-fill
+  const result = sorted.map((item) => {
+    const value = Number(item[valueKey]);
+
+    if (value === 0 || !value || isNaN(value)) {
+      zeroCount++;
+      if (lastValidValue !== null) {
+        filledCount++;
+        return { ...item, [valueKey]: lastValidValue };
+      }
+      return item; // Keep zero if no prior valid value (will back-fill)
+    }
+
+    lastValidValue = value;
+    return item;
+  });
+
+  // Second pass: back-fill any remaining zeros at the start
+  const firstValidValue = result.find(item => {
+    const val = Number(item[valueKey]);
+    return val > 0 && !isNaN(val);
+  })?.[valueKey];
+
+  if (firstValidValue) {
+    for (let i = 0; i < result.length; i++) {
+      const value = Number(result[i][valueKey]);
+      if (value === 0 || !value || isNaN(value)) {
+        result[i] = { ...result[i], [valueKey]: firstValidValue };
+        filledCount++;
+      } else {
+        break; // Stop at first valid value
+      }
+    }
+  }
+
+  return { filled: result, zeroCount, filledCount };
+}
+
+// Process raw data without aggregation
+function processRawData(
+  snapshots: any[],
+  solPrices: any[],
+  startingSolBalance: number
+): ChartDataPoint[] {
+  if (!snapshots.length) return [];
+
+  // Create a map of timestamps to data points
+  const timestampMap = new Map<number, ChartDataPoint>();
+
+  // Process all snapshots without aggregation
+  snapshots.forEach((snapshot) => {
+    const timestamp = new Date(snapshot.timestamp).getTime();
+
+    if (!timestampMap.has(timestamp)) {
+      timestampMap.set(timestamp, {
+        timestamp,
+        date: new Date(timestamp).toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }),
+      });
+    }
+
+    const point = timestampMap.get(timestamp)!;
+    point[snapshot.agent_id] = snapshot.total_portfolio_value_usd;
+  });
+
+  // Add SOL baseline prices
+  const solPriceMap = new Map<number, number>();
+  solPrices.forEach((price) => {
+    const timestamp = new Date(price.timestamp).getTime();
+    solPriceMap.set(timestamp, price.price_usd);
+  });
+
+  // Add SOL baseline to each datapoint
+  timestampMap.forEach((point, timestamp) => {
+    const solPrice = solPriceMap.get(timestamp);
+    if (solPrice) {
+      point[SOL_BASELINE.id] = startingSolBalance * solPrice;
+    }
+  });
+
+  // Convert to array and sort by timestamp
+  return Array.from(timestampMap.values()).sort((a, b) => a.timestamp - b.timestamp);
+}
 
 // Initial chart data - fetch server-side for faster initial render
-async function getInitialChartData(): Promise<ChartDataPoint[]> {
+async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataPoint[]> {
   try {
-    const range = "24H";
-    const timeRange = TIME_RANGES[range];
+    const rangeConfig = TIME_RANGES[range];
+    console.log(`Fetching ${range} data...`);
 
-    const hoursAgo = new Date();
-    hoursAgo.setHours(hoursAgo.getHours() - timeRange.hours);
+    // Calculate time filter based on range (null for ALL)
+    let timeFilter: Date | null = null;
+    if (rangeConfig.hours !== null) {
+      timeFilter = new Date();
+      timeFilter.setHours(timeFilter.getHours() - rangeConfig.hours);
+      console.log('From:', timeFilter.toISOString());
+    } else {
+      console.log('Fetching ALL historical data...');
+    }
 
-    // Fetch portfolio snapshots for all agents
-    const { data: snapshots } = await supabaseServer
-      .from("portfolio_snapshots")
-      .select("agent_id, timestamp, total_portfolio_value_usd")
-      .gte("timestamp", hoursAgo.toISOString())
-      .order("timestamp", { ascending: true });
+    // Fetch snapshots using pagination (Supabase has 1000 row limit)
+    let snapshots: any[] = [];
+    let offset = 0;
+    const batchSize = 1000;
+    let hasMore = true;
 
-    // Fetch SOL price history
-    const { data: solPrices } = await supabaseServer
+    console.log('Fetching snapshots in batches...');
+    while (hasMore) {
+      let query = supabaseServer
+        .from("portfolio_snapshots")
+        .select("agent_id, timestamp, total_portfolio_value_usd");
+
+      // Apply time filter if not ALL
+      if (timeFilter) {
+        query = query.gte("timestamp", timeFilter.toISOString());
+      }
+
+      const { data: batch } = await query
+        .order("timestamp", { ascending: true })
+        .range(offset, offset + batchSize - 1);
+
+      if (batch && batch.length > 0) {
+        snapshots.push(...batch);
+        console.log(`Fetched batch ${Math.floor(offset / batchSize) + 1}: ${batch.length} rows (total: ${snapshots.length})`);
+        offset += batchSize;
+        hasMore = batch.length === batchSize;
+      } else {
+        hasMore = false;
+      }
+    }
+
+    // Fetch SOL prices with same time filter
+    let solPricesQuery = supabaseServer
       .from("sol_price_history")
-      .select("timestamp, price_usd")
-      .gte("timestamp", hoursAgo.toISOString())
+      .select("timestamp, price_usd");
+
+    if (timeFilter) {
+      solPricesQuery = solPricesQuery.gte("timestamp", timeFilter.toISOString());
+    }
+
+    const { data: solPrices } = await solPricesQuery
       .order("timestamp", { ascending: true });
 
     if (!snapshots || snapshots.length === 0) {
       return [];
     }
 
-    // Aggregate data
+    // Apply forward-fill to handle zero/missing values
+    const { filled: filledSnapshots, zeroCount: snapshotZeros, filledCount: snapshotFills } =
+      forwardFillTimeSeries(snapshots, 'timestamp', 'total_portfolio_value_usd');
+
+    const { filled: filledSolPrices, zeroCount: solZeros, filledCount: solFills } =
+      forwardFillTimeSeries(solPrices || [], 'timestamp', 'price_usd');
+
+    console.log('=== DATA QUALITY ===');
+    console.log(`Snapshots: ${snapshotZeros} zeros found, ${snapshotFills} values forward-filled`);
+    console.log(`SOL Prices: ${solZeros} zeros found, ${solFills} values forward-filled`);
+
+    // Return all raw data without aggregation
     const startingSolBalance = 1.0;
-    const aggregationMinutes = timeRange.aggregation;
-    const buckets = new Map<number, Map<string, number>>();
+    const result = processRawData(filledSnapshots, filledSolPrices, startingSolBalance);
 
-    // Process snapshots
-    snapshots.forEach((snapshot) => {
-      const timestamp = new Date(snapshot.timestamp).getTime();
-      const bucketTime = Math.floor(timestamp / (aggregationMinutes * 60 * 1000)) * (aggregationMinutes * 60 * 1000);
-
-      if (!buckets.has(bucketTime)) {
-        buckets.set(bucketTime, new Map());
-      }
-
-      const bucket = buckets.get(bucketTime)!;
-      bucket.set(snapshot.agent_id, snapshot.total_portfolio_value_usd);
-    });
-
-    // Process SOL prices for baseline
-    const solPriceMap = new Map<number, number>();
-    if (solPrices) {
-      solPrices.forEach((price) => {
-        const timestamp = new Date(price.timestamp).getTime();
-        const bucketTime = Math.floor(timestamp / (aggregationMinutes * 60 * 1000)) * (aggregationMinutes * 60 * 1000);
-        solPriceMap.set(bucketTime, price.price_usd);
-      });
+    // DEBUG: Log data info
+    console.log('=== SERVER: Chart Data Summary ===');
+    console.log('Total snapshots fetched:', snapshots.length);
+    console.log('Total SOL prices fetched:', solPrices.length);
+    console.log('Total data points created:', result.length);
+    if (result.length > 0) {
+      console.log('First timestamp (ms):', result[0].timestamp);
+      console.log('Last timestamp (ms):', result[result.length - 1].timestamp);
+      console.log('First date (UTC):', new Date(result[0].timestamp).toISOString());
+      console.log('Last date (UTC):', new Date(result[result.length - 1].timestamp).toISOString());
+      const durationHours = (result[result.length - 1].timestamp - result[0].timestamp) / (1000 * 60 * 60);
+      console.log('Duration (hours):', durationHours.toFixed(2));
     }
+    console.log('===================================');
 
-    // Convert to chart data points
-    const dataPoints: ChartDataPoint[] = [];
-
-    buckets.forEach((agentValues, bucketTime) => {
-      const point: ChartDataPoint = {
-        timestamp: bucketTime,
-        date: new Date(bucketTime).toLocaleString("en-US", {
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-
-      // Add agent values
-      agentValues.forEach((value, agentId) => {
-        point[agentId] = value;
-      });
-
-      // Add SOL baseline
-      const solPrice = solPriceMap.get(bucketTime);
-      if (solPrice) {
-        point[SOL_BASELINE.id] = startingSolBalance * solPrice;
-      }
-
-      dataPoints.push(point);
-    });
-
-    return dataPoints.sort((a, b) => a.timestamp - b.timestamp);
+    return result;
   } catch (error) {
     console.error("Error fetching initial chart data:", error);
     return [];
   }
 }
 
-export default async function HomePage() {
-  const initialData = await getInitialChartData();
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string }>;
+}) {
+  const params = await searchParams;
+  const range = (params.range?.toUpperCase() as TimeRange) || "24H";
+
+  // Validate range
+  const validRange = TIME_RANGES[range] ? range : "24H";
+
+  const initialData = await getInitialChartData(validRange);
   const agentStats = await getAgentStats();
   const latestTrades = await getLatestTrades(20);
   const latestActivities = await getLatestActivities(50);
@@ -111,12 +244,12 @@ export default async function HomePage() {
       <Ticker />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden lg:gap-4">
         {/* Left Side - Chart and Performance */}
         <div className="flex-1 flex flex-col min-w-0 h-[600px] md:h-auto">
           {/* Chart */}
           <div className="flex-1 min-h-[400px] md:min-h-[600px]">
-            <ChartContainer initialData={initialData} initialRange="24H" />
+            <ChartContainer initialData={initialData} activeRange={validRange} />
           </div>
 
           {/* Agent Performance */}
@@ -136,5 +269,6 @@ export default async function HomePage() {
     </div>
   );
 }
+
 
 

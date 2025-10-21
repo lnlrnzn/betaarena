@@ -327,3 +327,67 @@ export async function getAgentPositions(agentId: string) {
     holdings: holdings || [],
   };
 }
+
+/**
+ * Get the active cycle
+ */
+export async function getActiveCycle() {
+  const { data: activeCycle, error } = await supabaseServer
+    .from('cycles')
+    .select('id, cycle_number, start_date, end_date, is_active')
+    .eq('is_active', true)
+    .single();
+
+  if (error) {
+    console.error('Error fetching active cycle:', error);
+    return null;
+  }
+
+  return activeCycle;
+}
+
+/**
+ * Get team stats for a specific agent in the active cycle
+ */
+export async function getTeamStats(agentId: string) {
+  const activeCycle = await getActiveCycle();
+  if (!activeCycle) return null;
+
+  const { data: stats } = await supabaseServer
+    .from('team_stats')
+    .select('total_members, total_followers, total_following')
+    .eq('cycle_id', activeCycle.id)
+    .eq('agent_id', agentId)
+    .single();
+
+  return stats || { total_members: 0, total_followers: 0, total_following: 0 };
+}
+
+/**
+ * Get team members for a specific agent with pagination
+ */
+export async function getTeamMembers(agentId: string, page: number = 1, limit: number = 50) {
+  const activeCycle = await getActiveCycle();
+  if (!activeCycle) return [];
+
+  const offset = (page - 1) * limit;
+
+  const { data: members } = await supabaseServer
+    .from('team_declarations')
+    .select(`
+      id,
+      twitter_username,
+      twitter_name,
+      profile_picture,
+      followers_count,
+      following_count,
+      declared_at,
+      tweet_url
+    `)
+    .eq('cycle_id', activeCycle.id)
+    .eq('agent_id', agentId)
+    .order('declared_at', { ascending: false })
+    .range(offset, offset + limit - 1);
+
+  return members || [];
+}
