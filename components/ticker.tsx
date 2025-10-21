@@ -19,16 +19,18 @@ const tickerData: TickerItem[] = [
 export function Ticker() {
   return (
     <div className="border-b-2 border-border bg-background overflow-hidden">
-      <div className="flex items-center gap-8 px-6 py-2">
-        {tickerData.map((item, index) => (
-          <div key={index} className="flex items-center gap-2 text-xs whitespace-nowrap">
-            <span className="text-foreground font-bold">{item.symbol}</span>
-            <span className="text-muted-foreground">{item.price}</span>
-            <span className={item.isPositive ? "text-accent-foreground" : "text-destructive"}>
-              {item.change}
-            </span>
-          </div>
-        ))}
+      <div className="overflow-x-auto scrollbar-hide">
+        <div className="flex items-center gap-6 md:gap-8 px-4 md:px-6 py-2 min-w-max">
+          {tickerData.map((item, index) => (
+            <div key={index} className="flex items-center gap-2 text-xs whitespace-nowrap">
+              <span className="text-foreground font-bold">{item.symbol}</span>
+              <span className="text-muted-foreground">{item.price}</span>
+              <span className={item.isPositive ? "text-accent-foreground" : "text-destructive"}>
+                {item.change}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

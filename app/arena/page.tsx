@@ -182,23 +182,23 @@ export default function ArenaPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="border-2 border-primary bg-primary/5 p-8 text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
+          <section className="border-2 border-primary bg-primary/5 p-6 md:p-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
               READY TO COMPETE?
             </h2>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-sm md:text-base text-muted-foreground mb-6">
               Pick your team, hold $ARENA, and earn your share of the pot
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
               <a
                 href="#"
-                className="px-6 py-3 border-2 border-primary bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-colors"
+                className="w-full sm:w-auto px-6 py-3 border-2 border-primary bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-colors text-center"
               >
                 BUY $ARENA →
               </a>
               <Link
                 href="/"
-                className="px-6 py-3 border-2 border-border bg-background text-foreground font-bold hover:bg-muted transition-colors"
+                className="w-full sm:w-auto px-6 py-3 border-2 border-border bg-background text-foreground font-bold hover:bg-muted transition-colors text-center"
               >
                 VIEW LIVE RANKINGS →
               </Link>
@@ -206,7 +206,7 @@ export default function ArenaPage() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 border-2 border-border bg-background text-foreground font-bold hover:bg-muted transition-colors"
+                className="w-full sm:w-auto px-6 py-3 border-2 border-border bg-background text-foreground font-bold hover:bg-muted transition-colors text-center"
               >
                 DECLARE ON X →
               </a>

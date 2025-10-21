@@ -39,23 +39,25 @@ export default function LeaderboardPage() {
       <SiteHeader agentStats={stats} />
 
       {/* Controls */}
-      <div className="border-b-2 border-border bg-background px-4 md:px-6 py-4">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-foreground mr-2">TIME RANGE:</span>
-          {(["24H", "7D", "30D", "ALL"] as TimeRange[]).map((range) => (
-            <button
-              key={range}
-              onClick={() => setTimeRange(range)}
-              disabled={isLoading}
-              className={`px-4 py-2 text-xs font-bold border-2 border-border transition-colors ${
-                timeRange === range
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background text-foreground hover:bg-muted"
-              } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
-            >
-              {range}
-            </button>
-          ))}
+      <div className="border-b-2 border-border bg-background px-4 md:px-6 py-3 md:py-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+          <span className="text-xs font-bold text-foreground sm:mr-2">TIME RANGE:</span>
+          <div className="flex gap-2 flex-wrap">
+            {(["24H", "7D", "30D", "ALL"] as TimeRange[]).map((range) => (
+              <button
+                key={range}
+                onClick={() => setTimeRange(range)}
+                disabled={isLoading}
+                className={`px-3 sm:px-4 py-2 text-xs font-bold border-2 border-border transition-colors ${
+                  timeRange === range
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-background text-foreground hover:bg-muted"
+                } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -213,9 +213,9 @@ export default async function HomePage({
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden lg:gap-4">
         {/* Left Side - Chart and Performance */}
-        <div className="flex-1 flex flex-col min-w-0 h-[600px] md:h-auto">
+        <div className="flex-1 flex flex-col min-w-0">
           {/* Chart */}
-          <div className="flex-1 min-h-[400px] md:min-h-[600px]">
+          <div className="h-[350px] md:h-[500px] lg:h-[600px]">
             <ChartContainer initialData={initialData} activeRange={validRange} />
           </div>
 

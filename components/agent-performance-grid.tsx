@@ -73,7 +73,7 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
       </div>
 
       {/* Agent Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 divide-x-2 divide-border">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x-2 divide-border">
         {sortedStats.map((stat, index) => {
           const agent = getAgentConfig(stat.agent_id);
           return (

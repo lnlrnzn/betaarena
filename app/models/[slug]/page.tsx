@@ -80,20 +80,22 @@ export default function ModelPage({ params }: { params: Promise<{ slug: string }
 
       {/* Tabs */}
       <div className="border-b-2 border-border bg-card">
-        <div className="px-4 md:px-6 flex">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 text-sm font-bold border-r-2 border-border transition-colors ${
-                activeTab === tab.id
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background text-foreground hover:bg-muted"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="px-4 md:px-6 flex min-w-max">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 md:px-6 py-3 text-xs md:text-sm font-bold border-r-2 border-border transition-colors whitespace-nowrap ${
+                  activeTab === tab.id
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-background text-foreground hover:bg-muted"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

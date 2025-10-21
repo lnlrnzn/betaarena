@@ -85,25 +85,25 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
       <table className="w-full">
         <thead>
           <tr className="border-b-2 border-border bg-card">
-            <th className="px-4 py-3 text-left text-xs font-bold text-foreground">
+            <th className="px-2 sm:px-4 py-3 text-left text-xs font-bold text-foreground">
               <SortButton column="rank" label="RANK" align="left" />
             </th>
-            <th className="px-4 py-3 text-left text-xs font-bold text-foreground">
+            <th className="px-2 sm:px-4 py-3 text-left text-xs font-bold text-foreground">
               MODEL
             </th>
-            <th className="px-4 py-3 text-right text-xs font-bold text-foreground">
+            <th className="px-2 sm:px-4 py-3 text-right text-xs font-bold text-foreground">
               <SortButton column="value" label="VALUE" align="right" />
             </th>
-            <th className="px-4 py-3 text-right text-xs font-bold text-foreground">
+            <th className="hidden lg:table-cell px-4 py-3 text-right text-xs font-bold text-foreground">
               <SortButton column="change" label="CHANGE ($)" align="right" />
             </th>
-            <th className="px-4 py-3 text-right text-xs font-bold text-foreground">
+            <th className="px-2 sm:px-4 py-3 text-right text-xs font-bold text-foreground">
               <SortButton column="changePercent" label="CHANGE (%)" align="right" />
             </th>
-            <th className="px-4 py-3 text-right text-xs font-bold text-foreground">
+            <th className="hidden md:table-cell px-4 py-3 text-right text-xs font-bold text-foreground">
               <SortButton column="trades" label="TRADES" align="right" />
             </th>
-            <th className="px-4 py-3 text-right text-xs font-bold text-foreground">
+            <th className="hidden md:table-cell px-4 py-3 text-right text-xs font-bold text-foreground">
               <SortButton column="winRate" label="WIN RATE" align="right" />
             </th>
           </tr>
@@ -124,8 +124,8 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
                 }`}
               >
                 {/* Rank */}
-                <td className="px-4 py-3">
-                  <div className={`inline-flex items-center justify-center w-8 h-8 border-2 border-border text-xs font-bold ${
+                <td className="px-2 sm:px-4 py-3">
+                  <div className={`inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 border-2 border-border text-xs font-bold ${
                     stat.rank === 1 ? "bg-yellow-500 text-white" :
                     stat.rank === 2 ? "bg-gray-400 text-white" :
                     stat.rank === 3 ? "bg-orange-600 text-white" :
@@ -136,7 +136,7 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
                 </td>
 
                 {/* Model */}
-                <td className="px-4 py-3">
+                <td className="px-2 sm:px-4 py-3">
                   <Link
                     href={`/models/${agent.model}`}
                     className="flex items-center gap-2 hover:text-primary transition-colors"
@@ -148,11 +148,11 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
                       color={agent.color}
                       size={32}
                     />
-                    <div>
-                      <div className="text-xs font-bold text-foreground">
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-foreground truncate">
                         {agent.shortName}
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-muted-foreground truncate hidden sm:block">
                         {agent.model}
                       </div>
                     </div>
@@ -160,14 +160,14 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
                 </td>
 
                 {/* Value */}
-                <td className="px-4 py-3 text-right">
-                  <div className="text-sm font-bold text-foreground">
-                    ${stat.currentValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <td className="px-2 sm:px-4 py-3 text-right">
+                  <div className="text-xs sm:text-sm font-bold text-foreground">
+                    ${stat.currentValue.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                   </div>
                 </td>
 
-                {/* Change ($) */}
-                <td className="px-4 py-3 text-right">
+                {/* Change ($) - Hidden on mobile/tablet */}
+                <td className="hidden lg:table-cell px-4 py-3 text-right">
                   <div className={`text-sm font-bold ${
                     isProfitable ? "text-green-500" : "text-red-500"
                   }`}>
@@ -176,23 +176,23 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
                 </td>
 
                 {/* Change (%) */}
-                <td className="px-4 py-3 text-right">
-                  <div className={`text-sm font-bold ${
+                <td className="px-2 sm:px-4 py-3 text-right">
+                  <div className={`text-xs sm:text-sm font-bold ${
                     isProfitable ? "text-green-500" : "text-red-500"
                   }`}>
-                    {isProfitable ? "+" : ""}{stat.changePercent.toFixed(2)}%
+                    {isProfitable ? "+" : ""}{stat.changePercent.toFixed(1)}%
                   </div>
                 </td>
 
-                {/* Trades */}
-                <td className="px-4 py-3 text-right">
+                {/* Trades - Hidden on mobile */}
+                <td className="hidden md:table-cell px-4 py-3 text-right">
                   <div className="text-sm text-foreground">
                     {stat.totalTrades}
                   </div>
                 </td>
 
-                {/* Win Rate */}
-                <td className="px-4 py-3 text-right">
+                {/* Win Rate - Hidden on mobile */}
+                <td className="hidden md:table-cell px-4 py-3 text-right">
                   <div className="text-sm text-foreground">
                     {stat.winRate.toFixed(1)}%
                   </div>
