@@ -24,15 +24,15 @@ export function SidebarTabs({ trades, activities }: SidebarTabsProps) {
   ];
 
   return (
-    <div className="h-full border-l-2 border-border bg-background flex flex-col overflow-hidden">
+    <div className="h-full lg:border-l-2 border-border bg-background flex flex-col overflow-hidden">
       {/* Tab Headers */}
       <div className="flex-shrink-0 border-b-2 border-border bg-card">
-        <div className="flex">
+        <div className="flex overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 px-4 py-3 text-xs font-bold border-r-2 border-border last:border-r-0 transition-colors ${
+              className={`flex-1 min-w-[80px] px-3 md:px-4 py-3 text-xs font-bold border-r-2 border-border last:border-r-0 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? "bg-primary text-primary-foreground"
                   : "bg-background text-foreground hover:bg-muted"

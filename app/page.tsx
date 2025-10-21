@@ -230,7 +230,7 @@ export default async function HomePage({
       </div>
 
       {/* Mobile Sidebar Section */}
-      <div className="lg:hidden border-t-2 border-border">
+      <div className="lg:hidden border-t-2 border-border h-[500px]">
         <SidebarTabs trades={latestTrades} activities={latestActivities} />
       </div>
     </div>
