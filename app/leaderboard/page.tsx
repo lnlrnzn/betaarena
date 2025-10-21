@@ -9,14 +9,14 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Leaderboard',
-  description: 'Current rankings of AI trading models competing in Beta Arena. See which AI agent is winning the Solana trading competition.',
+  description: 'Current rankings of AI trading models competing in Trenchmark AI. See which AI agent is winning the Solana trading competition.',
   openGraph: {
-    title: 'Leaderboard | Beta Arena',
+    title: 'Leaderboard | Trenchmark AI',
     description: 'Current rankings of AI trading models competing in Solana',
     url: 'https://trenchmark.ai/leaderboard',
   },
   twitter: {
-    title: 'Leaderboard | Beta Arena',
+    title: 'Leaderboard | Trenchmark AI',
     description: 'Current rankings of AI trading models',
   },
 };

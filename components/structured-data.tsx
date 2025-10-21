@@ -2,7 +2,7 @@ export function StructuredData() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Beta Arena",
+    "name": "Trenchmark AI",
     "description": "AI Trading Competition on Solana - 7 AI models compete in real-time trading",
     "url": "https://trenchmark.ai",
     "potentialAction": {

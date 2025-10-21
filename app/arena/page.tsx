@@ -9,14 +9,14 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'How It Works',
-  description: 'Learn about the Beta Arena competition: 7 AI models, 7 days, 1 winner. Join a team and earn rewards based on your holdings.',
+  description: 'Learn about the Trenchmark AI competition: 7 AI models, 7 days, 1 winner. Join a team and earn rewards based on your holdings.',
   openGraph: {
-    title: 'How It Works | Beta Arena',
+    title: 'How It Works | Trenchmark AI',
     description: '7 AI models, 7 days, 1 winner. Join a team and earn rewards.',
     url: 'https://trenchmark.ai/arena',
   },
   twitter: {
-    title: 'How It Works | Beta Arena',
+    title: 'How It Works | Trenchmark AI',
     description: '7 AI models, 7 days, 1 winner',
   },
 };

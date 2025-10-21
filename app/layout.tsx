@@ -8,15 +8,15 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://trenchmark.ai'),
 
   title: {
-    default: 'Beta Arena - AI Trading Competition',
-    template: '%s | Beta Arena'
+    default: 'Trenchmark AI - AI Trading Competition',
+    template: '%s | Trenchmark AI'
   },
 
   description: '7 AI models compete in real-time Solana trading. Watch Claude, GPT-5, Gemini, Grok, Qwen, GLM, and Mistral battle for trading supremacy.',
 
-  keywords: ['AI trading', 'Solana', 'crypto', 'AI competition', 'trading bots', 'beta arena', 'Claude', 'GPT-5', 'Gemini', 'Grok'],
+  keywords: ['AI trading', 'Solana', 'crypto', 'AI competition', 'trading bots', 'trenchmark ai', 'Claude', 'GPT-5', 'Gemini', 'Grok'],
 
-  authors: [{ name: 'Beta Arena' }],
+  authors: [{ name: 'Trenchmark AI' }],
 
   // Favicon and Icons
   icons: {
@@ -41,15 +41,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://trenchmark.ai',
-    siteName: 'Beta Arena',
-    title: 'Beta Arena - AI Trading Competition',
+    siteName: 'Trenchmark AI',
+    title: 'Trenchmark AI - AI Trading Competition',
     description: '7 AI models compete in real-time Solana trading. Watch the ultimate AI vs AI showdown.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Beta Arena - AI Trading Competition',
+        alt: 'Trenchmark AI - AI Trading Competition',
         type: 'image/png',
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   // Twitter
   twitter: {
     card: 'summary_large_image',
-    title: 'Beta Arena - AI Trading Competition',
+    title: 'Trenchmark AI - AI Trading Competition',
     description: '7 AI models compete in real-time Solana trading',
     images: ['/twitter-image.png'],
     creator: '@TrenchMarking',

@@ -21,46 +21,60 @@ export const supabaseServer = createClient(supabaseUrl, serviceRoleKey, {
 
 /**
  * Get real-time agent statistics from Supabase
- * Optimized to batch queries instead of making 4 queries per agent
+ * Optimized to fetch only first/last snapshots per agent instead of all snapshots
  */
 export async function getAgentStats(): Promise<AgentStats[]> {
   const agentIds = Object.values(AGENTS).map((a) => a.id);
 
-  // Batch query 1: Get all latest snapshots in a single query
-  const { data: allSnapshots } = await supabaseServer
-    .from('portfolio_snapshots')
-    .select('agent_id, total_portfolio_value_usd, timestamp')
-    .in('agent_id', agentIds)
-    .order('timestamp', { ascending: false });
+  // Optimized: Fetch first and last snapshots per agent in parallel
+  const snapshotQueries = agentIds.flatMap((agentId) => [
+    // First snapshot for this agent
+    supabaseServer
+      .from('portfolio_snapshots')
+      .select('agent_id, total_portfolio_value_usd')
+      .eq('agent_id', agentId)
+      .order('timestamp', { ascending: true })
+      .limit(1)
+      .single()
+      .then(res => ({ ...res.data, type: 'first' as const })),
 
-  // Batch query 2: Get trade statistics using aggregation
-  const { data: tradeStats } = await supabaseServer
+    // Latest snapshot for this agent
+    supabaseServer
+      .from('portfolio_snapshots')
+      .select('agent_id, total_portfolio_value_usd')
+      .eq('agent_id', agentId)
+      .order('timestamp', { ascending: false })
+      .limit(1)
+      .single()
+      .then(res => ({ ...res.data, type: 'latest' as const })),
+  ]);
+
+  // Get trade statistics for all agents
+  const tradesQuery = supabaseServer
     .from('trades')
     .select('agent_id, status, pnl_usd')
     .in('agent_id', agentIds);
 
-  // Process snapshots to find latest and first for each agent
-  const latestSnapshots = new Map<string, { value: number; timestamp: string }>();
-  const firstSnapshots = new Map<string, { value: number; timestamp: string }>();
+  // Execute all queries in parallel
+  const [snapshots, tradesResult] = await Promise.all([
+    Promise.all(snapshotQueries),
+    tradesQuery,
+  ]);
 
-  agentIds.forEach((agentId) => {
-    const agentSnapshots = (allSnapshots || []).filter((s) => s.agent_id === agentId);
+  const tradeStats = tradesResult.data || [];
 
-    if (agentSnapshots.length > 0) {
-      // Sort by timestamp to get first and latest
-      const sorted = agentSnapshots.sort(
-        (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-      );
+  // Build maps for first and latest snapshots
+  const firstSnapshots = new Map<string, number>();
+  const latestSnapshots = new Map<string, number>();
 
-      firstSnapshots.set(agentId, {
-        value: parseFloat(sorted[0].total_portfolio_value_usd),
-        timestamp: sorted[0].timestamp,
-      });
-
-      latestSnapshots.set(agentId, {
-        value: parseFloat(sorted[sorted.length - 1].total_portfolio_value_usd),
-        timestamp: sorted[sorted.length - 1].timestamp,
-      });
+  snapshots.forEach((snapshot) => {
+    if (snapshot && snapshot.agent_id && snapshot.total_portfolio_value_usd) {
+      const value = parseFloat(snapshot.total_portfolio_value_usd);
+      if (snapshot.type === 'first') {
+        firstSnapshots.set(snapshot.agent_id, value);
+      } else {
+        latestSnapshots.set(snapshot.agent_id, value);
+      }
     }
   });
 
@@ -68,7 +82,7 @@ export async function getAgentStats(): Promise<AgentStats[]> {
   const agentTradeStats = new Map<string, { total: number; wins: number }>();
 
   agentIds.forEach((agentId) => {
-    const agentTrades = (tradeStats || []).filter((t) => t.agent_id === agentId);
+    const agentTrades = tradeStats.filter((t) => t.agent_id === agentId);
     const totalTrades = agentTrades.length;
     const winningTrades = agentTrades.filter(
       (t) => t.status === 'closed' && parseFloat(t.pnl_usd || '0') > 0
@@ -79,8 +93,8 @@ export async function getAgentStats(): Promise<AgentStats[]> {
 
   // Build stats array for each agent
   const stats = agentIds.map((agentId) => {
-    const currentValue = latestSnapshots.get(agentId)?.value || 0;
-    const startingValue = firstSnapshots.get(agentId)?.value || 0;
+    const currentValue = latestSnapshots.get(agentId) || 0;
+    const startingValue = firstSnapshots.get(agentId) || 0;
     const change = currentValue - startingValue;
     const changePercent = startingValue > 0 ? (change / startingValue) * 100 : 0;
 
@@ -173,30 +187,43 @@ export async function getLatestActivities(limit: number = 50) {
  * Optimized to batch queries instead of making 4 separate queries
  */
 export async function getSingleAgentStats(agentId: string): Promise<AgentStats | null> {
-  // Batch query 1: Get all snapshots for this agent
-  const { data: snapshots } = await supabaseServer
-    .from('portfolio_snapshots')
-    .select('total_portfolio_value_usd, timestamp')
-    .eq('agent_id', agentId)
-    .order('timestamp', { ascending: true });
+  // Optimized: Fetch only first and last snapshots instead of all 1,560+
+  const [firstSnapshotResult, latestSnapshotResult, trades] = await Promise.all([
+    // Query 1: Get first snapshot
+    supabaseServer
+      .from('portfolio_snapshots')
+      .select('total_portfolio_value_usd')
+      .eq('agent_id', agentId)
+      .order('timestamp', { ascending: true })
+      .limit(1)
+      .single(),
 
-  // Batch query 2: Get all trades for this agent
-  const { data: trades } = await supabaseServer
-    .from('trades')
-    .select('status, pnl_usd')
-    .eq('agent_id', agentId);
+    // Query 2: Get latest snapshot
+    supabaseServer
+      .from('portfolio_snapshots')
+      .select('total_portfolio_value_usd')
+      .eq('agent_id', agentId)
+      .order('timestamp', { ascending: false })
+      .limit(1)
+      .single(),
 
-  if (!snapshots || snapshots.length === 0) {
+    // Query 3: Get all trades for statistics
+    supabaseServer
+      .from('trades')
+      .select('status, pnl_usd')
+      .eq('agent_id', agentId),
+  ]);
+
+  if (!firstSnapshotResult.data || !latestSnapshotResult.data) {
     return null;
   }
 
-  // Extract first and latest snapshots
-  const firstSnapshot = snapshots[0];
-  const latestSnapshot = snapshots[snapshots.length - 1];
+  const firstSnapshot = firstSnapshotResult.data;
+  const latestSnapshot = latestSnapshotResult.data;
 
   // Calculate trade statistics
-  const totalTrades = trades?.length || 0;
-  const winningTrades = trades?.filter(
+  const totalTrades = trades.data?.length || 0;
+  const winningTrades = trades.data?.filter(
     (t) => t.status === 'closed' && parseFloat(t.pnl_usd || '0') > 0
   ).length || 0;
 
@@ -306,7 +333,17 @@ export async function getAgentPositions(agentId: string) {
     };
   }
 
-  // Get holdings for this snapshot
+  // Get latest SOL price for USD conversion
+  const { data: latestSolPrice } = await supabaseServer
+    .from('sol_price_history')
+    .select('price_usd')
+    .order('timestamp', { ascending: false })
+    .limit(1)
+    .single();
+
+  const solPriceUSD = latestSolPrice ? parseFloat(latestSolPrice.price_usd) : 191.5;
+
+  // Get holdings for this snapshot with correct column names
   const { data: holdings } = await supabaseServer
     .from('portfolio_holdings')
     .select(`
@@ -315,8 +352,8 @@ export async function getAgentPositions(agentId: string) {
       token_symbol,
       token_image_url,
       token_amount,
-      value_usd,
-      price_usd
+      value_in_usd,
+      current_price_sol
     `)
     .eq('snapshot_id', latestSnapshot.id)
     .gt('token_amount', 0);
@@ -324,7 +361,15 @@ export async function getAgentPositions(agentId: string) {
   return {
     solBalance: latestSnapshot.sol_balance ? parseFloat(latestSnapshot.sol_balance) : 0,
     totalValue: parseFloat(latestSnapshot.total_portfolio_value_usd),
-    holdings: holdings || [],
+    holdings: (holdings || []).map(h => ({
+      token_address: h.token_address,
+      token_name: h.token_name,
+      token_symbol: h.token_symbol,
+      token_image_url: h.token_image_url,
+      token_amount: h.token_amount,
+      value_usd: h.value_in_usd,  // Map DB column to expected interface
+      price_usd: (parseFloat(h.current_price_sol) * solPriceUSD).toFixed(10).toString(),  // Convert SOL → USD
+    })),
   };
 }
 

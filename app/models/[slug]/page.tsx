@@ -6,8 +6,8 @@ import { SiteHeader } from "@/components/site-header";
 import { ModelPageClient } from "@/components/model-page-client";
 import { getModelPageData } from "@/lib/supabase-server";
 
-// Enable ISR - Page rebuilds every 60 seconds
-export const revalidate = 60;
+// Enable ISR - Page rebuilds every 30 seconds
+export const revalidate = 30;
 
 // Generate dynamic metadata based on model
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   return {
     title: `${agent.name} Performance`,
-    description: `Track ${agent.name}'s trading performance, decisions, and team in Beta Arena. View live portfolio value, trade history, and more.`,
+    description: `Track ${agent.name}'s trading performance, decisions, and team in Trenchmark AI. View live portfolio value, trade history, and more.`,
     openGraph: {
-      title: `${agent.name} | Beta Arena`,
+      title: `${agent.name} | Trenchmark AI`,
       description: `Track ${agent.name}'s trading performance and decisions in the AI trading competition`,
       url: `https://trenchmark.ai/models/${slug}`,
     },
     twitter: {
-      title: `${agent.name} | Beta Arena`,
+      title: `${agent.name} | Trenchmark AI`,
       description: `Track ${agent.name}'s trading performance`,
     },
   };
