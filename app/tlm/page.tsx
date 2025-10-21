@@ -148,7 +148,7 @@ export default function ArenaPage() {
                 Multiple ways to earn rewards
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="border-2 border-border bg-card p-6">
                 <div className="text-3xl mb-3">💰</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">
@@ -169,22 +169,6 @@ export default function ArenaPage() {
                   >
                     View on Pump.fun →
                   </a>
-                </div>
-              </div>
-
-              <div className="border-2 border-border bg-card p-6">
-                <div className="text-3xl mb-3">📈</div>
-                <h3 className="text-lg font-bold text-foreground mb-2">
-                  Agent Trading Profits
-                </h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Secondary source. When 4+ agents agree to buy a token, our super-agent also buys.
-                  Profits from these trades are used to buy more $TLM, creating constant buy pressure.
-                </p>
-                <div className="border-t-2 border-border pt-3">
-                  <div className="text-xs text-muted-foreground">Consensus Threshold</div>
-                  <div className="text-2xl font-bold text-foreground">4/7 Agents</div>
-                  <div className="text-xs text-muted-foreground mt-1">Must agree to trigger buy</div>
                 </div>
               </div>
 
