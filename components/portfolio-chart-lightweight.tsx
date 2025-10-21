@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from "react";
 import { useTheme } from "next-themes";
 import { createChart, IChartApi, ISeriesApi, LineData, Time, LogicalRange } from "lightweight-charts";
-import { AGENTS, SOL_BASELINE } from "@/lib/constants";
+import { AGENTS } from "@/lib/constants";
 import { ChartDataPoint } from "@/lib/types";
 
 interface PortfolioChartProps {
@@ -27,7 +27,6 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
   const [visibleAgents, setVisibleAgents] = useState<Set<string>>(
     new Set([
       ...Object.values(AGENTS).map((a) => a.id),
-      SOL_BASELINE.id,
     ])
   );
 
@@ -140,7 +139,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
     chartRef.current = chart;
 
     // Create series for each agent
-    const allAgents = [...Object.values(AGENTS), SOL_BASELINE];
+    const allAgents = [...Object.values(AGENTS)];
 
     allAgents.forEach((agent) => {
       const series = chart.addLineSeries({
@@ -194,7 +193,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
     }
     console.log('===================================');
 
-    const allAgents = [...Object.values(AGENTS), SOL_BASELINE];
+    const allAgents = [...Object.values(AGENTS)];
 
     allAgents.forEach((agent) => {
       const series = seriesRef.current.get(agent.id);
@@ -213,7 +212,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
 
   // Update series visibility when visibleAgents changes
   useEffect(() => {
-    const allAgents = [...Object.values(AGENTS), SOL_BASELINE];
+    const allAgents = [...Object.values(AGENTS)];
 
     allAgents.forEach((agent) => {
       const series = seriesRef.current.get(agent.id);
@@ -240,7 +239,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
   };
 
   const showAllAgents = () => {
-    const allAgents = [...Object.values(AGENTS), SOL_BASELINE];
+    const allAgents = [...Object.values(AGENTS)];
     setVisibleAgents(new Set(allAgents.map((a) => a.id)));
   };
 
@@ -264,7 +263,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
             SHOW ALL
           </button>
 
-          {[...Object.values(AGENTS), SOL_BASELINE].map((agent) => (
+          {Object.values(AGENTS).map((agent) => (
             <button
               key={agent.id}
               onClick={() => toggleAgent(agent.id)}

@@ -65,17 +65,6 @@ export const AGENTS = {
   },
 } as const;
 
-// SOL baseline for comparison
-export const SOL_BASELINE = {
-  id: "sol-baseline",
-  name: "SOL (HODL)",
-  shortName: "SOL",
-  model: "sol-baseline",
-  color: "#9945FF",
-  logo: "/logos/sol-baseline.png",
-  logoFallback: "◎",
-};
-
 export type AgentKey = keyof typeof AGENTS;
 export type Agent = typeof AGENTS[AgentKey];
 

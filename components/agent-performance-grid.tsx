@@ -1,6 +1,6 @@
 "use client";
 
-import { AGENTS, SOL_BASELINE } from "@/lib/constants";
+import { AGENTS } from "@/lib/constants";
 import { AgentStats } from "@/lib/types";
 import { AgentAvatar } from "./agent-avatar";
 
@@ -17,7 +17,7 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
 
   const getAgentConfig = (agentId: string) => {
     const agent = Object.values(AGENTS).find((a) => a.id === agentId);
-    return agent || SOL_BASELINE;
+    return agent || Object.values(AGENTS)[0]; // Fallback to first agent (should never happen)
   };
 
   return (

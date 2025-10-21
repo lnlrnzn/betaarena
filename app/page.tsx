@@ -5,7 +5,7 @@ import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
 import { SiteHeader } from "@/components/site-header";
 import { ChartDataPoint } from "@/lib/types";
 import { getAgentStats, getLatestTrades, getLatestActivities, supabaseServer } from "@/lib/supabase-server";
-import { SOL_BASELINE, TIME_RANGES, TimeRange } from "@/lib/constants";
+import { TIME_RANGES, TimeRange } from "@/lib/constants";
 
 // Enable ISR - Page rebuilds every 60 seconds to show latest data
 export const revalidate = 60;
@@ -71,9 +71,7 @@ function forwardFillTimeSeries<T extends Record<string, any>>(
 
 // Process raw data without aggregation
 function processRawData(
-  snapshots: any[],
-  solPrices: any[],
-  startingSolBalance: number
+  snapshots: any[]
 ): ChartDataPoint[] {
   if (!snapshots.length) return [];
 
@@ -101,51 +99,8 @@ function processRawData(
     point[snapshot.agent_id] = snapshot.total_portfolio_value_usd;
   });
 
-  // Add SOL baseline prices with improved timestamp matching
-  // Sort and filter valid SOL prices
-  const sortedSolPrices = solPrices
-    .filter(p => p.price_usd && p.price_usd > 0) // Filter out null/zero prices
-    .map(p => ({
-      timestamp: new Date(p.timestamp).getTime(),
-      price: p.price_usd
-    }))
-    .sort((a, b) => a.timestamp - b.timestamp);
-
-  // Add SOL baseline to each datapoint using last known price
-  timestampMap.forEach((point, timestamp) => {
-    // Find the last SOL price before or at this timestamp
-    let solPrice = null;
-    for (let i = sortedSolPrices.length - 1; i >= 0; i--) {
-      if (sortedSolPrices[i].timestamp <= timestamp) {
-        solPrice = sortedSolPrices[i].price;
-        break;
-      }
-    }
-
-    // If no price found before this timestamp, use the first available price
-    if (!solPrice && sortedSolPrices.length > 0) {
-      solPrice = sortedSolPrices[0].price;
-    }
-
-    if (solPrice && solPrice > 0) {
-      point[SOL_BASELINE.id] = startingSolBalance * solPrice;
-    }
-  });
-
   // Convert to array and sort by timestamp
   const result = Array.from(timestampMap.values()).sort((a, b) => a.timestamp - b.timestamp);
-
-  // Safety net: Forward-fill any missing SOL baseline values
-  let lastValidSolBaseline: number | null = null;
-  result.forEach(point => {
-    const solBaselineValue = Number(point[SOL_BASELINE.id]);
-    if (solBaselineValue && solBaselineValue > 0) {
-      lastValidSolBaseline = solBaselineValue;
-      point[SOL_BASELINE.id] = solBaselineValue;
-    } else if (lastValidSolBaseline) {
-      point[SOL_BASELINE.id] = lastValidSolBaseline;
-    }
-  });
 
   return result;
 }
@@ -197,18 +152,6 @@ async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataP
       }
     }
 
-    // Fetch SOL prices with same time filter
-    let solPricesQuery = supabaseServer
-      .from("sol_price_history")
-      .select("timestamp, price_usd");
-
-    if (timeFilter) {
-      solPricesQuery = solPricesQuery.gte("timestamp", timeFilter.toISOString());
-    }
-
-    const { data: solPrices } = await solPricesQuery
-      .order("timestamp", { ascending: true });
-
     if (!snapshots || snapshots.length === 0) {
       return [];
     }
@@ -217,21 +160,15 @@ async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataP
     const { filled: filledSnapshots, zeroCount: snapshotZeros, filledCount: snapshotFills } =
       forwardFillTimeSeries(snapshots, 'timestamp', 'total_portfolio_value_usd');
 
-    const { filled: filledSolPrices, zeroCount: solZeros, filledCount: solFills } =
-      forwardFillTimeSeries(solPrices || [], 'timestamp', 'price_usd');
-
     console.log('=== DATA QUALITY ===');
     console.log(`Snapshots: ${snapshotZeros} zeros found, ${snapshotFills} values forward-filled`);
-    console.log(`SOL Prices: ${solZeros} zeros found, ${solFills} values forward-filled`);
 
     // Return all raw data without aggregation
-    const startingSolBalance = 1.0;
-    const result = processRawData(filledSnapshots, filledSolPrices, startingSolBalance);
+    const result = processRawData(filledSnapshots);
 
     // DEBUG: Log data info
     console.log('=== SERVER: Chart Data Summary ===');
     console.log('Total snapshots fetched:', snapshots.length);
-    console.log('Total SOL prices fetched:', solPrices?.length || 0);
     console.log('Total data points created:', result.length);
     if (result.length > 0) {
       console.log('First timestamp (ms):', result[0].timestamp);
