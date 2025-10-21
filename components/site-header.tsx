@@ -41,6 +41,13 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
               LEADERBOARD
             </Link>
             <span className="text-muted-foreground">|</span>
+            <Link
+              href="/teams"
+              className="px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              TEAMS
+            </Link>
+            <span className="text-muted-foreground">|</span>
             <ModelsDropdown agentStats={agentStats} />
             <span className="text-muted-foreground">|</span>
             <Link
@@ -100,6 +107,13 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
               className="block px-4 py-3 font-medium text-foreground hover:bg-muted transition-colors"
             >
               LEADERBOARD
+            </Link>
+            <Link
+              href="/teams"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              TEAMS
             </Link>
             <div className="px-4 py-2">
               <ModelsDropdown agentStats={agentStats} />

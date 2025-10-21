@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Metadata } from "next";
-import { SiteHeader } from "@/components/site-header";
+import { supabase } from "@/lib/supabase";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { JoinTeamModal } from "@/components/join-team-modal";
 import { AGENTS } from "@/lib/constants";
@@ -24,28 +23,54 @@ interface TeamStatsResponse {
   teams: TeamData[];
 }
 
-export default function SocialPage() {
-  const [teamStats, setTeamStats] = useState<TeamStatsResponse | null>(null);
+interface TeamsClientProps {
+  initialTeamStats: TeamStatsResponse | null;
+}
+
+export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
+  const [teamStats, setTeamStats] = useState<TeamStatsResponse | null>(initialTeamStats);
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Subscribe to real-time updates for team declarations
   useEffect(() => {
-    async function fetchTeamStats() {
-      try {
-        const response = await fetch('/api/teams/stats');
-        if (response.ok) {
-          const data = await response.json();
-          setTeamStats(data);
-        }
-      } catch (error) {
-        console.error('Error fetching team stats:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+    if (!teamStats?.cycle_id) return;
 
-    fetchTeamStats();
-  }, []);
+    const channel = supabase
+      .channel('team-declarations')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'team_declarations',
+          filter: `cycle_id=eq.${teamStats.cycle_id}`,
+        },
+        (payload) => {
+          console.log('New team member joined:', payload);
+
+          // Fetch updated team stats
+          fetchTeamStats();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [teamStats?.cycle_id]);
+
+  const fetchTeamStats = async () => {
+    try {
+      const response = await fetch('/api/teams/stats');
+      if (response.ok) {
+        const data = await response.json();
+        setTeamStats(data);
+      }
+    } catch (error) {
+      console.error('Error fetching team stats:', error);
+    }
+  };
 
   const formatNumber = (num: number): string => {
     if (num >= 1000000) {
@@ -61,25 +86,8 @@ export default function SocialPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <SiteHeader />
-
-      {/* Hero Section */}
-      <section className="border-b-2 border-border bg-card px-4 md:px-6 py-12">
-        <div className="max-w-4xl mx-auto text-center space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary">
-            JOIN A TEAM
-          </h1>
-          <p className="text-lg md:text-xl text-foreground">
-            Pick your AI champion and earn $TLM rewards if they win
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Declare your team on Twitter to be eligible for rewards when the competition ends
-          </p>
-        </div>
-      </section>
-
-      {/* Leaderboard */}
+    <>
+      {/* Main Content */}
       <main className="flex-1 px-4 md:px-6 py-8">
         <div className="max-w-4xl mx-auto">
           {isLoading ? (
@@ -175,17 +183,6 @@ export default function SocialPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t-2 border-border bg-card px-4 md:px-6 py-4">
-        <div className="text-xs text-muted-foreground text-center">
-          <Link href="/" className="hover:text-primary">← Back to Live Dashboard</Link>
-          {" | "}
-          <Link href="/leaderboard" className="hover:text-primary">View Leaderboard</Link>
-          {" | "}
-          <Link href="/arena" className="hover:text-primary">How It Works</Link>
-        </div>
-      </footer>
-
       {/* Join Team Modal */}
       {selectedAgent && getAgent(selectedAgent) && (
         <JoinTeamModal
@@ -194,6 +191,6 @@ export default function SocialPage() {
           onClose={() => setSelectedAgent(null)}
         />
       )}
-    </div>
+    </>
   );
 }
