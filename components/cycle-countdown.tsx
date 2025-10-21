@@ -95,7 +95,7 @@ export function CycleCountdown({ cycleStartDate = null, currentDay = 0 }: CycleC
               COMING SOON
             </div>
             <div className="text-sm text-muted-foreground">
-              7-day competition will start after $ARENA token deployment
+              7-day competition will start after $TLM token deployment
             </div>
             <div className="pt-4 border-t-2 border-border grid grid-cols-2 gap-4 text-sm">
               <div>

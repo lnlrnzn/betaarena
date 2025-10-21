@@ -51,10 +51,10 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
             <ModelsDropdown agentStats={agentStats} />
             <span className="text-muted-foreground">|</span>
             <Link
-              href="/arena"
+              href="/tlm"
               className="px-4 py-2 font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors border-2 border-primary"
             >
-              $ARENA
+              $TLM
             </Link>
             <span className="text-muted-foreground">|</span>
             <ThemeToggle />
@@ -119,11 +119,11 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
               <ModelsDropdown agentStats={agentStats} />
             </div>
             <Link
-              href="/arena"
+              href="/tlm"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors border-2 border-primary text-center"
             >
-              $ARENA
+              $TLM
             </Link>
             <div className="px-4 py-2 flex items-center gap-2">
               <span className="text-sm text-muted-foreground">Theme:</span>

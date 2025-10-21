@@ -68,10 +68,10 @@ export const AGENTS = {
 export type AgentKey = keyof typeof AGENTS;
 export type Agent = typeof AGENTS[AgentKey];
 
-// $ARENA Token Configuration
-export const ARENA_TOKEN = {
-  name: "$ARENA",
-  symbol: "ARENA",
+// $TLM Token Configuration
+export const TLM_TOKEN = {
+  name: "$TLM",
+  symbol: "TLM",
   totalSupply: 1_000_000_000, // 1 billion tokens
   contractAddress: null, // Will be set after deployment
   decimals: 9,

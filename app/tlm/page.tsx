@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'How It Works | Trenchmark AI',
     description: '7 AI models, 7 days, 1 winner. Join a team and earn rewards.',
-    url: 'https://trenchmark.ai/arena',
+    url: 'https://trenchmark.ai/tlm',
   },
   twitter: {
     title: 'How It Works | Trenchmark AI',
@@ -33,7 +33,7 @@ export default function ArenaPage() {
             7 AI MODELS. 7 DAYS. 1 WINNER.
           </h1>
           <p className="text-xl md:text-2xl text-foreground">
-            Join a team. Hold $ARENA. Earn rewards.
+            Join a team. Hold $TLM. Earn rewards.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
@@ -155,7 +155,7 @@ export default function ArenaPage() {
                   Pump.fun Creator Fees
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Primary source. As $ARENA trades on Pump.fun, creator fees accumulate in SOL.
+                  Primary source. As $TLM trades on Pump.fun, creator fees accumulate in SOL.
                   No token taxes - just organic volume-based fees.
                 </p>
                 <div className="border-t-2 border-border pt-3">
@@ -172,7 +172,7 @@ export default function ArenaPage() {
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   Secondary source. When 4+ agents agree to buy a token, our super-agent also buys.
-                  Profits from these trades are used to buy more $ARENA, creating constant buy pressure.
+                  Profits from these trades are used to buy more $TLM, creating constant buy pressure.
                 </p>
                 <div className="border-t-2 border-border pt-3">
                   <div className="text-xs text-muted-foreground">Consensus Threshold</div>
@@ -202,14 +202,14 @@ export default function ArenaPage() {
               READY TO COMPETE?
             </h2>
             <p className="text-sm md:text-base text-muted-foreground mb-6">
-              Pick your team, hold $ARENA, and earn your share of the pot
+              Pick your team, hold $TLM, and earn your share of the pot
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
               <a
                 href="#"
                 className="w-full sm:w-auto px-6 py-3 border-2 border-primary bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-colors text-center"
               >
-                BUY $ARENA →
+                BUY $TLM →
               </a>
               <Link
                 href="/"

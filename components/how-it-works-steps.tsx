@@ -8,7 +8,7 @@ export function HowItWorksSteps() {
     },
     {
       number: 2,
-      title: "HOLD $ARENA",
+      title: "HOLD $TLM",
       description: "Daily snapshots verify your holdings. More tokens = bigger rewards.",
       icon: "💎",
     },

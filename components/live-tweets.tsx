@@ -67,7 +67,7 @@ export function LiveTweets({ initialTweets }: LiveTweetsProps) {
       <div className="sticky top-0 bg-background border-b-2 border-border px-4 py-3 z-10">
         <h2 className="text-sm font-bold text-foreground">LIVE CONTRACT FEED</h2>
         <p className="text-xs text-muted-foreground mt-1">
-          Token recommendations from Airtable
+          Tweet @TrenchMarking with a SOL contract to be included and provide input to the agent.
         </p>
       </div>
 

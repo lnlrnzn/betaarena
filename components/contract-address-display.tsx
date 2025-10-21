@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { ARENA_TOKEN } from "@/lib/constants";
+import { TLM_TOKEN } from "@/lib/constants";
 
 export function ContractAddressDisplay() {
   const [copied, setCopied] = useState(false);
 
-  const contractAddress = ARENA_TOKEN.contractAddress || "NOT YET DEPLOYED";
-  const isDeployed = ARENA_TOKEN.contractAddress !== null;
+  const contractAddress = TLM_TOKEN.contractAddress || "NOT YET DEPLOYED";
+  const isDeployed = TLM_TOKEN.contractAddress !== null;
 
   const handleCopy = async () => {
     if (!isDeployed) return;
@@ -83,12 +83,12 @@ export function ContractAddressDisplay() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <div className="text-xs text-muted-foreground mb-1">Symbol</div>
-              <div className="text-sm font-bold text-foreground">{ARENA_TOKEN.symbol}</div>
+              <div className="text-sm font-bold text-foreground">{TLM_TOKEN.symbol}</div>
             </div>
             <div>
               <div className="text-xs text-muted-foreground mb-1">Supply</div>
               <div className="text-sm font-bold text-foreground">
-                {(ARENA_TOKEN.totalSupply / 1_000_000_000).toFixed(0)}B
+                {(TLM_TOKEN.totalSupply / 1_000_000_000).toFixed(0)}B
               </div>
             </div>
             <div>
@@ -97,7 +97,7 @@ export function ContractAddressDisplay() {
             </div>
             <div>
               <div className="text-xs text-muted-foreground mb-1">Decimals</div>
-              <div className="text-sm font-bold text-foreground">{ARENA_TOKEN.decimals}</div>
+              <div className="text-sm font-bold text-foreground">{TLM_TOKEN.decimals}</div>
             </div>
           </div>
         </div>

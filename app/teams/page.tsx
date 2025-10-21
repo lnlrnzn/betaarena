@@ -74,7 +74,7 @@ export default async function TeamsPage() {
           {" | "}
           <Link href="/leaderboard" className="hover:text-primary">View Leaderboard</Link>
           {" | "}
-          <Link href="/arena" className="hover:text-primary">How It Works</Link>
+          <Link href="/tlm" className="hover:text-primary">How It Works</Link>
         </div>
       </footer>
     </div>
