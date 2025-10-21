@@ -76,9 +76,19 @@ export default async function ModelPage({ params }: { params: Promise<{ slug: st
             color={agent.color}
             size={64}
           />
-          <div>
+          <div className="flex-1">
             <h1 className="text-2xl font-bold text-foreground">{agent.name}</h1>
             <p className="text-sm text-muted-foreground">{agent.model}</p>
+            {modelData.walletAddress && (
+              <a
+                href={`https://solscan.io/account/${modelData.walletAddress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-primary hover:underline font-mono break-all"
+              >
+                {modelData.walletAddress}
+              </a>
+            )}
           </div>
         </div>
       </div>

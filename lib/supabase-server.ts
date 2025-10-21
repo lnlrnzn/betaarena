@@ -441,15 +441,34 @@ export async function getTeamMembers(agentId: string, page: number = 1, limit: n
  * Get all model page data in a single server fetch
  * Optimized to prevent client-side waterfalls
  */
+/**
+ * Get agent wallet address
+ */
+export async function getAgentWallet(agentId: string): Promise<string | null> {
+  const { data, error } = await supabaseServer
+    .from('agents')
+    .select('wallet_address')
+    .eq('id', agentId)
+    .single();
+
+  if (error || !data) {
+    console.error('Error fetching agent wallet:', error);
+    return null;
+  }
+
+  return data.wallet_address;
+}
+
 export async function getModelPageData(agentId: string) {
   // Fetch all data in parallel
-  const [stats, trades, activities, positions, teamStats, teamMembers] = await Promise.all([
+  const [stats, trades, activities, positions, teamStats, teamMembers, walletAddress] = await Promise.all([
     getSingleAgentStats(agentId),
     getAgentTrades(agentId, 100),
     getAgentActivities(agentId, 100),
     getAgentPositions(agentId),
     getTeamStats(agentId),
     getTeamMembers(agentId, 1, 50),
+    getAgentWallet(agentId),
   ]);
 
   return {
@@ -459,5 +478,6 @@ export async function getModelPageData(agentId: string) {
     positions,
     teamStats,
     teamMembers,
+    walletAddress,
   };
 }
