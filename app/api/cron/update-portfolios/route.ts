@@ -426,10 +426,7 @@ export async function GET(request: NextRequest) {
 
       // OUTLIER DETECTION: Check if value deviates significantly from previous snapshot
       const previousValue = await getPreviousSnapshotValue(agent.id);
-      // API summary excludes TLM, so add it manually
-      const tlmHolding = tokenHoldings.find(t => t.symbol === 'TLM');
-      const tlmValueUsd = tlmHolding?.valueUsd || 0;
-      let currentValue = portfolio.summary.totalUsd + tlmValueUsd;
+      let currentValue = portfolio.summary.totalUsd;
 
       if (previousValue !== null && previousValue > 0) {
         const changePercent = Math.abs((currentValue - previousValue) / previousValue);
@@ -448,13 +445,7 @@ export async function GET(request: NextRequest) {
 
           try {
             const retryPortfolio = await getWalletPortfolio(agent.wallet);
-            // Add TLM to retry value too
-            const retryTokenHoldings = retryPortfolio.tokens.filter(
-              (t) => t.mint !== wSOL_MINT && t.balance > 0
-            );
-            const retryTlmHolding = retryTokenHoldings.find(t => t.symbol === 'TLM');
-            const retryTlmValueUsd = retryTlmHolding?.valueUsd || 0;
-            const retryValue = retryPortfolio.summary.totalUsd + retryTlmValueUsd;
+            const retryValue = retryPortfolio.summary.totalUsd;
             const retryChangePercent = Math.abs((retryValue - previousValue) / previousValue);
 
             logger.info(
