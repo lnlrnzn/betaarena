@@ -430,7 +430,7 @@ export async function GET(request: NextRequest) {
 
       if (previousValue !== null && previousValue > 0) {
         const changePercent = Math.abs((currentValue - previousValue) / previousValue);
-        const OUTLIER_THRESHOLD = 50.0; // 5000% - TEMPORARY for TLM migration (revert to 0.20 after values stabilize)
+        const OUTLIER_THRESHOLD = 0.20; // 20% deviation threshold
 
         if (changePercent > OUTLIER_THRESHOLD) {
           logger.warn(
