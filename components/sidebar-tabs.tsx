@@ -17,12 +17,12 @@ interface SidebarTabsProps {
 }
 
 export function SidebarTabs({ trades, decisions, activities, tweets }: SidebarTabsProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("trades");
+  const [activeTab, setActiveTab] = useState<TabType>("reasoning");
   const [selectedAgent, setSelectedAgent] = useState<string>("all");
 
   const tabs = [
-    { id: "trades" as const, label: "Trades" },
     { id: "reasoning" as const, label: "Reasoning" },
+    { id: "trades" as const, label: "Trades" },
     { id: "tools" as const, label: "Tools" },
     { id: "tweets" as const, label: "Tweets" },
   ];
