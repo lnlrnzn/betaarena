@@ -22,9 +22,10 @@ interface LiveToolsProps {
 }
 
 function formatRelativeTime(timestamp: string) {
-  const now = new Date();
-  const activityTime = new Date(timestamp);
-  const diffMs = now.getTime() - activityTime.getTime();
+  // Use UTC timestamps to avoid timezone issues
+  const now = Date.now(); // Current time in milliseconds (UTC)
+  const activityTime = new Date(timestamp).getTime(); // Parse timestamp and get UTC milliseconds
+  const diffMs = now - activityTime;
   const diffMins = Math.floor(diffMs / 60000);
   const diffHours = Math.floor(diffMins / 60);
   const diffDays = Math.floor(diffHours / 24);
