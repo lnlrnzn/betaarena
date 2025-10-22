@@ -321,7 +321,7 @@ export async function getSingleAgentStats(agentId: string): Promise<AgentStats |
 }
 
 /**
- * Get trades for a specific agent (raw n8n data only)
+ * Get trades for a specific agent (enriched data for model detail page)
  */
 export async function getAgentTrades(agentId: string, limit: number = 100) {
   const { data: trades, error } = await supabaseServer
@@ -330,9 +330,22 @@ export async function getAgentTrades(agentId: string, limit: number = 100) {
       id,
       agent_id,
       token_address,
+      token_name,
+      token_symbol,
+      token_image_url,
       side,
-      signature,
-      timestamp
+      token_amount,
+      price_usd,
+      price_at_exit,
+      volume_usd,
+      volume_sol,
+      timestamp,
+      exit_timestamp,
+      pnl_sol,
+      pnl_usd,
+      pnl_percentage,
+      holding_time_minutes,
+      status
     `)
     .eq('agent_id', agentId)
     .order('timestamp', { ascending: false })
