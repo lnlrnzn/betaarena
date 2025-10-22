@@ -24,10 +24,12 @@ export function ModelsDropdown({ agentStats = [] }: ModelsDropdownProps) {
     return index >= 0 ? index + 1 : null;
   };
 
-  const models = Object.values(AGENTS).map((agent) => ({
-    ...agent,
-    rank: getRank(agent.id),
-  }));
+  const models = Object.values(AGENTS)
+    .filter((agent) => agent.model !== 'system')
+    .map((agent) => ({
+      ...agent,
+      rank: getRank(agent.id),
+    }));
 
   return (
     <div
