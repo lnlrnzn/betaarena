@@ -12,4 +12,5 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
+// Create Supabase client
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

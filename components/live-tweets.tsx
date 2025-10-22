@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { useRealtime } from "./providers/realtime-provider";
 
 interface TweetData {
   id: string;
@@ -34,32 +34,16 @@ function formatRelativeTime(timestamp: string) {
 
 export function LiveTweets({ initialTweets }: LiveTweetsProps) {
   const [tweets, setTweets] = useState<TweetData[]>(initialTweets);
+  const { latestTweet } = useRealtime();
 
-  // Subscribe to real-time tweet inserts
+  // Real-time update from global context
   useEffect(() => {
-    const channel = supabase
-      .channel('live-tweets')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'tweets'
-        },
-        (payload) => {
-          console.log('New tweet received:', payload);
-          const newTweet = payload.new as TweetData;
+    if (!latestTweet) return;
 
-          // Add new tweet to the top of the list
-          setTweets((prev) => [newTweet, ...prev]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
+    console.log('New tweet received:', latestTweet);
+    // Add new tweet to the top of the list
+    setTweets((prev) => [latestTweet, ...prev]);
+  }, [latestTweet]);
 
   return (
     <div className="h-full bg-background overflow-y-auto">

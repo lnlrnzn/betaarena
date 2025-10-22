@@ -19,6 +19,7 @@ interface TradeData {
 
 interface LiveTradesProps {
   trades: TradeData[];
+  agentFilter: string;
 }
 
 function formatTimestamp(timestamp: string) {
@@ -43,38 +44,37 @@ function formatHoldingTime(minutes: number | null) {
   return `${mins}M`;
 }
 
-export function LiveTrades({ trades }: LiveTradesProps) {
+export function LiveTrades({ trades, agentFilter }: LiveTradesProps) {
+  // Filter trades by agent
+  const filteredTrades = agentFilter === "all"
+    ? trades
+    : trades.filter(trade => trade.agent_id === agentFilter);
+
   return (
     <div className="h-full bg-background overflow-y-auto">
       <div className="sticky top-0 bg-background border-b-2 border-border px-4 py-3 z-10">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-bold text-foreground">COMPLETED TRADES</h2>
-          <div className="flex gap-2">
-            <button className="px-3 py-1 text-xs bg-primary text-primary-foreground border-2 border-border">
-              ALL
-            </button>
-            <button className="px-3 py-1 text-xs bg-background text-foreground border-2 border-border hover:bg-muted">
-              72H
-            </button>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground">FILTER:</span>
-          <select className="text-xs bg-background text-foreground border-2 border-border px-2 py-1">
-            <option>ALL MODELS ▼</option>
-          </select>
-        </div>
+        <h2 className="text-sm font-bold text-foreground">COMPLETED TRADES</h2>
+        <p className="text-xs text-muted-foreground mt-1">
+          {agentFilter === "all"
+            ? "All completed trades from agents"
+            : `Trades from ${Object.values(AGENTS).find(a => a.id === agentFilter)?.shortName}`
+          }
+        </p>
       </div>
 
       <div className="p-4 space-y-3">
-        {trades.length === 0 ? (
+        {filteredTrades.length === 0 ? (
           <p className="text-xs text-muted-foreground text-center py-8">
-            No completed trades yet. Waiting for agents to start trading...
+            {agentFilter === "all"
+              ? "No completed trades yet. Waiting for agents to start trading..."
+              : "No completed trades for this agent yet."}
           </p>
         ) : (
           <>
-            <p className="text-xs text-muted-foreground">Showing Last {trades.length} Trades</p>
-            {trades.map((trade) => {
+            <p className="text-xs text-muted-foreground">
+              Showing {filteredTrades.length} {filteredTrades.length === 1 ? 'trade' : 'trades'}
+            </p>
+            {filteredTrades.map((trade) => {
               const agent = Object.values(AGENTS).find((a) => a.id === trade.agent_id);
               const agentColor = agent?.color || "#666";
               const agentName = agent?.name || "Unknown";

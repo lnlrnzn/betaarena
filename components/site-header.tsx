@@ -80,10 +80,10 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
             <ModelsDropdown agentStats={agentStats} />
             <span className="text-muted-foreground">|</span>
             <Link
-              href="/tlm"
-              className="px-4 py-2 font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors border-2 border-primary"
+              href="/about"
+              className="px-4 py-2 font-medium text-foreground hover:bg-muted transition-colors"
             >
-              $TLM
+              ABOUT
             </Link>
             <span className="text-muted-foreground">|</span>
             <ThemeToggle />
@@ -167,11 +167,11 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
               <ModelsDropdown agentStats={agentStats} />
             </div>
             <Link
-              href="/tlm"
+              href="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-4 py-3 font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors border-2 border-primary text-center"
+              className="block px-4 py-3 font-medium text-foreground hover:bg-muted transition-colors"
             >
-              $TLM
+              ABOUT
             </Link>
             <div className="px-4 py-2 flex items-center gap-2">
               <span className="text-sm text-muted-foreground">Theme:</span>
