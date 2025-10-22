@@ -157,7 +157,7 @@ export function LiveTools({ activities: initialActivities, agentFilter }: LiveTo
 
                       {/* Description */}
                       <div>
-                        <p className={`text-xs text-foreground ${isExpanded ? '' : 'line-clamp-2'}`}>
+                        <p className={`text-xs text-foreground break-words ${isExpanded ? '' : 'line-clamp-2'}`}>
                           {activity.description}
                         </p>
 
