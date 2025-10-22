@@ -3,7 +3,7 @@ import { SidebarTabs } from "@/components/sidebar-tabs";
 import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
 import { SiteHeader } from "@/components/site-header";
 import { ChartDataPoint } from "@/lib/types";
-import { getAgentStats, getLatestTrades, getLatestActivities, getLatestTweets, supabaseServer } from "@/lib/supabase-server";
+import { getAgentStats, getLatestTrades, getLatestDecisions, getLatestTweets, supabaseServer } from "@/lib/supabase-server";
 import { TIME_RANGES, TimeRange } from "@/lib/constants";
 
 // Enable ISR - Page rebuilds every 60 seconds to show latest data
@@ -79,7 +79,8 @@ function processRawData(
 
   // Process all snapshots without aggregation
   snapshots.forEach((snapshot) => {
-    const timestamp = new Date(snapshot.timestamp).getTime();
+    // Force UTC parsing: Supabase returns timestamps without 'Z', causing local time interpretation
+    const timestamp = new Date(snapshot.timestamp + 'Z').getTime();
 
     if (!timestampMap.has(timestamp)) {
       timestampMap.set(timestamp, {
@@ -90,6 +91,8 @@ function processRawData(
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
+          hour12: false,
+          timeZone: "UTC",
         }),
       });
     }
@@ -216,10 +219,10 @@ export default async function HomePage({
   const initialData = await getInitialChartData(validRange);
 
   // Fetch all data in parallel
-  const [agentStats, latestTrades, latestActivities, latestTweets] = await Promise.all([
+  const [agentStats, latestTrades, latestDecisions, latestTweets] = await Promise.all([
     getAgentStats(),
     getLatestTrades(20),
-    getLatestActivities(20),
+    getLatestDecisions(20),
     getLatestTweets(20),
   ]);
 
@@ -242,13 +245,13 @@ export default async function HomePage({
 
         {/* Right Sidebar - Tabbed Info (Desktop only) */}
         <div className="hidden lg:block w-96 flex-shrink-0">
-          <SidebarTabs trades={latestTrades} activities={latestActivities} tweets={latestTweets} />
+          <SidebarTabs trades={latestTrades} decisions={latestDecisions} tweets={latestTweets} />
         </div>
       </div>
 
       {/* Mobile Sidebar Section - FIXED: max-h instead of h for better scrolling */}
       <div className="lg:hidden border-t-2 border-border max-h-[500px]">
-        <SidebarTabs trades={latestTrades} activities={latestActivities} tweets={latestTweets} />
+        <SidebarTabs trades={latestTrades} decisions={latestDecisions} tweets={latestTweets} />
       </div>
     </div>
   );

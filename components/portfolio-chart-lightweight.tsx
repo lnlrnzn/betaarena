@@ -208,7 +208,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
     });
 
     chartRef.current.timeScale().fitContent();
-  }, [initialData]);
+  }, [initialData, theme]); // Re-populate data when theme changes
 
   // Update series visibility when visibleAgents changes
   useEffect(() => {

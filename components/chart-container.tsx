@@ -31,7 +31,8 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
     }
 
     setChartData(prev => {
-      const timestamp = new Date(latestSnapshot.timestamp).getTime();
+      // Force UTC parsing: Supabase returns timestamps without 'Z', causing local time interpretation
+      const timestamp = new Date(latestSnapshot.timestamp + 'Z').getTime();
       const existingIndex = prev.findIndex(p => p.timestamp === timestamp);
 
       if (existingIndex >= 0) {
@@ -52,6 +53,8 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
             hour: "2-digit",
             minute: "2-digit",
             second: "2-digit",
+            hour12: false,
+            timeZone: "UTC",
           }),
           [latestSnapshot.agent_id]: latestSnapshot.total_portfolio_value_usd,
         }].sort((a, b) => a.timestamp - b.timestamp);
@@ -137,6 +140,9 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
           </button>
           <span className="text-xs text-muted-foreground ml-2">
             Use mouse wheel to zoom, drag to pan
+          </span>
+          <span className="text-xs font-bold text-muted-foreground ml-auto border-l-2 border-border pl-4">
+            ALL TIMES IN UTC
           </span>
         </div>
       </div>
