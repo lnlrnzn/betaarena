@@ -424,14 +424,68 @@ export async function GET(request: NextRequest) {
         continue;
       }
 
-      // Create snapshot record
+      // OUTLIER DETECTION: Check if value deviates significantly from previous snapshot
+      const previousValue = await getPreviousSnapshotValue(agent.id);
+      let currentValue = portfolio.summary.totalUsd;
+
+      if (previousValue !== null && previousValue > 0) {
+        const changePercent = Math.abs((currentValue - previousValue) / previousValue);
+        const OUTLIER_THRESHOLD = 0.20; // 20% deviation threshold
+
+        if (changePercent > OUTLIER_THRESHOLD) {
+          logger.warn(
+            `[CRON] ⚠️  OUTLIER DETECTED for ${agent.name}: ` +
+            `${(changePercent * 100).toFixed(1)}% change ` +
+            `($${previousValue.toFixed(2)} → $${currentValue.toFixed(2)})`
+          );
+
+          // RETRY LOGIC: Refetch portfolio to confirm outlier
+          logger.info('CRON', `Retrying portfolio fetch for ${agent.name}...`);
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+
+          try {
+            const retryPortfolio = await getWalletPortfolio(agent.wallet);
+            const retryValue = retryPortfolio.summary.totalUsd;
+            const retryChangePercent = Math.abs((retryValue - previousValue) / previousValue);
+
+            logger.info(
+              'CRON',
+              `Retry value for ${agent.name}: $${retryValue.toFixed(2)} ` +
+              `(${(retryChangePercent * 100).toFixed(1)}% change from previous)`
+            );
+
+            // If retry also shows large deviation, use forward-fill (previous value)
+            if (retryChangePercent > OUTLIER_THRESHOLD) {
+              logger.warn(
+                `[CRON] ⚠️  Retry confirms large deviation for ${agent.name}. ` +
+                `Using forward-fill (previous value: $${previousValue.toFixed(2)})`
+              );
+              currentValue = previousValue; // Forward-fill with last known good value
+            } else {
+              // Retry value is reasonable, use it
+              logger.info('CRON', `✓ Retry value accepted for ${agent.name}`);
+              currentValue = retryValue;
+              // Update portfolio object for holdings calculations
+              portfolio.summary.totalUsd = retryValue;
+              portfolio.summary.totalSol = retryPortfolio.summary.totalSol;
+            }
+          } catch (retryError) {
+            // Retry failed, use forward-fill
+            logger.error(`[CRON] ❌ Retry failed for ${agent.name}:`, retryError);
+            logger.warn(`[CRON] Using forward-fill (previous value: $${previousValue.toFixed(2)})`);
+            currentValue = previousValue;
+          }
+        }
+      }
+
+      // Create snapshot record (using potentially forward-filled value)
       const snapshot = {
         agent_id: agent.id,
         timestamp,
         sol_balance: solBalance,
         token_holdings_value_sol: tokenHoldingsValueSol,
         total_portfolio_value_sol: portfolio.summary.totalSol,
-        total_portfolio_value_usd: portfolio.summary.totalUsd,
+        total_portfolio_value_usd: currentValue, // Use validated/forward-filled value
         unrealized_pnl_sol: 0, // Calculate based on cost basis
         unrealized_pnl_usd: 0,
         realized_pnl_sol: 0,
@@ -490,7 +544,7 @@ export async function GET(request: NextRequest) {
       successCount++;
       logger.info(
         'CRON',
-        `✓ ${agent.name}: $${portfolio.summary.totalUsd.toFixed(2)} (${numOpenPositions} positions)`
+        `✓ ${agent.name}: $${currentValue.toFixed(2)} (${numOpenPositions} positions)`
       );
     }
 
@@ -574,6 +628,30 @@ function getWalletAddress(model: string): string {
   };
 
   return wallets[model] || '';
+}
+
+/**
+ * Get the most recent portfolio snapshot value for an agent
+ * Used for outlier detection
+ */
+async function getPreviousSnapshotValue(agentId: string): Promise<number | null> {
+  try {
+    const { data, error } = await supabaseServer
+      .from('portfolio_snapshots')
+      .select('total_portfolio_value_usd')
+      .eq('agent_id', agentId)
+      .order('timestamp', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !data) {
+      return null;
+    }
+
+    return Number(data.total_portfolio_value_usd);
+  } catch {
+    return null;
+  }
 }
 
 
