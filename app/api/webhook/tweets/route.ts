@@ -1,17 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
-
-// Webhook secret for security
-const WEBHOOK_SECRET = process.env.AIRTABLE_WEBHOOK_SECRET || "trenchmark-tweets-webhook-2025";
+import { createErrorResponse, logger } from "@/lib/logger";
 
 export async function POST(request: NextRequest) {
   try {
+    // Webhook secret must be configured
+    const WEBHOOK_SECRET = process.env.AIRTABLE_WEBHOOK_SECRET;
+
+    if (!WEBHOOK_SECRET) {
+      logger.error('[WEBHOOK] AIRTABLE_WEBHOOK_SECRET not configured');
+      return NextResponse.json(
+        { success: false, error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
     // Parse request body
     const body = await request.json();
 
     // Validate webhook secret
     if (body.secret !== WEBHOOK_SECRET) {
-      console.error("Invalid webhook secret");
+      logger.error("[WEBHOOK] Invalid webhook secret attempt");
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
         { status: 401 }
@@ -63,7 +72,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("✅ Tweet inserted successfully:", insertedTweet.id);
+    logger.info("WEBHOOK", "Tweet inserted successfully:", insertedTweet.id);
 
     return NextResponse.json({
       success: true,
@@ -71,9 +80,8 @@ export async function POST(request: NextRequest) {
       tweet_id: insertedTweet.id,
     });
   } catch (error) {
-    console.error("Webhook error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal server error" },
+      { success: false, ...createErrorResponse(error) },
       { status: 500 }
     );
   }

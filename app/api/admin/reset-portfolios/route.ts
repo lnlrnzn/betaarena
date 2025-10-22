@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase-server';
+import { createErrorResponse, logger } from '@/lib/logger';
 
 // Verify cron secret for security
 function verifyAuth(request: NextRequest): boolean {
@@ -7,7 +8,7 @@ function verifyAuth(request: NextRequest): boolean {
   const cronSecret = process.env.CRON_SECRET;
 
   if (!cronSecret) {
-    console.error('CRON_SECRET not configured');
+    logger.error('[ADMIN] CRON_SECRET not configured');
     return false;
   }
 
@@ -17,12 +18,12 @@ function verifyAuth(request: NextRequest): boolean {
 export async function POST(request: NextRequest) {
   // Verify authorization
   if (!verifyAuth(request)) {
-    console.error('[ADMIN] Unauthorized request');
+    logger.error('[ADMIN] Unauthorized request');
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
-    console.log('[ADMIN] Deleting all portfolio snapshots...');
+    logger.info('ADMIN', 'Deleting all portfolio snapshots...');
 
     // Delete all portfolio snapshots
     const { error: deleteError, count } = await supabaseServer
@@ -31,14 +32,14 @@ export async function POST(request: NextRequest) {
       .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all except impossible UUID
 
     if (deleteError) {
-      console.error('[ADMIN] Error deleting snapshots:', deleteError);
-      return NextResponse.json({
-        success: false,
-        error: deleteError.message
-      }, { status: 500 });
+      logger.error('[ADMIN] Error deleting snapshots:', deleteError);
+      return NextResponse.json(
+        { success: false, ...createErrorResponse(deleteError) },
+        { status: 500 }
+      );
     }
 
-    console.log(`[ADMIN] ✓ Deleted ${count || 'all'} portfolio snapshots`);
+    logger.info('ADMIN', `Deleted ${count || 'all'} portfolio snapshots`);
 
     return NextResponse.json({
       success: true,
@@ -46,10 +47,9 @@ export async function POST(request: NextRequest) {
       message: 'All portfolio snapshots deleted successfully'
     });
   } catch (error) {
-    console.error('[ADMIN] Error:', error);
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      { success: false, ...createErrorResponse(error) },
+      { status: 500 }
+    );
   }
 }

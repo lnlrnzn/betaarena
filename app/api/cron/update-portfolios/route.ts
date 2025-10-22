@@ -9,6 +9,7 @@ import {
   type Trade,
 } from '@/lib/solanatracker';
 import { AGENTS } from '@/lib/constants';
+import { createErrorResponse, logger } from '@/lib/logger';
 
 // Verify cron secret for security
 function verifyCronAuth(request: NextRequest): boolean {
@@ -16,7 +17,7 @@ function verifyCronAuth(request: NextRequest): boolean {
   const cronSecret = process.env.CRON_SECRET;
 
   if (!cronSecret) {
-    console.error('CRON_SECRET not configured');
+    logger.error('[CRON] CRON_SECRET not configured');
     return false;
   }
 
@@ -27,7 +28,7 @@ function verifyCronAuth(request: NextRequest): boolean {
  * Enrich pending trades with data from SolanaTracker API
  */
 async function enrichTrades() {
-  console.log('[CRON] Starting trade enrichment...');
+  logger.info('CRON', 'Starting trade enrichment...');
 
   // Step 1: Find all unenriched trades
   const { data: unenrichedTrades, error: tradesError } = await supabaseServer
@@ -37,16 +38,16 @@ async function enrichTrades() {
     .limit(100); // Process in batches
 
   if (tradesError) {
-    console.error('[CRON] Error fetching unenriched trades:', tradesError);
+    logger.error('[CRON] Error fetching unenriched trades:', tradesError);
     return { enriched: 0, failed: 0 };
   }
 
   if (!unenrichedTrades || unenrichedTrades.length === 0) {
-    console.log('[CRON] No unenriched trades found');
+    logger.info('CRON', 'No unenriched trades found');
     return { enriched: 0, failed: 0 };
   }
 
-  console.log(`[CRON] Found ${unenrichedTrades.length} unenriched trades`);
+  logger.info('CRON', `Found ${unenrichedTrades.length} unenriched trades`);
 
   // Step 2: Group trades by agent
   const tradesByAgent = new Map<string, typeof unenrichedTrades>();
@@ -63,20 +64,20 @@ async function enrichTrades() {
   for (const [agentId, trades] of tradesByAgent) {
     const agent = Object.values(AGENTS).find((a) => a.id === agentId);
     if (!agent) {
-      console.error(`[CRON] Agent not found: ${agentId}`);
+      logger.error(`[CRON] Agent not found: ${agentId}`);
       failedCount += trades.length;
       continue;
     }
 
     const walletAddress = getWalletAddress(agent.model);
     if (!walletAddress) {
-      console.error(`[CRON] Wallet address not found for ${agent.name}`);
+      logger.error(`[CRON] Wallet address not found for ${agent.name}`);
       failedCount += trades.length;
       continue;
     }
 
     try {
-      console.log(`[CRON] Fetching trades for ${agent.name}...`);
+      logger.info('CRON', `Fetching trades for ${agent.name}...`);
 
       // Fetch recent trades from SolanaTracker (first page only)
       const { trades: apiTrades } = await getWalletTrades(walletAddress, {
@@ -90,7 +91,7 @@ async function enrichTrades() {
         const apiTrade = apiTrades.find((t) => t.signature === trade.signature);
 
         if (!apiTrade) {
-          console.warn(`[CRON] No match found for signature: ${trade.signature}`);
+          logger.warn(`[CRON] No match found for signature: ${trade.signature}`);
           failedCount++;
           continue;
         }
@@ -121,20 +122,20 @@ async function enrichTrades() {
           .eq('id', trade.id);
 
         if (updateError) {
-          console.error(`[CRON] Error updating trade ${trade.id}:`, updateError);
+          logger.error(`[CRON] Error updating trade ${trade.id}:`, updateError);
           failedCount++;
         } else {
           enrichedCount++;
-          console.log(`[CRON] ✓ Enriched trade ${trade.id} (${tradedToken.symbol})`);
+          logger.info('CRON', `✓ Enriched trade ${trade.id} (${tradedToken.symbol})`);
         }
       }
     } catch (error) {
-      console.error(`[CRON] Error processing trades for ${agent.name}:`, error);
+      logger.error(`[CRON] Error processing trades for ${agent.name}:`, error);
       failedCount += trades.length;
     }
   }
 
-  console.log(`[CRON] Trade enrichment complete: ${enrichedCount} enriched, ${failedCount} failed`);
+  logger.info('CRON', `Trade enrichment complete: ${enrichedCount} enriched, ${failedCount} failed`);
   return { enriched: enrichedCount, failed: failedCount };
 }
 
@@ -142,7 +143,7 @@ async function enrichTrades() {
  * Match buy/sell pairs and calculate P&L
  */
 async function matchAndCalculatePnL() {
-  console.log('[CRON] Starting buy/sell pair matching...');
+  logger.info('CRON', 'Starting buy/sell pair matching...');
 
   // Step 1: Find all enriched but not yet matched trades
   const { data: enrichedTrades, error: tradesError } = await supabaseServer
@@ -153,16 +154,16 @@ async function matchAndCalculatePnL() {
     .order('timestamp', { ascending: true });
 
   if (tradesError) {
-    console.error('[CRON] Error fetching enriched trades:', tradesError);
+    logger.error('[CRON] Error fetching enriched trades:', tradesError);
     return { matched: 0, failed: 0 };
   }
 
   if (!enrichedTrades || enrichedTrades.length === 0) {
-    console.log('[CRON] No unmatched enriched trades found');
+    logger.info('CRON', 'No unmatched enriched trades found');
     return { matched: 0, failed: 0 };
   }
 
-  console.log(`[CRON] Found ${enrichedTrades.length} unmatched enriched trades`);
+  logger.info('CRON', `Found ${enrichedTrades.length} unmatched enriched trades`);
 
   // Step 2: Group trades by agent and token (to find buy/sell pairs)
   const tradeGroups = new Map<string, typeof enrichedTrades>();
@@ -229,7 +230,7 @@ async function matchAndCalculatePnL() {
           .eq('id', buyTrade.id);
 
         if (buyUpdateError) {
-          console.error(`[CRON] Error updating buy trade ${buyTrade.id}:`, buyUpdateError);
+          logger.error(`[CRON] Error updating buy trade ${buyTrade.id}:`, buyUpdateError);
           failedMatches++;
           continue;
         }
@@ -249,41 +250,42 @@ async function matchAndCalculatePnL() {
           .eq('id', sellTrade.id);
 
         if (sellUpdateError) {
-          console.error(`[CRON] Error updating sell trade ${sellTrade.id}:`, sellUpdateError);
+          logger.error(`[CRON] Error updating sell trade ${sellTrade.id}:`, sellUpdateError);
           failedMatches++;
           continue;
         }
 
         matchedPairs++;
         const profitSign = pnlUsd >= 0 ? '+' : '';
-        console.log(
-          `[CRON] ✓ Matched ${buyTrade.token_symbol} trade: ${profitSign}$${pnlUsd.toFixed(2)} ` +
+        logger.info(
+          'CRON',
+          `✓ Matched ${buyTrade.token_symbol} trade: ${profitSign}$${pnlUsd.toFixed(2)} ` +
           `(${profitSign}${pnlPercentage.toFixed(2)}%) over ${holdingTimeMinutes}min`
         );
       } catch (error) {
-        console.error(`[CRON] Error matching trades ${buyTrade.id} and ${sellTrade.id}:`, error);
+        logger.error(`[CRON] Error matching trades ${buyTrade.id} and ${sellTrade.id}:`, error);
         failedMatches++;
       }
     }
 
     // Log if there are unmatched buys or sells (should not happen if agents buy/sell 100%)
     if (buys.length !== sells.length) {
-      console.warn(
+      logger.warn(
         `[CRON] Unbalanced trades for ${tokenAddress}: ${buys.length} buys, ${sells.length} sells`
       );
     }
   }
 
-  console.log(`[CRON] P&L matching complete: ${matchedPairs} pairs matched, ${failedMatches} failed`);
+  logger.info('CRON', `P&L matching complete: ${matchedPairs} pairs matched, ${failedMatches} failed`);
   return { matched: matchedPairs, failed: failedMatches };
 }
 
 export async function GET(request: NextRequest) {
-  console.log('[CRON] Portfolio update started at', new Date().toISOString());
+  logger.info('CRON', `Portfolio update started at ${new Date().toISOString()}`);
 
   // Verify authorization
   if (!verifyCronAuth(request)) {
-    console.error('[CRON] Unauthorized request');
+    logger.error('[CRON] Unauthorized request');
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -293,7 +295,7 @@ export async function GET(request: NextRequest) {
 
     // Step 1: Fetch SOL price with validation
     try {
-      console.log('[CRON] Fetching SOL price...');
+      logger.info('CRON', 'Fetching SOL price...');
       const solPriceData = await getSolPrice();
       solPriceUsd = solPriceData.priceUsd;
 
@@ -302,7 +304,7 @@ export async function GET(request: NextRequest) {
         throw new Error(`Invalid SOL price after fetch: ${solPriceUsd}`);
       }
 
-      console.log(`[CRON] ✓ SOL Price: $${solPriceUsd.toFixed(2)}`);
+      logger.info('CRON', `✓ SOL Price: $${solPriceUsd.toFixed(2)}`);
 
       // Step 2: Store SOL price in database
       const { error: solPriceError } = await supabaseServer
@@ -313,18 +315,18 @@ export async function GET(request: NextRequest) {
         });
 
       if (solPriceError) {
-        console.error('[CRON] Error storing SOL price:', solPriceError);
+        logger.error('[CRON] Error storing SOL price:', solPriceError);
         throw solPriceError;
       }
 
-      console.log('[CRON] ✓ SOL price stored successfully');
+      logger.info('CRON', '✓ SOL price stored successfully');
     } catch (error) {
-      console.error('[CRON] ❌ CRITICAL: Failed to fetch or store SOL price:', error);
-      console.error('[CRON] Error details:', error instanceof Error ? error.message : String(error));
+      logger.error('[CRON] ❌ CRITICAL: Failed to fetch or store SOL price:', error);
+      logger.error('[CRON] Error details:', error instanceof Error ? error.message : String(error));
 
       // Don't throw - continue with portfolio updates even if SOL price fetch fails
       // We'll use the last known price from the database for calculations
-      console.log('[CRON] Continuing with portfolio updates using last known SOL price...');
+      logger.info('CRON', 'Continuing with portfolio updates using last known SOL price...');
 
       // Fetch last known SOL price from database
       const { data: lastPrice } = await supabaseServer
@@ -336,15 +338,15 @@ export async function GET(request: NextRequest) {
 
       if (lastPrice) {
         solPriceUsd = Number(lastPrice.price_usd);
-        console.log(`[CRON] Using last known SOL price: $${solPriceUsd.toFixed(2)}`);
+        logger.info('CRON', `Using last known SOL price: $${solPriceUsd.toFixed(2)}`);
       } else {
-        console.error('[CRON] ❌ FATAL: No SOL price available (neither fresh nor historical)');
+        logger.error('[CRON] ❌ FATAL: No SOL price available (neither fresh nor historical)');
         throw new Error('Cannot proceed without SOL price data');
       }
     }
 
     // Step 3: Fetch all agent portfolios in parallel (paid plan = no rate limit)
-    console.log('[CRON] Fetching portfolios for all agents...');
+    logger.info('CRON', 'Fetching portfolios for all agents...');
 
     const agentsList = Object.values(AGENTS);
     const walletAddresses = agentsList.map((agent) => ({
@@ -355,7 +357,7 @@ export async function GET(request: NextRequest) {
 
     const portfolioPromises = walletAddresses.map(async (agent) => {
       try {
-        console.log(`[CRON] Fetching portfolio for ${agent.name}...`);
+        logger.info('CRON', `Fetching portfolio for ${agent.name}...`);
         const portfolio = await getWalletPortfolio(agent.wallet);
 
         // Validate portfolio data (API client already validates, but double-check)
@@ -369,8 +371,8 @@ export async function GET(request: NextRequest) {
 
         return { agent, portfolio, error: null };
       } catch (error) {
-        console.error(`[CRON] ❌ Error fetching ${agent.name}:`, error);
-        console.error(`[CRON] Error details for ${agent.name}:`, error instanceof Error ? error.message : String(error));
+        logger.error(`[CRON] ❌ Error fetching ${agent.name}:`, error);
+        logger.error(`[CRON] Error details for ${agent.name}:`, error instanceof Error ? error.message : String(error));
         return { agent, portfolio: null, error };
       }
     });
@@ -411,13 +413,13 @@ export async function GET(request: NextRequest) {
 
       // Validate snapshot data before storing
       if (portfolio.summary.totalUsd < 0 || portfolio.summary.totalSol < 0) {
-        console.error(`[CRON] ❌ Invalid portfolio values for ${agent.name}: totalUsd=${portfolio.summary.totalUsd}, totalSol=${portfolio.summary.totalSol}`);
+        logger.error(`[CRON] ❌ Invalid portfolio values for ${agent.name}: totalUsd=${portfolio.summary.totalUsd}, totalSol=${portfolio.summary.totalSol}`);
         errorCount++;
         continue;
       }
 
       if (isNaN(portfolio.summary.totalUsd) || isNaN(portfolio.summary.totalSol)) {
-        console.error(`[CRON] ❌ NaN portfolio values for ${agent.name}: totalUsd=${portfolio.summary.totalUsd}, totalSol=${portfolio.summary.totalSol}`);
+        logger.error(`[CRON] ❌ NaN portfolio values for ${agent.name}: totalUsd=${portfolio.summary.totalUsd}, totalSol=${portfolio.summary.totalSol}`);
         errorCount++;
         continue;
       }
@@ -447,7 +449,7 @@ export async function GET(request: NextRequest) {
         .single();
 
       if (snapshotError) {
-        console.error(`[CRON] ❌ Error inserting snapshot for ${agent.name}:`, snapshotError);
+        logger.error(`[CRON] ❌ Error inserting snapshot for ${agent.name}:`, snapshotError);
         errorCount++;
         continue;
       }
@@ -464,7 +466,7 @@ export async function GET(request: NextRequest) {
 
         // Skip tokens with invalid data
         if (isNaN(priceSol) || isNaN(valueSol)) {
-          console.warn(`[CRON] ⚠️  Skipping invalid token ${token.symbol}: priceUsd=${priceUsd}, valueUsd=${valueUsd}`);
+          logger.warn(`[CRON] ⚠️  Skipping invalid token ${token.symbol}: priceUsd=${priceUsd}, valueUsd=${valueUsd}`);
           continue;
         }
 
@@ -486,8 +488,9 @@ export async function GET(request: NextRequest) {
       }
 
       successCount++;
-      console.log(
-        `[CRON] ✓ ${agent.name}: $${portfolio.summary.totalUsd.toFixed(2)} (${numOpenPositions} positions)`
+      logger.info(
+        'CRON',
+        `✓ ${agent.name}: $${portfolio.summary.totalUsd.toFixed(2)} (${numOpenPositions} positions)`
       );
     }
 
@@ -498,9 +501,9 @@ export async function GET(request: NextRequest) {
         .insert(holdings);
 
       if (holdingsError) {
-        console.error('[CRON] Error inserting holdings:', holdingsError);
+        logger.error('[CRON] Error inserting holdings:', holdingsError);
       } else {
-        console.log(`[CRON] Inserted ${holdings.length} holdings records`);
+        logger.info('CRON', `Inserted ${holdings.length} holdings records`);
       }
     }
 
@@ -535,28 +538,24 @@ export async function GET(request: NextRequest) {
       },
     };
 
-    console.log('===================================');
-    console.log('[CRON] ✓ Portfolio update completed successfully');
-    console.log('[CRON] Summary:', JSON.stringify(summary, null, 2));
-    console.log('===================================');
+    logger.log('===================================');
+    logger.log('[CRON] ✓ Portfolio update completed successfully');
+    logger.log('[CRON] Summary:', JSON.stringify(summary, null, 2));
+    logger.log('===================================');
 
     // Warn if there were any issues
     if (errorCount > 0) {
-      console.warn(`[CRON] ⚠️  WARNING: ${errorCount} agent(s) failed to update`);
+      logger.warn(`[CRON] ⚠️  WARNING: ${errorCount} agent(s) failed to update`);
     }
 
     if (enrichmentResults.failed > 0 || pnlResults.failed > 0) {
-      console.warn(`[CRON] ⚠️  WARNING: Trade enrichment issues - ${enrichmentResults.failed} enrichment failures, ${pnlResults.failed} matching failures`);
+      logger.warn(`[CRON] ⚠️  WARNING: Trade enrichment issues - ${enrichmentResults.failed} enrichment failures, ${pnlResults.failed} matching failures`);
     }
 
     return NextResponse.json(summary);
   } catch (error) {
-    console.error('[CRON] Fatal error:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
-      },
+      { success: false, ...createErrorResponse(error) },
       { status: 500 }
     );
   }

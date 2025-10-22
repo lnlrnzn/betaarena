@@ -1,7 +1,26 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase-server';
+import { createErrorResponse } from '@/lib/logger';
 
-export async function GET() {
+// Verify authorization for admin access
+function verifyAuth(request: NextRequest): boolean {
+  const authHeader = request.headers.get('authorization');
+  const cronSecret = process.env.CRON_SECRET;
+
+  if (!cronSecret) {
+    console.error('[ADMIN] CRON_SECRET not configured');
+    return false;
+  }
+
+  return authHeader === `Bearer ${cronSecret}`;
+}
+
+export async function GET(request: NextRequest) {
+  // Verify authorization
+  if (!verifyAuth(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     // Count team declarations
     const { count: declarationsCount, error: declError } = await supabaseServer
@@ -36,9 +55,6 @@ export async function GET() {
       portfolio_snapshots: snapshotsCount || 0,
     });
   } catch (error) {
-    console.error('Error:', error);
-    return NextResponse.json({
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(createErrorResponse(error), { status: 500 });
   }
 }
