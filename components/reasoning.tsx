@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-// import { useRealtime } from "./providers/realtime-provider";
+import { useState, useEffect } from "react";
+import { useRealtime } from "./providers/realtime-provider";
 import { DecisionReasoningCard } from "./decision-reasoning-card";
 
 interface Decision {
@@ -23,15 +23,15 @@ interface ReasoningProps {
 
 export function Reasoning({ decisions: initialDecisions }: ReasoningProps) {
   const [decisions, setDecisions] = useState<Decision[]>(initialDecisions);
-  // const { latestDecision } = useRealtime();
+  const { latestDecision } = useRealtime();
 
-  // TEMPORARILY DISABLED: Real-time update from global context
-  // useEffect(() => {
-  //   if (!latestDecision) return;
+  // Real-time update from global context
+  useEffect(() => {
+    if (!latestDecision) return;
 
-  //   console.log('New decision received:', latestDecision);
-  //   setDecisions((prev) => [latestDecision, ...prev].slice(0, 20)); // Keep latest 20
-  // }, [latestDecision]);
+    console.log('New decision received:', latestDecision);
+    setDecisions((prev) => [latestDecision, ...prev].slice(0, 20)); // Keep latest 20
+  }, [latestDecision]);
 
   if (decisions.length === 0) {
     return (

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-// import { useRealtime } from "./providers/realtime-provider";
+import { useState, useEffect } from "react";
+import { useRealtime } from "./providers/realtime-provider";
 import { DecisionReasoningCard } from "./decision-reasoning-card";
 
 interface Decision {
@@ -24,16 +24,16 @@ interface ModelDecisionsProps {
 
 export function ModelDecisions({ decisions: initialDecisions, agentId }: ModelDecisionsProps) {
   const [decisions, setDecisions] = useState<Decision[]>(initialDecisions);
-  // const { latestDecision } = useRealtime();
+  const { latestDecision } = useRealtime();
 
-  // TEMPORARILY DISABLED: Real-time update from global context (filter for this agent only)
-  // useEffect(() => {
-  //   if (!latestDecision) return;
-  //   if (latestDecision.agent_id !== agentId) return; // Filter for this agent
+  // Real-time update from global context (filter for this agent only)
+  useEffect(() => {
+    if (!latestDecision) return;
+    if (latestDecision.agent_id !== agentId) return; // Filter for this agent
 
-  //   console.log('Decision update received:', latestDecision);
-  //   setDecisions((prev) => [latestDecision, ...prev].slice(0, 100)); // Keep latest 100
-  // }, [latestDecision, agentId]);
+    console.log('Decision update received:', latestDecision);
+    setDecisions((prev) => [latestDecision, ...prev].slice(0, 100)); // Keep latest 100
+  }, [latestDecision, agentId]);
 
   if (decisions.length === 0) {
     return (

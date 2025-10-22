@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { useRealtime } from "./providers/realtime-provider";
 import { Agent } from "@/lib/constants";
 import { JoinTeamModal } from "./join-team-modal";
 import { TeamMemberCard } from "./team-member-card";
@@ -39,6 +39,7 @@ export function ModelTeam({ agentId, agent, initialStats, initialMembers }: Mode
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(initialMembers.length >= 50);
   const [showJoinModal, setShowJoinModal] = useState(false);
+  const { latestTeamDeclaration } = useRealtime();
 
   // Fetch team data for pagination
   const fetchTeamData = async (pageNum: number) => {
@@ -58,39 +59,24 @@ export function ModelTeam({ agentId, agent, initialStats, initialMembers }: Mode
     }
   };
 
-  // Subscribe to real-time updates
+  // Real-time update from global context (filter for this agent only)
   useEffect(() => {
-    const channel = supabase
-      .channel(`team-${agentId}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'team_declarations',
-          filter: `agent_id=eq.${agentId}`,
-        },
-        (payload) => {
-          console.log('New team member:', payload);
+    if (!latestTeamDeclaration) return;
+    if (latestTeamDeclaration.agent_id !== agentId) return; // Filter for this agent
 
-          // Add new member to top of list
-          const newMember = payload.new as TeamMember;
-          setMembers((prev) => [newMember, ...prev]);
+    console.log('New team member:', latestTeamDeclaration);
 
-          // Update stats
-          setStats((prev) => ({
-            total_members: prev.total_members + 1,
-            total_followers: prev.total_followers + (newMember.followers_count || 0),
-            total_following: prev.total_following + (newMember.following_count || 0),
-          }));
-        }
-      )
-      .subscribe();
+    // Add new member to top of list
+    const newMember = latestTeamDeclaration as TeamMember;
+    setMembers((prev) => [newMember, ...prev]);
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [agentId]);
+    // Update stats
+    setStats((prev) => ({
+      total_members: prev.total_members + 1,
+      total_followers: prev.total_followers + (newMember.followers_count || 0),
+      total_following: prev.total_following + (newMember.following_count || 0),
+    }));
+  }, [latestTeamDeclaration, agentId]);
 
   const handleLoadMore = () => {
     fetchTeamData(page + 1);

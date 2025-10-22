@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { useRealtime } from "./providers/realtime-provider";
 import { AgentAvatar } from "@/components/agent-avatar";
 import { JoinTeamModal } from "@/components/join-team-modal";
 import { AGENTS } from "@/lib/constants";
@@ -32,33 +32,19 @@ export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Subscribe to real-time updates for team declarations
+  // Real-time update from global context
+  const { latestTeamDeclaration } = useRealtime();
+
   useEffect(() => {
+    if (!latestTeamDeclaration) return;
     if (!teamStats?.cycle_id) return;
+    if (latestTeamDeclaration.cycle_id !== teamStats.cycle_id) return; // Filter by cycle
 
-    const channel = supabase
-      .channel('team-declarations')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'team_declarations',
-          filter: `cycle_id=eq.${teamStats.cycle_id}`,
-        },
-        (payload) => {
-          console.log('New team member joined:', payload);
+    console.log('New team member joined:', latestTeamDeclaration);
 
-          // Fetch updated team stats
-          fetchTeamStats();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [teamStats?.cycle_id]);
+    // Fetch updated team stats
+    fetchTeamStats();
+  }, [latestTeamDeclaration, teamStats?.cycle_id]);
 
   const fetchTeamStats = async () => {
     try {

@@ -9,6 +9,8 @@ interface RealtimeContextType {
   latestTrade: any | null;
   latestActivity: any | null;
   latestTweet: any | null;
+  latestDecision: any | null;
+  latestTeamDeclaration: any | null;
 }
 
 const RealtimeContext = createContext<RealtimeContextType>({
@@ -16,6 +18,8 @@ const RealtimeContext = createContext<RealtimeContextType>({
   latestTrade: null,
   latestActivity: null,
   latestTweet: null,
+  latestDecision: null,
+  latestTeamDeclaration: null,
 });
 
 interface RealtimeProviderProps {
@@ -38,73 +42,66 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
   const [latestTrade, setLatestTrade] = useState<any | null>(null);
   const [latestActivity, setLatestActivity] = useState<any | null>(null);
   const [latestTweet, setLatestTweet] = useState<any | null>(null);
+  const [latestDecision, setLatestDecision] = useState<any | null>(null);
+  const [latestTeamDeclaration, setLatestTeamDeclaration] = useState<any | null>(null);
 
   useEffect(() => {
-    // Single channel for ALL real-time subscriptions
+    let isSubscribed = false;
+
+    // Try WebSocket realtime first
     const channel = supabase
       .channel('global-updates')
-      // Portfolio snapshots (for chart updates)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'portfolio_snapshots',
-        },
-        (payload) => {
-          setLatestSnapshot(payload.new);
-        }
-      )
-      // Trades (for live trades sidebar)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'trades',
-        },
-        (payload) => {
-          setLatestTrade(payload.new);
-        }
-      )
-      // Agent activities (for live activities sidebar)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'agent_activities',
-        },
-        (payload) => {
-          setLatestActivity(payload.new);
-        }
-      )
-      // Tweets (for tweets feed)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'tweets',
-        },
-        (payload) => {
-          setLatestTweet(payload.new);
-        }
-      )
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'portfolio_snapshots' }, (payload) => {
+        setLatestSnapshot(payload.new);
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'trades' }, (payload) => {
+        setLatestTrade(payload.new);
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'agent_activities' }, (payload) => {
+        setLatestActivity(payload.new);
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'tweets' }, (payload) => {
+        setLatestTweet(payload.new);
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'agent_decisions' }, (payload) => {
+        setLatestDecision(payload.new);
+      })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'team_declarations' }, (payload) => {
+        setLatestTeamDeclaration(payload.new);
+      })
       .subscribe((status) => {
         if (status === 'SUBSCRIBED') {
-          console.log('[Realtime] Connected to global updates channel');
-        } else if (status === 'CHANNEL_ERROR') {
-          console.error('[Realtime] Channel error');
-        } else if (status === 'TIMED_OUT') {
-          console.warn('[Realtime] Connection timed out');
+          console.log('[Realtime] ✅ WebSocket connected');
+          isSubscribed = true;
+        } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          console.warn('[Realtime] ⚠️ WebSocket failed, using polling fallback');
         }
       });
 
-    // Cleanup on unmount
+    // Polling fallback - check for new data every 5 seconds
+    const pollInterval = setInterval(async () => {
+      if (isSubscribed) return; // Skip polling if WebSocket is working
+
+      try {
+        // Poll for latest portfolio snapshot
+        const { data: snapshot } = await supabase
+          .from('portfolio_snapshots')
+          .select('*')
+          .order('timestamp', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (snapshot) {
+          setLatestSnapshot(snapshot);
+        }
+      } catch (error) {
+        // Ignore errors, will retry on next interval
+      }
+    }, 5000);
+
     return () => {
-      console.log('[Realtime] Disconnecting from global updates channel');
       supabase.removeChannel(channel);
+      clearInterval(pollInterval);
     };
   }, []);
 
@@ -115,6 +112,8 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
         latestTrade,
         latestActivity,
         latestTweet,
+        latestDecision,
+        latestTeamDeclaration,
       }}
     >
       {children}
