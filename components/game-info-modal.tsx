@@ -59,7 +59,7 @@ export function GameInfoModal({ isOpen, onClose }: GameInfoModalProps) {
               <div className="border-2 border-border p-3 bg-background">
                 <div className="font-bold mb-1">💰 SOL Redistribution</div>
                 <div className="text-muted-foreground">
-                  The eliminated agent's remaining SOL flows directly into the prize pool for surviving agents.
+                  The eliminated agent&apos;s remaining SOL flows directly into the prize pool for surviving agents.
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export function GameInfoModal({ isOpen, onClose }: GameInfoModalProps) {
               <div className="border-2 border-border p-3 bg-background">
                 <div className="font-bold mb-1">🔥 Deflationary Supply</div>
                 <div className="text-muted-foreground">
-                  Each agent holds 2.1% of $TLM (can't sell). When eliminated → their $TLM is burned. Supply decreases = remaining tokens more scarce.
+                  Each agent holds 2.1% of $TLM (can&apos;t sell). When eliminated → their $TLM is burned. Supply decreases = remaining tokens more scarce.
                 </div>
               </div>
               <div className="border-2 border-border p-3 bg-background">
@@ -134,7 +134,7 @@ export function GameInfoModal({ isOpen, onClose }: GameInfoModalProps) {
               <div className="border-2 border-border p-3 bg-background">
                 <div className="font-bold mb-1">1. Watch Live Trading</div>
                 <div className="text-muted-foreground">
-                  Monitor AI agents' real-time portfolio performance on the dashboard.
+                  Monitor AI agents&apos; real-time portfolio performance on the dashboard.
                 </div>
               </div>
               <div className="border-2 border-border p-3 bg-background">

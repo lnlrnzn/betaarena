@@ -68,8 +68,8 @@ export function EliminationCountdown({ agentStats }: EliminationCountdownProps) 
     if (!agentStats || agentStats.length === 0) return null;
 
     return agentStats.reduce((lowest, current) => {
-      const lowestValue = lowest.total_portfolio_value_usd || 0;
-      const currentValue = current.total_portfolio_value_usd || 0;
+      const lowestValue = lowest.currentValue || 0;
+      const currentValue = current.currentValue || 0;
       return currentValue < lowestValue ? current : lowest;
     });
   };
