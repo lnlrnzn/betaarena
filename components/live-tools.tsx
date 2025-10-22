@@ -43,8 +43,20 @@ function formatToolName(activityType: string): string {
     .join(' ');
 }
 
+// Helper function to deduplicate activities by ID
+function deduplicateActivities(activities: Activity[]): Activity[] {
+  const seen = new Set<string>();
+  return activities.filter(activity => {
+    if (seen.has(activity.id)) {
+      return false;
+    }
+    seen.add(activity.id);
+    return true;
+  });
+}
+
 export function LiveTools({ activities: initialActivities, agentFilter }: LiveToolsProps) {
-  const [activities, setActivities] = useState<Activity[]>(initialActivities);
+  const [activities, setActivities] = useState<Activity[]>(deduplicateActivities(initialActivities));
   const { latestActivity } = useRealtime();
 
   // Real-time update from global context
@@ -52,7 +64,13 @@ export function LiveTools({ activities: initialActivities, agentFilter }: LiveTo
     if (!latestActivity) return;
 
     console.log('New activity received:', latestActivity);
-    setActivities((prev) => [latestActivity, ...prev].slice(0, 100)); // Keep latest 100
+    setActivities((prev) => {
+      // Check if activity already exists to prevent duplicates
+      if (prev.some(activity => activity.id === latestActivity.id)) {
+        return prev;
+      }
+      return [latestActivity, ...prev].slice(0, 100); // Keep latest 100
+    });
   }, [latestActivity]);
 
   // Filter activities by agent
