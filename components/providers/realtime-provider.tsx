@@ -57,6 +57,9 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'trades' }, (payload) => {
         setLatestTrade(payload.new);
       })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'trades' }, (payload) => {
+        setLatestTrade(payload.new);
+      })
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'agent_activities' }, (payload) => {
         setLatestActivity(payload.new);
       })

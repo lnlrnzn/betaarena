@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from "react";
+import { useEffect, useRef, useState, useImperativeHandle, forwardRef, useMemo } from "react";
 import { useTheme } from "next-themes";
 import { createChart, IChartApi, ISeriesApi, LineData, Time, LogicalRange } from "lightweight-charts";
 import { AGENTS } from "@/lib/constants";
@@ -23,11 +23,15 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
   const seriesRef = useRef<Map<string, ISeriesApi<"Line">>>(new Map());
   const { theme } = useTheme();
 
+  // Filter out SYSTEM agent - only show trading agents (memoized)
+  const tradingAgents = useMemo(() =>
+    Object.values(AGENTS).filter(a => a.model !== 'system'),
+    []
+  );
+
   // Track which agents are visible (all visible by default)
-  const [visibleAgents, setVisibleAgents] = useState<Set<string>>(
-    new Set([
-      ...Object.values(AGENTS).map((a) => a.id),
-    ])
+  const [visibleAgents, setVisibleAgents] = useState<Set<string>>(() =>
+    new Set(tradingAgents.map((a) => a.id))
   );
 
   // Expose zoom methods to parent
@@ -138,10 +142,8 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
 
     chartRef.current = chart;
 
-    // Create series for each agent
-    const allAgents = [...Object.values(AGENTS)];
-
-    allAgents.forEach((agent) => {
+    // Create series for each trading agent (excluding SYSTEM)
+    tradingAgents.forEach((agent) => {
       const series = chart.addLineSeries({
         color: agent.color,
         lineWidth: 2,
@@ -176,7 +178,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
       window.removeEventListener("resize", handleResize);
       chart.remove();
     };
-  }, [theme]);
+  }, [theme, tradingAgents]);
 
   // Update data when initialData changes
   useEffect(() => {
@@ -193,9 +195,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
     }
     console.log('===================================');
 
-    const allAgents = [...Object.values(AGENTS)];
-
-    allAgents.forEach((agent) => {
+    tradingAgents.forEach((agent) => {
       const series = seriesRef.current.get(agent.id);
       if (!series) return;
 
@@ -208,13 +208,11 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
     });
 
     chartRef.current.timeScale().fitContent();
-  }, [initialData, theme]); // Re-populate data when theme changes
+  }, [initialData, theme, tradingAgents]); // Re-populate data when theme changes
 
   // Update series visibility when visibleAgents changes
   useEffect(() => {
-    const allAgents = [...Object.values(AGENTS)];
-
-    allAgents.forEach((agent) => {
+    tradingAgents.forEach((agent) => {
       const series = seriesRef.current.get(agent.id);
       if (!series) return;
 
@@ -222,7 +220,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
         visible: visibleAgents.has(agent.id),
       });
     });
-  }, [visibleAgents]);
+  }, [visibleAgents, tradingAgents]);
 
   const toggleAgent = (agentId: string) => {
     setVisibleAgents((prev) => {
@@ -239,8 +237,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
   };
 
   const showAllAgents = () => {
-    const allAgents = [...Object.values(AGENTS)];
-    setVisibleAgents(new Set(allAgents.map((a) => a.id)));
+    setVisibleAgents(new Set(tradingAgents.map((a) => a.id)));
   };
 
   return (
@@ -263,7 +260,7 @@ export const PortfolioChartLightweight = forwardRef<ChartHandle, PortfolioChartP
             SHOW ALL
           </button>
 
-          {Object.values(AGENTS).map((agent) => (
+          {tradingAgents.map((agent) => (
             <button
               key={agent.id}
               onClick={() => toggleAgent(agent.id)}

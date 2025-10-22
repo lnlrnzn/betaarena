@@ -211,18 +211,9 @@ async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataP
   }
 }
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ range?: string }>;
-}) {
-  const params = await searchParams;
-  const range = (params.range?.toUpperCase() as TimeRange) || "24H";
-
-  // Validate range
-  const validRange = TIME_RANGES[range] ? range : "24H";
-
-  const initialData = await getInitialChartData(validRange);
+export default async function HomePage() {
+  // Always fetch ALL data (no more timeframe selection)
+  const initialData = await getInitialChartData("ALL");
 
   // Fetch all data in parallel
   const [agentStats, latestTrades, latestDecisions, latestActivities, latestTweets] = await Promise.all([
@@ -243,7 +234,7 @@ export default async function HomePage({
         <div className="flex-1 flex flex-col">
           {/* Chart Section */}
           <div className="flex-1 border-b-2 lg:border-b-0 lg:border-r-2 border-border">
-            <ChartContainer initialData={initialData} activeRange={validRange} agentStats={agentStats} />
+            <ChartContainer initialData={initialData} agentStats={agentStats} />
           </div>
 
           {/* Agent Performance */}

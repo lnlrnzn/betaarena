@@ -1,24 +1,18 @@
 "use client";
 
-import { useRef, useState, useEffect, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRef, useState, useEffect } from "react";
 import { PortfolioChartLightweight } from "./portfolio-chart-lightweight";
 import { ChartDataPoint, AgentStats } from "@/lib/types";
-import { TIME_RANGES, TimeRange } from "@/lib/constants";
 import { useRealtime } from "@/components/providers/realtime-provider";
 import { EliminationCountdown } from "./elimination-countdown";
 
 interface ChartContainerProps {
   initialData: ChartDataPoint[];
-  activeRange: TimeRange;
   agentStats: AgentStats[];
 }
 
-export function ChartContainer({ initialData, activeRange, agentStats }: ChartContainerProps) {
+export function ChartContainer({ initialData, agentStats }: ChartContainerProps) {
   const chartRef = useRef<any>(null);
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-  const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState<ChartDataPoint[]>(initialData);
 
   // Use global realtime context instead of individual subscription
@@ -27,6 +21,11 @@ export function ChartContainer({ initialData, activeRange, agentStats }: ChartCo
   // Handle real-time updates from global provider
   useEffect(() => {
     if (!latestSnapshot) return;
+
+    // Ignore SYSTEM agent snapshots (SYSTEM is not a trading agent)
+    if (latestSnapshot.agent_id === '00000000-0000-0000-0000-000000000000') {
+      return;
+    }
 
     if (process.env.NODE_ENV === 'development') {
       console.log('[Chart] New snapshot received:', latestSnapshot);
@@ -95,42 +94,10 @@ export function ChartContainer({ initialData, activeRange, agentStats }: ChartCo
     }
   };
 
-  const handleRangeChange = (range: TimeRange) => {
-    setIsLoading(true);
-    startTransition(() => {
-      router.push(`/?range=${range.toLowerCase()}`);
-    });
-  };
-
-  // Reset loading state when data changes
-  useEffect(() => {
-    setIsLoading(false);
-  }, [initialData]);
-
   return (
     <div className="flex flex-col h-full">
       {/* Elimination Countdown Timer */}
       <EliminationCountdown agentStats={agentStats} />
-
-      {/* Timeframe Selector */}
-      <div className="bg-background border-2 border-b-0 border-t-0 border-border px-3 sm:px-6 py-2 sm:py-3">
-        <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
-          <span className="text-[10px] sm:text-xs font-bold text-muted-foreground mr-1 sm:mr-2">TIMEFRAME:</span>
-          {(Object.keys(TIME_RANGES) as TimeRange[]).map((range) => (
-            <button
-              key={range}
-              onClick={() => handleRangeChange(range)}
-              className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold border-2 transition-colors ${
-                activeRange === range
-                  ? "border-border bg-primary text-primary-foreground"
-                  : "border-border bg-background text-foreground hover:bg-muted"
-              }`}
-            >
-              {range}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* Zoom Controls */}
       <div className="bg-background border-2 border-b-0 border-border px-3 sm:px-6 py-2 sm:py-3">
@@ -171,20 +138,6 @@ export function ChartContainer({ initialData, activeRange, agentStats }: ChartCo
           ref={chartRef}
           initialData={chartData}
         />
-
-        {/* Loading Overlay */}
-        {isLoading && (
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300">
-            <div className="flex flex-col items-center gap-4">
-              {/* Spinner */}
-              <div className="w-12 h-12 border-4 border-border border-t-primary rounded-full animate-spin" />
-              {/* Loading Text */}
-              <div className="text-sm font-bold text-foreground">
-                Loading {TIME_RANGES[activeRange].label} data...
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

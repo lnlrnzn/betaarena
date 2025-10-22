@@ -120,7 +120,7 @@ export async function getAgentStats(): Promise<AgentStats[]> {
 }
 
 /**
- * Get latest completed trades from Supabase
+ * Get latest trades from Supabase (all statuses: open, closed, enriched)
  */
 export async function getLatestTrades(limit: number = 20) {
   const { data: trades, error } = await supabaseServer
@@ -144,10 +144,11 @@ export async function getLatestTrades(limit: number = 20) {
       pnl_usd,
       pnl_percentage,
       holding_time_minutes,
-      status
+      status,
+      enriched,
+      signature
     `)
-    .eq('status', 'closed')
-    .order('exit_timestamp', { ascending: false })
+    .order('timestamp', { ascending: false })
     .limit(limit);
 
   if (error) {
