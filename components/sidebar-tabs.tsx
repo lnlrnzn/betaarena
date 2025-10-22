@@ -2,24 +2,24 @@
 
 import { useState } from "react";
 import { LiveTrades } from "./live-trades";
-import { ModelChat } from "./model-chat";
+import { Reasoning } from "./reasoning";
 import { Positions } from "./positions";
 import { LiveTweets } from "./live-tweets";
 
-type TabType = "trades" | "modelchat" | "positions" | "tweets";
+type TabType = "trades" | "reasoning" | "positions" | "tweets";
 
 interface SidebarTabsProps {
   trades: any[];
-  activities: any[];
+  decisions: any[];
   tweets: any[];
 }
 
-export function SidebarTabs({ trades, activities, tweets }: SidebarTabsProps) {
+export function SidebarTabs({ trades, decisions, tweets }: SidebarTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>("trades");
 
   const tabs = [
     { id: "trades" as const, label: "Trades" },
-    { id: "modelchat" as const, label: "Modelchat" },
+    { id: "reasoning" as const, label: "Reasoning" },
     { id: "positions" as const, label: "Positions" },
     { id: "tweets" as const, label: "Tweets" },
   ];
@@ -52,9 +52,9 @@ export function SidebarTabs({ trades, activities, tweets }: SidebarTabsProps) {
             <LiveTrades trades={trades} />
           </div>
         )}
-        {activeTab === "modelchat" && (
+        {activeTab === "reasoning" && (
           <div className="absolute inset-0">
-            <ModelChat activities={activities} />
+            <Reasoning decisions={decisions} />
           </div>
         )}
         {activeTab === "positions" && (
