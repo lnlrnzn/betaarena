@@ -1,65 +1,41 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-import { DecisionCard } from "./decision-card";
+import { useState } from "react";
+// import { useRealtime } from "./providers/realtime-provider";
+import { DecisionReasoningCard } from "./decision-reasoning-card";
 
-interface Activity {
+interface Decision {
   id: string;
+  tweet_id: string | null;
   agent_id: string;
-  activity_type: string;
-  description: string;
-  timestamp: string;
-  metadata: any;
-  target_agent_id: string | null;
-  target_resource: string | null;
+  decision: string;
+  amount_sol: number | null;
+  reasoning: string;
+  exit_plan: string | null;
+  confidence_score: number | null;
+  decided_at: string | null;
+  created_at: string;
 }
 
 interface ModelDecisionsProps {
-  activities: Activity[];
+  decisions: Decision[];
   agentId: string;
 }
 
-export function ModelDecisions({ activities: initialActivities, agentId }: ModelDecisionsProps) {
-  const [activities, setActivities] = useState<Activity[]>(initialActivities);
+export function ModelDecisions({ decisions: initialDecisions, agentId }: ModelDecisionsProps) {
+  const [decisions, setDecisions] = useState<Decision[]>(initialDecisions);
+  // const { latestDecision } = useRealtime();
 
-  // Real-time subscription for new activities/decisions
-  useEffect(() => {
-    const channel = supabase
-      .channel(`activities-${agentId}`)
-      .on(
-        'postgres_changes',
-        {
-          event: '*', // Listen to INSERT, UPDATE, DELETE
-          schema: 'public',
-          table: 'agent_activities',
-          filter: `agent_id=eq.${agentId}`,
-        },
-        (payload) => {
-          console.log('Activity update received:', payload);
+  // TEMPORARILY DISABLED: Real-time update from global context (filter for this agent only)
+  // useEffect(() => {
+  //   if (!latestDecision) return;
+  //   if (latestDecision.agent_id !== agentId) return; // Filter for this agent
 
-          if (payload.eventType === 'INSERT') {
-            const newActivity = payload.new as Activity;
-            setActivities((prev) => [newActivity, ...prev].slice(0, 100)); // Keep latest 100
-          } else if (payload.eventType === 'UPDATE') {
-            const updatedActivity = payload.new as Activity;
-            setActivities((prev) =>
-              prev.map((activity) => (activity.id === updatedActivity.id ? updatedActivity : activity))
-            );
-          } else if (payload.eventType === 'DELETE') {
-            const deletedActivity = payload.old as Activity;
-            setActivities((prev) => prev.filter((activity) => activity.id !== deletedActivity.id));
-          }
-        }
-      )
-      .subscribe();
+  //   console.log('Decision update received:', latestDecision);
+  //   setDecisions((prev) => [latestDecision, ...prev].slice(0, 100)); // Keep latest 100
+  // }, [latestDecision, agentId]);
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [agentId]);
-
-  if (activities.length === 0) {
+  if (decisions.length === 0) {
     return (
       <div className="flex items-center justify-center py-20">
         <p className="text-muted-foreground">No decisions yet</p>
@@ -77,8 +53,8 @@ export function ModelDecisions({ activities: initialActivities, agentId }: Model
       </div>
 
       <div className="space-y-3">
-        {activities.map((activity) => (
-          <DecisionCard key={activity.id} activity={activity} />
+        {decisions.map((decision) => (
+          <DecisionReasoningCard key={decision.id} decision={decision} previewMode={false} />
         ))}
       </div>
     </div>
