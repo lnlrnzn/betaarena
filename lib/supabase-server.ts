@@ -210,6 +210,65 @@ export async function getLatestTweets(limit: number = 50) {
 }
 
 /**
+ * Get latest agent decisions from all agents for homepage
+ */
+export async function getLatestDecisions(limit: number = 20) {
+  const { data: decisions, error } = await supabaseServer
+    .from('agent_decisions')
+    .select(`
+      id,
+      tweet_id,
+      agent_id,
+      decision,
+      amount_sol,
+      reasoning,
+      exit_plan,
+      confidence_score,
+      decided_at,
+      created_at
+    `)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching decisions:', error);
+    return [];
+  }
+
+  return decisions || [];
+}
+
+/**
+ * Get agent decisions for a specific agent
+ */
+export async function getAgentDecisions(agentId: string, limit: number = 100) {
+  const { data: decisions, error } = await supabaseServer
+    .from('agent_decisions')
+    .select(`
+      id,
+      tweet_id,
+      agent_id,
+      decision,
+      amount_sol,
+      reasoning,
+      exit_plan,
+      confidence_score,
+      decided_at,
+      created_at
+    `)
+    .eq('agent_id', agentId)
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching agent decisions:', error);
+    return [];
+  }
+
+  return decisions || [];
+}
+
+/**
  * Get statistics for a single agent
  * Optimized to batch queries instead of making 4 separate queries
  */
@@ -488,10 +547,10 @@ export async function getAgentWallet(agentId: string): Promise<string | null> {
 
 export async function getModelPageData(agentId: string) {
   // Fetch all data in parallel
-  const [stats, trades, activities, positions, teamStats, teamMembers, walletAddress] = await Promise.all([
+  const [stats, trades, decisions, positions, teamStats, teamMembers, walletAddress] = await Promise.all([
     getSingleAgentStats(agentId),
     getAgentTrades(agentId, 100),
-    getAgentActivities(agentId, 100),
+    getAgentDecisions(agentId, 100),
     getAgentPositions(agentId),
     getTeamStats(agentId),
     getTeamMembers(agentId, 1, 50),
@@ -501,7 +560,7 @@ export async function getModelPageData(agentId: string) {
   return {
     stats,
     trades,
-    activities,
+    decisions,
     positions,
     teamStats,
     teamMembers,
