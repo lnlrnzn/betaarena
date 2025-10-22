@@ -4,7 +4,7 @@ import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
 import { SiteHeader } from "@/components/site-header";
 import { ChartDataPoint } from "@/lib/types";
 import { getAgentStats, getLatestTrades, getLatestDecisions, getLatestTweets, getLatestActivities, supabaseServer } from "@/lib/supabase-server";
-import { TIME_RANGES, TimeRange } from "@/lib/constants";
+import { TIME_RANGES, TimeRange, AGENTS } from "@/lib/constants";
 
 // Enable ISR - Page rebuilds every 60 seconds to show latest data
 export const revalidate = 60;
@@ -140,10 +140,16 @@ async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataP
       console.log('Fetching snapshots in batches...');
     }
 
+    // Get non-system agent IDs for filtering
+    const agentIds = Object.values(AGENTS)
+      .filter((a) => a.model !== 'system')
+      .map((a) => a.id);
+
     while (hasMore) {
       let query = supabaseServer
         .from("portfolio_snapshots")
-        .select("agent_id, timestamp, total_portfolio_value_usd");
+        .select("agent_id, timestamp, total_portfolio_value_usd")
+        .in("agent_id", agentIds); // Exclude SYSTEM agent
 
       // Apply time filter if not ALL
       if (timeFilter) {

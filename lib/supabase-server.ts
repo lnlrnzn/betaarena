@@ -24,7 +24,10 @@ export const supabaseServer = createClient(supabaseUrl, serviceRoleKey, {
  * Optimized to fetch only first/last snapshots per agent instead of all snapshots
  */
 export async function getAgentStats(): Promise<AgentStats[]> {
-  const agentIds = Object.values(AGENTS).map((a) => a.id);
+  // Exclude SYSTEM agent from charts and performance metrics
+  const agentIds = Object.values(AGENTS)
+    .filter((a) => a.model !== 'system')
+    .map((a) => a.id);
 
   // Optimized: Fetch first and last snapshots per agent in parallel
   const snapshotQueries = agentIds.flatMap((agentId) => [
