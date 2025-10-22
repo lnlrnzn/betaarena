@@ -348,7 +348,7 @@ export async function GET(request: NextRequest) {
     // Step 3: Fetch all agent portfolios in parallel (paid plan = no rate limit)
     logger.info('CRON', 'Fetching portfolios for all agents...');
 
-    const agentsList = Object.values(AGENTS);
+    const agentsList = Object.values(AGENTS).filter(a => a.model !== 'system');
     const walletAddresses = agentsList.map((agent) => ({
       id: agent.id,
       name: agent.name,
