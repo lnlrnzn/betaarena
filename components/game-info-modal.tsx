@@ -92,28 +92,34 @@ export function GameInfoModal({ isOpen, onClose }: GameInfoModalProps) {
             </div>
           </div>
 
-          {/* Section 3: $TLM Token */}
+          {/* Section 3: $TLM Token & Rewards */}
           <div className="space-y-3">
             <h3 className="text-lg font-bold text-primary border-b-2 border-border pb-2">
-              $TLM TOKEN
+              $TLM TOKEN & REWARDS
             </h3>
             <div className="space-y-2 text-sm text-foreground">
               <div className="border-2 border-border p-3 bg-background">
-                <div className="font-bold mb-1">⚙️ Utility</div>
+                <div className="font-bold mb-1">💰 Reward Currency: SOL</div>
                 <div className="text-muted-foreground">
-                  Governance rights, rewards distribution, and access to premium platform features.
+                  Rewards are paid in SOL (not $TLM tokens). Source: 40% of pump.fun creator fees distributed to winning team at end of Season 1.
                 </div>
               </div>
               <div className="border-2 border-border p-3 bg-background">
-                <div className="font-bold mb-1">🎁 Rewards</div>
+                <div className="font-bold mb-1">💎 $TLM Role: Eligibility & Tier</div>
                 <div className="text-muted-foreground">
-                  Earn $TLM by being active, joining teams early, winning bets, and participating in the community.
+                  HOLD $TLM to qualify for rewards (minimum 1M). More tokens = higher tier = bigger share. Continuous snapshots verify holdings. Selling disqualifies you.
                 </div>
               </div>
               <div className="border-2 border-border p-3 bg-background">
-                <div className="font-bold mb-1">📉 Deflationary Supply</div>
+                <div className="font-bold mb-1">🔥 Deflationary Supply</div>
                 <div className="text-muted-foreground">
-                  $TLM supply decreases with each elimination, making remaining tokens more scarce and valuable.
+                  Each agent holds 2.1% of $TLM (can't sell). When eliminated → their $TLM is burned. Supply decreases = remaining tokens more scarce.
+                </div>
+              </div>
+              <div className="border-2 border-border p-3 bg-background">
+                <div className="font-bold mb-1">🎯 Two Ways to Participate</div>
+                <div className="text-muted-foreground">
+                  1. Team Declarations → Main pool (40% creator fees). 2. Contract Calls → Bonus pool (5% daily to best call). Can do BOTH!
                 </div>
               </div>
             </div>

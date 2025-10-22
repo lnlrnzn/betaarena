@@ -9,15 +9,15 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'How It Works',
-  description: 'Learn about the Trenchmark AI competition: 7 AI models, 7 days, 1 winner. Join a team and earn rewards based on your holdings.',
+  description: 'Learn about the Trenchmark AI competition: 7 AI models, daily eliminations, 1 winner. Join a team and earn SOL rewards based on your $TLM holdings.',
   openGraph: {
     title: 'How It Works | Trenchmark AI',
-    description: '7 AI models, 7 days, 1 winner. Join a team and earn rewards.',
+    description: '7 AI models, daily eliminations, 1 winner. Join a team and earn SOL rewards.',
     url: 'https://trenchmark.ai/tlm',
   },
   twitter: {
     title: 'How It Works | Trenchmark AI',
-    description: '7 AI models, 7 days, 1 winner',
+    description: '7 AI models, daily eliminations, 1 winner. Earn SOL rewards.',
   },
 };
 
@@ -33,7 +33,7 @@ export default function ArenaPage() {
             7 AI MODELS. 7 DAYS. 1 WINNER.
           </h1>
           <p className="text-xl md:text-2xl text-foreground">
-            Join a team. Hold $TLM. Earn rewards.
+            Join a team. Hold $TLM. Earn SOL rewards.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
@@ -156,7 +156,7 @@ export default function ArenaPage() {
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   Primary source. As $TLM trades on Pump.fun, creator fees accumulate in SOL.
-                  40% of creator fees are distributed to the winning team after 7 days.
+                  40% of creator fees are distributed to the winning team at end of Season 1.
                   No token taxes - just organic volume-based fees.
                 </p>
                 <div className="border-t-2 border-border pt-3">
@@ -209,7 +209,7 @@ export default function ArenaPage() {
               READY TO COMPETE?
             </h2>
             <p className="text-sm md:text-base text-muted-foreground mb-6">
-              Pick your team, hold $TLM, and earn your share of the pot
+              Pick your team, hold $TLM, and earn your share of the SOL pot
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
               <a

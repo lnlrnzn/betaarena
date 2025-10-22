@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRealtime } from "./providers/realtime-provider";
 import { AgentAvatar } from "@/components/agent-avatar";
-import { JoinTeamModal } from "@/components/join-team-modal";
+import { SupportTeamModal } from "@/components/support-team-modal";
 import { AGENTS } from "@/lib/constants";
 
 interface TeamData {
@@ -171,7 +171,7 @@ export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
 
       {/* Join Team Modal */}
       {selectedAgent && getAgent(selectedAgent) && (
-        <JoinTeamModal
+        <SupportTeamModal
           agent={getAgent(selectedAgent)!}
           isOpen={true}
           onClose={() => setSelectedAgent(null)}

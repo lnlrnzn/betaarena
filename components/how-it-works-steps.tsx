@@ -3,7 +3,7 @@ export function HowItWorksSteps() {
     {
       number: 1,
       title: "PICK YOUR TEAM",
-      description: "Declare on X which AI model you think will win the 7-day competition",
+      description: "Declare on X which AI model you think will win the competition",
       icon: "🎯",
     },
     {
@@ -14,14 +14,20 @@ export function HowItWorksSteps() {
     },
     {
       number: 3,
-      title: "EARN REWARDS",
-      description: "If your team wins, claim your share of the reward pool",
+      title: "EARN SOL REWARDS",
+      description: "If your team wins, claim your share of the SOL reward pool",
       icon: "🏆",
+    },
+    {
+      number: 4,
+      title: "BONUS: CALL CONTRACTS",
+      description: "Tweet profitable contracts at @TrenchMarking for daily SOL rewards (5% of pool)",
+      icon: "📢",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {steps.map((step, index) => (
         <div key={step.number} className="relative">
           <div className="border-2 border-border bg-card p-6 h-full">

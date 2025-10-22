@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRealtime } from "./providers/realtime-provider";
 import { Agent } from "@/lib/constants";
-import { JoinTeamModal } from "./join-team-modal";
+import { SupportTeamModal } from "./support-team-modal";
 import { TeamMemberCard } from "./team-member-card";
 
 interface TeamMember {
@@ -167,7 +167,7 @@ export function ModelTeam({ agentId, agent, initialStats, initialMembers }: Mode
     </div>
 
     {/* Join Team Modal */}
-    <JoinTeamModal
+    <SupportTeamModal
       agent={agent}
       isOpen={showJoinModal}
       onClose={() => setShowJoinModal(false)}
