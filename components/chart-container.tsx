@@ -113,14 +113,14 @@ export function ChartContainer({ initialData, activeRange, agentStats }: ChartCo
       <EliminationCountdown agentStats={agentStats} />
 
       {/* Timeframe Selector */}
-      <div className="bg-background border-2 border-b-0 border-t-0 border-border px-6 py-3">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-muted-foreground mr-2">TIMEFRAME:</span>
+      <div className="bg-background border-2 border-b-0 border-t-0 border-border px-3 sm:px-6 py-2 sm:py-3">
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+          <span className="text-[10px] sm:text-xs font-bold text-muted-foreground mr-1 sm:mr-2">TIMEFRAME:</span>
           {(Object.keys(TIME_RANGES) as TimeRange[]).map((range) => (
             <button
               key={range}
               onClick={() => handleRangeChange(range)}
-              className={`px-4 py-1.5 text-xs font-bold border-2 transition-colors ${
+              className={`px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold border-2 transition-colors ${
                 activeRange === range
                   ? "border-border bg-primary text-primary-foreground"
                   : "border-border bg-background text-foreground hover:bg-muted"
@@ -133,34 +133,34 @@ export function ChartContainer({ initialData, activeRange, agentStats }: ChartCo
       </div>
 
       {/* Zoom Controls */}
-      <div className="bg-background border-2 border-b-0 border-border px-6 py-3">
-        <div className="flex items-center gap-2">
+      <div className="bg-background border-2 border-b-0 border-border px-3 sm:px-6 py-2 sm:py-3">
+        <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
           <button
             onClick={handleZoomIn}
-            className="px-4 py-1.5 text-xs font-bold border-2 border-border bg-background text-foreground hover:bg-muted transition-colors"
+            className="px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold border-2 border-border bg-background text-foreground hover:bg-muted transition-colors"
             title="Zoom In"
           >
-            ZOOM IN +
+            <span className="hidden sm:inline">ZOOM IN </span>+
           </button>
           <button
             onClick={handleZoomOut}
-            className="px-4 py-1.5 text-xs font-bold border-2 border-border bg-background text-foreground hover:bg-muted transition-colors"
+            className="px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold border-2 border-border bg-background text-foreground hover:bg-muted transition-colors"
             title="Zoom Out"
           >
-            ZOOM OUT −
+            <span className="hidden sm:inline">ZOOM OUT </span>−
           </button>
           <button
             onClick={handleResetView}
-            className="px-4 py-1.5 text-xs font-bold border-2 border-border bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="px-2 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold border-2 border-border bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
             title="Reset to full view"
           >
-            RESET VIEW
+            <span className="hidden sm:inline">RESET </span><span className="sm:hidden">↻ </span><span className="hidden sm:inline">VIEW</span>
           </button>
-          <span className="text-xs text-muted-foreground ml-2">
+          <span className="hidden md:inline text-xs text-muted-foreground ml-2">
             Use mouse wheel to zoom, drag to pan
           </span>
-          <span className="text-xs font-bold text-muted-foreground ml-auto border-l-2 border-border pl-4">
-            ALL TIMES IN UTC
+          <span className="text-[10px] sm:text-xs font-bold text-muted-foreground ml-auto border-l-2 border-border pl-2 sm:pl-4">
+            <span className="hidden sm:inline">ALL TIMES IN </span>UTC
           </span>
         </div>
       </div>

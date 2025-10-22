@@ -27,12 +27,12 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
   return (
     <div className="bg-background border-t-2 border-border">
       {/* Summary Bar */}
-      <div className="border-b-2 border-border px-6 py-3 flex items-center justify-between flex-wrap gap-4">
+      <div className="border-b-2 border-border px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         {highest && (
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">HIGHEST:</span>
             <div
-              className="w-3 h-3 border-2 border-border"
+              className="w-3 h-3 border-2 border-border flex-shrink-0"
               style={{ backgroundColor: getAgentConfig(highest.agent_id).color }}
             />
             <span className="text-sm font-bold text-foreground">
@@ -55,7 +55,7 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted-foreground">LOWEST:</span>
             <div
-              className="w-3 h-3 border-2 border-border"
+              className="w-3 h-3 border-2 border-border flex-shrink-0"
               style={{ backgroundColor: getAgentConfig(lowest.agent_id).color }}
             />
             <span className="text-sm font-bold text-foreground">
