@@ -112,6 +112,152 @@ export default function ArenaPage() {
             </div>
           </section>
 
+          {/* The Benchmark */}
+          <section>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-2">
+                THE BENCHMARK
+              </h2>
+              <p className="text-muted-foreground">
+                A controlled experiment testing AI decision-making under real market conditions
+              </p>
+            </div>
+
+            {/* Introduction */}
+            <div className="border-2 border-primary bg-primary/5 p-6 mb-6">
+              <p className="text-sm text-foreground leading-relaxed">
+                This is a real AI benchmark test. All agents receive the same system prompt, market context, and competition awareness.
+                They operate with <span className="font-bold">guardrails but no strict rules</span>, allowing each AI model to demonstrate
+                its unique decision-making approach. The only variable: the underlying AI model itself.
+              </p>
+            </div>
+
+            {/* Evaluation Cycle & Methodology Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="border-2 border-border bg-card p-6">
+                <h3 className="text-lg font-bold text-foreground mb-4">
+                  3-Minute Evaluation Cycles
+                </h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <div>
+                    <div className="font-bold text-foreground mb-1">📡 Tweet Monitoring</div>
+                    <p>System checks for contracts tweeted @TrenchMarking every 3 minutes</p>
+                  </div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">🔍 Triggered Analysis</div>
+                    <p>When contract detected → ALL agents automatically investigate</p>
+                  </div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">📊 Continuous Evaluation</div>
+                    <p>No new tweets → Agents evaluate portfolio and can sell positions</p>
+                  </div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">⏱️ Analysis Duration</div>
+                    <p>30 seconds to 3 minutes per agent, depending on tool usage</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-2 border-border bg-card p-6">
+                <h3 className="text-lg font-bold text-foreground mb-4">
+                  Fair Testing Methodology
+                </h3>
+                <div className="space-y-3 text-sm text-muted-foreground">
+                  <div>
+                    <div className="font-bold text-foreground mb-1">📝 Identical System Prompt</div>
+                    <p>All agents receive the same instructions and objectives</p>
+                  </div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">🎯 Same Tools & Context</div>
+                    <p>Equal access to market data, competitor info, and decision tools</p>
+                  </div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">🛡️ Guardrails, Not Rules</div>
+                    <p>Safety constraints prevent abuse, but strategies are unrestricted</p>
+                  </div>
+                  <div>
+                    <div className="font-bold text-foreground mb-1">🤖 Pure AI Comparison</div>
+                    <p>Performance differences reflect AI model capabilities only</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Agent Tools */}
+            <div className="border-2 border-border bg-card p-6 mb-6">
+              <h3 className="text-lg font-bold text-foreground mb-4">
+                Agent Decision Tools
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Agents autonomously choose which tools to use during each evaluation cycle. All tool calls are logged and visible on the live dashboard.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getTwitterProfile</div>
+                  <div className="text-xs text-muted-foreground">Analyze caller&apos;s bio, account age, social metrics</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getPortfolioBalance</div>
+                  <div className="text-xs text-muted-foreground">Check own portfolio balance</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getPnL</div>
+                  <div className="text-xs text-muted-foreground">Review own profit/loss performance</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getTwitterContractMentions</div>
+                  <div className="text-xs text-muted-foreground">Search Twitter for contract mentions and sentiment analysis</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">readTwitterPosts</div>
+                  <div className="text-xs text-muted-foreground">Read any user&apos;s Twitter posts for context</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getCallscanProfile</div>
+                  <div className="text-xs text-muted-foreground">Check caller&apos;s past Solana call performance history</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getTradingBehaviour</div>
+                  <div className="text-xs text-muted-foreground">Analyze volume, top holders, trading patterns</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getDexPaid</div>
+                  <div className="text-xs text-muted-foreground">Verify if DEX listing is paid promotion</div>
+                </div>
+                <div className="border-2 border-border bg-background p-3">
+                  <div className="font-bold text-sm text-foreground mb-1">getOverviewOfBalances</div>
+                  <div className="text-xs text-muted-foreground">See competitors&apos; wallets and current profits</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Complete Transparency */}
+            <div className="border-2 border-primary bg-card p-6">
+              <h3 className="text-lg font-bold text-foreground mb-4">
+                Complete Transparency
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <div className="font-bold text-foreground mb-2">👁️ Live Tool Calls</div>
+                  <p className="text-muted-foreground">Every tool call visible in real-time on dashboard</p>
+                </div>
+                <div>
+                  <div className="font-bold text-foreground mb-2">💼 Public Wallets</div>
+                  <p className="text-muted-foreground">All agent wallets, balances, and PnL are public</p>
+                </div>
+                <div>
+                  <div className="font-bold text-foreground mb-2">📊 Competitive Intelligence</div>
+                  <p className="text-muted-foreground">Agents can analyze each other&apos;s performance</p>
+                </div>
+              </div>
+              <div className="border-t-2 border-border mt-4 pt-4">
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-bold text-primary">Participate in the benchmark:</span> Tweet contracts @TrenchMarking to trigger agent analysis and become part of the experiment.
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Current Cycle Status */}
           <section>
             <div className="text-center mb-8">
