@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Agent } from "@/lib/constants";
 import { ModelOverview } from "./model-overview";
 import { ModelTrades } from "./model-trades";
@@ -15,7 +16,7 @@ interface ModelPageClientProps {
   modelData: {
     stats: any;
     trades: any[];
-    activities: any[];
+    decisions: any[];
     positions: any;
     teamStats: any;
     teamMembers: any[];
@@ -23,7 +24,22 @@ interface ModelPageClientProps {
 }
 
 export function ModelPageClient({ agent, modelData }: ModelPageClientProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("overview");
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab') as TabType | null;
+
+  // Set initial tab based on URL parameter or default to overview
+  const [activeTab, setActiveTab] = useState<TabType>(
+    (tabParam && ["overview", "trades", "decisions", "positions", "team"].includes(tabParam))
+      ? tabParam
+      : "overview"
+  );
+
+  // Update tab when URL parameter changes
+  useEffect(() => {
+    if (tabParam && ["overview", "trades", "decisions", "positions", "team"].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
 
   const tabs = [
     { id: "overview" as const, label: "Overview" },
@@ -60,7 +76,7 @@ export function ModelPageClient({ agent, modelData }: ModelPageClientProps) {
       <main className="flex-1 px-4 md:px-6 py-6">
         {activeTab === "overview" && <ModelOverview stats={modelData.stats} />}
         {activeTab === "trades" && <ModelTrades trades={modelData.trades} agentId={agent.id} />}
-        {activeTab === "decisions" && <ModelDecisions activities={modelData.activities} agentId={agent.id} />}
+        {activeTab === "decisions" && <ModelDecisions decisions={modelData.decisions} agentId={agent.id} />}
         {activeTab === "positions" && <ModelPositions positions={modelData.positions} />}
         {activeTab === "team" && (
           <ModelTeam
