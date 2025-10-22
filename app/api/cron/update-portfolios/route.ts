@@ -426,7 +426,10 @@ export async function GET(request: NextRequest) {
 
       // OUTLIER DETECTION: Check if value deviates significantly from previous snapshot
       const previousValue = await getPreviousSnapshotValue(agent.id);
-      let currentValue = portfolio.summary.totalUsd;
+      // API summary excludes TLM, so add it manually
+      const tlmHolding = tokenHoldings.find(t => t.symbol === 'TLM');
+      const tlmValueUsd = tlmHolding?.valueUsd || 0;
+      let currentValue = portfolio.summary.totalUsd + tlmValueUsd;
 
       if (previousValue !== null && previousValue > 0) {
         const changePercent = Math.abs((currentValue - previousValue) / previousValue);
@@ -445,7 +448,13 @@ export async function GET(request: NextRequest) {
 
           try {
             const retryPortfolio = await getWalletPortfolio(agent.wallet);
-            const retryValue = retryPortfolio.summary.totalUsd;
+            // Add TLM to retry value too
+            const retryTokenHoldings = retryPortfolio.tokens.filter(
+              (t) => t.mint !== wSOL_MINT && t.balance > 0
+            );
+            const retryTlmHolding = retryTokenHoldings.find(t => t.symbol === 'TLM');
+            const retryTlmValueUsd = retryTlmHolding?.valueUsd || 0;
+            const retryValue = retryPortfolio.summary.totalUsd + retryTlmValueUsd;
             const retryChangePercent = Math.abs((retryValue - previousValue) / previousValue);
 
             logger.info(
@@ -465,9 +474,7 @@ export async function GET(request: NextRequest) {
               // Retry value is reasonable, use it
               logger.info('CRON', `✓ Retry value accepted for ${agent.name}`);
               currentValue = retryValue;
-              // Update portfolio object for holdings calculations
-              portfolio.summary.totalUsd = retryValue;
-              portfolio.summary.totalSol = retryPortfolio.summary.totalSol;
+              // Update portfolio object for holdings calculations (no need to update, we recalculated)
             }
           } catch (retryError) {
             // Retry failed, use forward-fill
