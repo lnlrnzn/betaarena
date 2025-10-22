@@ -52,7 +52,20 @@ function deduplicateActivities(activities: Activity[]): Activity[] {
 
 export function LiveTools({ activities: initialActivities, agentFilter }: LiveToolsProps) {
   const [activities, setActivities] = useState<Activity[]>(deduplicateActivities(initialActivities));
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const { latestActivity } = useRealtime();
+
+  const toggleExpand = (activityId: string) => {
+    setExpandedCards(prev => {
+      const next = new Set(prev);
+      if (next.has(activityId)) {
+        next.delete(activityId);
+      } else {
+        next.add(activityId);
+      }
+      return next;
+    });
+  };
 
   // Real-time update from global context
   useEffect(() => {
@@ -105,6 +118,8 @@ export function LiveTools({ activities: initialActivities, agentFilter }: LiveTo
               const agent = Object.values(AGENTS).find((a) => a.id === activity.agent_id);
               const agentColor = agent?.color || "#666";
               const agentName = agent?.shortName || "Unknown";
+              const isLongText = activity.description.length > 100;
+              const isExpanded = expandedCards.has(activity.id);
 
               return (
                 <div
@@ -141,9 +156,28 @@ export function LiveTools({ activities: initialActivities, agentFilter }: LiveTo
                       </div>
 
                       {/* Description */}
-                      <p className="text-xs text-foreground line-clamp-2">
-                        {activity.description}
-                      </p>
+                      <div>
+                        <p className={`text-xs text-foreground ${isExpanded ? '' : 'line-clamp-2'}`}>
+                          {activity.description}
+                        </p>
+
+                        {isLongText && (
+                          <button
+                            onClick={() => toggleExpand(activity.id)}
+                            className="text-xs text-primary hover:underline mt-1 flex items-center gap-1 font-bold"
+                          >
+                            {isExpanded ? (
+                              <>
+                                Show less ▲
+                              </>
+                            ) : (
+                              <>
+                                Show more ▼
+                              </>
+                            )}
+                          </button>
+                        )}
+                      </div>
 
                       {/* Target Info (if available) */}
                       {activity.target_agent_id && (
