@@ -236,7 +236,7 @@ export default async function HomePage({
         <div className="flex-1 flex flex-col">
           {/* Chart Section */}
           <div className="flex-1 border-b-2 lg:border-b-0 lg:border-r-2 border-border">
-            <ChartContainer initialData={initialData} activeRange={validRange} />
+            <ChartContainer initialData={initialData} activeRange={validRange} agentStats={agentStats} />
           </div>
 
           {/* Agent Performance */}

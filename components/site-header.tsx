@@ -45,7 +45,7 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
               className="font-mono text-foreground hover:text-primary transition-colors relative group"
               title="Click to copy"
             >
-              {contractAddress.slice(0, 8)}...{contractAddress.slice(-6)}
+              {contractAddress}
               {copied && (
                 <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-2 py-1 text-xs font-bold whitespace-nowrap">
                   COPIED!
@@ -125,14 +125,14 @@ export function SiteHeader({ agentStats = [] }: SiteHeaderProps) {
           <nav className="md:hidden mt-4 pt-4 border-t-2 border-border space-y-2">
             {/* Contract Address - Mobile */}
             <div className="px-4 py-2 border-2 border-border bg-background">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex flex-col gap-2">
                 <span className="text-xs text-muted-foreground">CA:</span>
                 <button
                   onClick={handleCopyContract}
-                  className="font-mono text-xs text-foreground hover:text-primary transition-colors relative flex-1 text-right"
+                  className="font-mono text-xs text-foreground hover:text-primary transition-colors relative break-all text-left"
                   title="Click to copy"
                 >
-                  {contractAddress.slice(0, 8)}...{contractAddress.slice(-6)}
+                  {contractAddress}
                   {copied && (
                     <span className="absolute -top-8 right-0 bg-primary text-primary-foreground px-2 py-1 text-xs font-bold whitespace-nowrap">
                       COPIED!

@@ -3,16 +3,18 @@
 import { useRef, useState, useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { PortfolioChartLightweight } from "./portfolio-chart-lightweight";
-import { ChartDataPoint } from "@/lib/types";
+import { ChartDataPoint, AgentStats } from "@/lib/types";
 import { TIME_RANGES, TimeRange } from "@/lib/constants";
 import { useRealtime } from "@/components/providers/realtime-provider";
+import { EliminationCountdown } from "./elimination-countdown";
 
 interface ChartContainerProps {
   initialData: ChartDataPoint[];
   activeRange: TimeRange;
+  agentStats: AgentStats[];
 }
 
-export function ChartContainer({ initialData, activeRange }: ChartContainerProps) {
+export function ChartContainer({ initialData, activeRange, agentStats }: ChartContainerProps) {
   const chartRef = useRef<any>(null);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -107,8 +109,11 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
 
   return (
     <div className="flex flex-col h-full">
+      {/* Elimination Countdown Timer */}
+      <EliminationCountdown agentStats={agentStats} />
+
       {/* Timeframe Selector */}
-      <div className="bg-background border-2 border-b-0 border-border px-6 py-3">
+      <div className="bg-background border-2 border-b-0 border-t-0 border-border px-6 py-3">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-muted-foreground mr-2">TIMEFRAME:</span>
           {(Object.keys(TIME_RANGES) as TimeRange[]).map((range) => (
