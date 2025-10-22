@@ -26,8 +26,9 @@ export async function GET() {
       .select("agent_id, total_members, total_followers, total_following")
       .eq("cycle_id", activeCycle.id);
 
-    // Build response with ALL 7 agents, merge with team_stats data
+    // Build response with trading agents only (exclude SYSTEM)
     const teams = Object.values(AGENTS)
+      .filter((agent) => agent.model !== 'system')
       .map((agent) => {
         // Find matching stats from database, default to 0 if no members yet
         const stat = (teamStats || []).find((s) => s.agent_id === agent.id);
