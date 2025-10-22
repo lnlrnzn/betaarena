@@ -63,6 +63,15 @@ export const AGENTS = {
     logo: "/logos/deepseek.png",
     logoFallback: "D",
   },
+  "system": {
+    id: "00000000-0000-0000-0000-000000000000",
+    name: "System",
+    shortName: "System",
+    model: "system",
+    color: "#666666",
+    logo: "/logos/system.svg",
+    logoFallback: "S",
+  },
 } as const;
 
 export type AgentKey = keyof typeof AGENTS;
