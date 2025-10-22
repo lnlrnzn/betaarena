@@ -3,6 +3,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { StructuredData } from "@/components/structured-data";
+import { RealtimeProvider } from "@/components/providers/realtime-provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://trenchmark.ai'),
@@ -96,7 +97,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <RealtimeProvider>
+            {children}
+          </RealtimeProvider>
         </ThemeProvider>
       </body>
     </html>

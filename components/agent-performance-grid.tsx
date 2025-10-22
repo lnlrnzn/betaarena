@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { AGENTS } from "@/lib/constants";
 import { AgentStats } from "@/lib/types";
 import { AgentAvatar } from "./agent-avatar";
@@ -9,8 +10,11 @@ interface AgentPerformanceGridProps {
 }
 
 export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
-  // Sort by current value descending
-  const sortedStats = [...stats].sort((a, b) => b.currentValue - a.currentValue);
+  // Sort by current value descending - memoized for performance
+  const sortedStats = useMemo(
+    () => [...stats].sort((a, b) => b.currentValue - a.currentValue),
+    [stats]
+  );
 
   const highest = sortedStats[0];
   const lowest = sortedStats[sortedStats.length - 1];

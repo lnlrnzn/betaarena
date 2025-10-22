@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState, useEffect, useTransition } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { PortfolioChartLightweight } from "./portfolio-chart-lightweight";
 import { ChartDataPoint } from "@/lib/types";
-import { supabase } from "@/lib/supabase";
 import { TIME_RANGES, TimeRange } from "@/lib/constants";
+import { useRealtime } from "@/components/providers/realtime-provider";
 
 interface ChartContainerProps {
   initialData: ChartDataPoint[];
@@ -19,52 +19,45 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
   const [isLoading, setIsLoading] = useState(false);
   const [chartData, setChartData] = useState<ChartDataPoint[]>(initialData);
 
-  // Real-time subscription for live updates
+  // Use global realtime context instead of individual subscription
+  const { latestSnapshot } = useRealtime();
+
+  // Handle real-time updates from global provider
   useEffect(() => {
-    const channel = supabase
-      .channel("live-portfolio")
-      .on('postgres_changes', {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'portfolio_snapshots',
-      }, (payload) => {
-        console.log('New snapshot received:', payload.new);
-        const newSnapshot = payload.new as any;
+    if (!latestSnapshot) return;
 
-        setChartData(prev => {
-          const timestamp = new Date(newSnapshot.timestamp).getTime();
-          const existingIndex = prev.findIndex(p => p.timestamp === timestamp);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Chart] New snapshot received:', latestSnapshot);
+    }
 
-          if (existingIndex >= 0) {
-            // Update existing point
-            const updated = [...prev];
-            updated[existingIndex] = {
-              ...updated[existingIndex],
-              [newSnapshot.agent_id]: newSnapshot.total_portfolio_value_usd,
-            };
-            return updated;
-          } else {
-            // Add new point
-            return [...prev, {
-              timestamp,
-              date: new Date(timestamp).toLocaleString("en-US", {
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-              }),
-              [newSnapshot.agent_id]: newSnapshot.total_portfolio_value_usd,
-            }].sort((a, b) => a.timestamp - b.timestamp);
-          }
-        });
-      })
-      .subscribe();
+    setChartData(prev => {
+      const timestamp = new Date(latestSnapshot.timestamp).getTime();
+      const existingIndex = prev.findIndex(p => p.timestamp === timestamp);
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
+      if (existingIndex >= 0) {
+        // Update existing point
+        const updated = [...prev];
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          [latestSnapshot.agent_id]: latestSnapshot.total_portfolio_value_usd,
+        };
+        return updated;
+      } else {
+        // Add new point
+        return [...prev, {
+          timestamp,
+          date: new Date(timestamp).toLocaleString("en-US", {
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          }),
+          [latestSnapshot.agent_id]: latestSnapshot.total_portfolio_value_usd,
+        }].sort((a, b) => a.timestamp - b.timestamp);
+      }
+    });
+  }, [latestSnapshot]);
 
   const handleZoomIn = () => {
     if (chartRef.current) {

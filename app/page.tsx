@@ -3,185 +3,49 @@ import { SidebarTabs } from "@/components/sidebar-tabs";
 import { AgentPerformanceGrid } from "@/components/agent-performance-grid";
 import { SiteHeader } from "@/components/site-header";
 import { ChartDataPoint } from "@/lib/types";
-import { getAgentStats, getLatestTrades, getLatestActivities, getLatestTweets, supabaseServer } from "@/lib/supabase-server";
+import { getAgentStats, getLatestTrades, getLatestActivities, getLatestTweets } from "@/lib/supabase-server";
 import { TIME_RANGES, TimeRange } from "@/lib/constants";
 
 // Enable ISR - Page rebuilds every 60 seconds to show latest data
 export const revalidate = 60;
 
-// Forward-fill utility to handle zero/missing values in time series data
-function forwardFillTimeSeries<T extends Record<string, any>>(
-  data: T[],
-  timestampKey: keyof T,
-  valueKey: keyof T
-): { filled: T[]; zeroCount: number; filledCount: number } {
-  if (!data || data.length === 0) {
-    return { filled: [], zeroCount: 0, filledCount: 0 };
-  }
+// Note: Forward-fill and data processing logic moved to /api/chart-data route
+// for better performance and separation of concerns
 
-  // Sort by timestamp to ensure proper forward-fill
-  const sorted = [...data].sort((a, b) => {
-    const timeA = new Date(a[timestampKey] as any).getTime();
-    const timeB = new Date(b[timestampKey] as any).getTime();
-    return timeA - timeB;
-  });
-
-  let zeroCount = 0;
-  let filledCount = 0;
-  let lastValidValue: number | null = null;
-
-  // First pass: count zeros and forward-fill
-  const result = sorted.map((item) => {
-    const value = Number(item[valueKey]);
-
-    if (value === 0 || !value || isNaN(value)) {
-      zeroCount++;
-      if (lastValidValue !== null) {
-        filledCount++;
-        return { ...item, [valueKey]: lastValidValue };
-      }
-      return item; // Keep zero if no prior valid value (will back-fill)
-    }
-
-    lastValidValue = value;
-    return item;
-  });
-
-  // Second pass: back-fill any remaining zeros at the start
-  const firstValidValue = result.find(item => {
-    const val = Number(item[valueKey]);
-    return val > 0 && !isNaN(val);
-  })?.[valueKey];
-
-  if (firstValidValue) {
-    for (let i = 0; i < result.length; i++) {
-      const value = Number(result[i][valueKey]);
-      if (value === 0 || !value || isNaN(value)) {
-        result[i] = { ...result[i], [valueKey]: firstValidValue };
-        filledCount++;
-      } else {
-        break; // Stop at first valid value
-      }
-    }
-  }
-
-  return { filled: result, zeroCount, filledCount };
-}
-
-// Process raw data without aggregation
-function processRawData(
-  snapshots: any[]
-): ChartDataPoint[] {
-  if (!snapshots.length) return [];
-
-  // Create a map of timestamps to data points
-  const timestampMap = new Map<number, ChartDataPoint>();
-
-  // Process all snapshots without aggregation
-  snapshots.forEach((snapshot) => {
-    const timestamp = new Date(snapshot.timestamp).getTime();
-
-    if (!timestampMap.has(timestamp)) {
-      timestampMap.set(timestamp, {
-        timestamp,
-        date: new Date(timestamp).toLocaleString("en-US", {
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }),
-      });
-    }
-
-    const point = timestampMap.get(timestamp)!;
-    point[snapshot.agent_id] = snapshot.total_portfolio_value_usd;
-  });
-
-  // Convert to array and sort by timestamp
-  const result = Array.from(timestampMap.values()).sort((a, b) => a.timestamp - b.timestamp);
-
-  return result;
-}
-
-// Initial chart data - fetch server-side for faster initial render
+// Initial chart data - fetch from optimized API route
 async function getInitialChartData(range: TimeRange = "24H"): Promise<ChartDataPoint[]> {
   try {
-    const rangeConfig = TIME_RANGES[range];
-    console.log(`Fetching ${range} data...`);
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const url = `${baseUrl}/api/chart-data?range=${range}`;
 
-    // Calculate time filter based on range (null for ALL)
-    let timeFilter: Date | null = null;
-    if (rangeConfig.hours !== null) {
-      timeFilter = new Date();
-      timeFilter.setHours(timeFilter.getHours() - rangeConfig.hours);
-      console.log('From:', timeFilter.toISOString());
-    } else {
-      console.log('Fetching ALL historical data...');
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[SERVER] Fetching ${range} chart data from API...`);
     }
 
-    // Fetch snapshots using pagination (Supabase has 1000 row limit)
-    let snapshots: any[] = [];
-    let offset = 0;
-    const batchSize = 1000;
-    let hasMore = true;
+    const response = await fetch(url, {
+      next: { revalidate: 60 }, // Cache for 60 seconds
+    });
 
-    console.log('Fetching snapshots in batches...');
-    while (hasMore) {
-      let query = supabaseServer
-        .from("portfolio_snapshots")
-        .select("agent_id, timestamp, total_portfolio_value_usd");
-
-      // Apply time filter if not ALL
-      if (timeFilter) {
-        query = query.gte("timestamp", timeFilter.toISOString());
-      }
-
-      const { data: batch } = await query
-        .order("timestamp", { ascending: true })
-        .range(offset, offset + batchSize - 1);
-
-      if (batch && batch.length > 0) {
-        snapshots.push(...batch);
-        console.log(`Fetched batch ${Math.floor(offset / batchSize) + 1}: ${batch.length} rows (total: ${snapshots.length})`);
-        offset += batchSize;
-        hasMore = batch.length === batchSize;
-      } else {
-        hasMore = false;
-      }
-    }
-
-    if (!snapshots || snapshots.length === 0) {
+    if (!response.ok) {
+      console.error('[SERVER] Chart data API error:', response.status, response.statusText);
       return [];
     }
 
-    // Apply forward-fill to handle zero/missing values
-    const { filled: filledSnapshots, zeroCount: snapshotZeros, filledCount: snapshotFills } =
-      forwardFillTimeSeries(snapshots, 'timestamp', 'total_portfolio_value_usd');
+    const data = await response.json();
 
-    console.log('=== DATA QUALITY ===');
-    console.log(`Snapshots: ${snapshotZeros} zeros found, ${snapshotFills} values forward-filled`);
-
-    // Return all raw data without aggregation
-    const result = processRawData(filledSnapshots);
-
-    // DEBUG: Log data info
-    console.log('=== SERVER: Chart Data Summary ===');
-    console.log('Total snapshots fetched:', snapshots.length);
-    console.log('Total data points created:', result.length);
-    if (result.length > 0) {
-      console.log('First timestamp (ms):', result[0].timestamp);
-      console.log('Last timestamp (ms):', result[result.length - 1].timestamp);
-      console.log('First date (UTC):', new Date(result[0].timestamp).toISOString());
-      console.log('Last date (UTC):', new Date(result[result.length - 1].timestamp).toISOString());
-      const durationHours = (result[result.length - 1].timestamp - result[0].timestamp) / (1000 * 60 * 60);
+    if (process.env.NODE_ENV === 'development' && data.length > 0) {
+      console.log('=== SERVER: Chart Data Summary ===');
+      console.log('Total data points:', data.length);
+      console.log('First date:', new Date(data[0].timestamp).toISOString());
+      console.log('Last date:', new Date(data[data.length - 1].timestamp).toISOString());
+      const durationHours = (data[data.length - 1].timestamp - data[0].timestamp) / (1000 * 60 * 60);
       console.log('Duration (hours):', durationHours.toFixed(2));
+      console.log('===================================');
     }
-    console.log('===================================');
 
-    return result;
+    return data;
   } catch (error) {
-    console.error("Error fetching initial chart data:", error);
+    console.error("[SERVER] Error fetching chart data:", error);
     return [];
   }
 }
@@ -227,7 +91,7 @@ export default async function HomePage({
       </div>
 
       {/* Mobile Sidebar Section */}
-      <div className="lg:hidden border-t-2 border-border h-[500px]">
+      <div className="lg:hidden border-t-2 border-border max-h-[500px]">
         <SidebarTabs trades={latestTrades} activities={latestActivities} tweets={latestTweets} />
       </div>
     </div>

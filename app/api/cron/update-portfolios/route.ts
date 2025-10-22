@@ -504,6 +504,21 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Step 4.5: Refresh materialized view for chart data (performance optimization)
+    try {
+      console.log('[CRON] Refreshing chart data materialized view...');
+      const { error: refreshError } = await supabaseServer.rpc('refresh_chart_data');
+
+      if (refreshError) {
+        // Log but don't fail - view will auto-refresh on next cron run
+        console.warn('[CRON] ⚠️  Chart view refresh failed (non-critical):', refreshError.message);
+      } else {
+        console.log('[CRON] ✓ Chart data view refreshed successfully');
+      }
+    } catch (error) {
+      console.warn('[CRON] ⚠️  Chart view refresh error (non-critical):', error);
+    }
+
     // Step 5: Enrich pending trades
     const enrichmentResults = await enrichTrades();
 
