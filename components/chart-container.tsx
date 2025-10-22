@@ -44,8 +44,10 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
         };
         return updated;
       } else {
-        // Add new point
-        return [...prev, {
+        // Add new point with forward-fill from previous timestamp
+        // This prevents temporary zeros when agents update at different times
+        const lastPoint = prev[prev.length - 1];
+        const newPoint: ChartDataPoint = {
           timestamp,
           date: new Date(timestamp).toLocaleString("en-US", {
             month: "short",
@@ -57,7 +59,18 @@ export function ChartContainer({ initialData, activeRange }: ChartContainerProps
             timeZone: "UTC",
           }),
           [latestSnapshot.agent_id]: latestSnapshot.total_portfolio_value_usd,
-        }].sort((a, b) => a.timestamp - b.timestamp);
+        };
+
+        // Forward-fill all other agent values from the last point
+        if (lastPoint) {
+          Object.keys(lastPoint).forEach(key => {
+            if (key !== 'timestamp' && key !== 'date' && !(key in newPoint)) {
+              newPoint[key] = lastPoint[key];
+            }
+          });
+        }
+
+        return [...prev, newPoint].sort((a, b) => a.timestamp - b.timestamp);
       }
     });
   }, [latestSnapshot]);
