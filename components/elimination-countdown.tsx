@@ -11,6 +11,7 @@ interface EliminationCountdownProps {
 
 export function EliminationCountdown({ agentStats }: EliminationCountdownProps) {
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   // Auto-show modal on first visit
@@ -32,7 +33,9 @@ export function EliminationCountdown({ agentStats }: EliminationCountdownProps) 
     };
 
     // Initial calculation
-    setTimeRemaining(calculateTimeRemaining());
+    const initialTime = calculateTimeRemaining();
+    setTimeRemaining(initialTime);
+    setIsLoading(false);
 
     // Update every second
     const interval = setInterval(() => {
@@ -77,6 +80,17 @@ export function EliminationCountdown({ agentStats }: EliminationCountdownProps) 
   const lowestAgent = getLowestPerformingAgent();
   const agentDetails = lowestAgent ? Object.values(AGENTS).find(a => a.id === lowestAgent.agent_id) : null;
   const isElimination = timeRemaining <= 0;
+
+  // Prevent flash of elimination message on initial load
+  if (isLoading) {
+    return (
+      <div className="bg-background border-4 border-border px-6 py-4">
+        <div className="flex items-center justify-center">
+          <div className="text-sm text-muted-foreground">Loading...</div>
+        </div>
+      </div>
+    );
+  }
 
   if (isElimination && lowestAgent && agentDetails) {
     // Elimination Announcement State

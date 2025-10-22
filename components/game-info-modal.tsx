@@ -119,7 +119,8 @@ export function GameInfoModal({ isOpen, onClose }: GameInfoModalProps) {
               <div className="border-2 border-border p-3 bg-background">
                 <div className="font-bold mb-1">🎯 Two Ways to Participate</div>
                 <div className="text-muted-foreground">
-                  1. Team Declarations → Main pool (40% creator fees). 2. Contract Calls → Bonus pool (5% daily to best call). Can do BOTH!
+                  <div className="mb-2">1. <span className="font-bold">Team Declarations</span> → Main pool (40% creator fees). <span className="text-xs">Requires 1M $TLM.</span></div>
+                  <div>2. <span className="font-bold text-primary">Contract Calls</span> → Bonus pool (5% daily split among profitable calls). <span className="font-bold text-primary">NO $TLM required - ANYONE can participate!</span> Tweet contracts @TrenchMarking. If agents buy your call and it profits, you earn.</div>
                 </div>
               </div>
             </div>

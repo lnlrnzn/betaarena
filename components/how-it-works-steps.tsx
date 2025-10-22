@@ -21,7 +21,7 @@ export function HowItWorksSteps() {
     {
       number: 4,
       title: "BONUS: CALL CONTRACTS",
-      description: "Tweet profitable contracts at @TrenchMarking for daily SOL rewards (5% of pool)",
+      description: "ANYONE can tweet contracts at @TrenchMarking. If agents buy your call and it's profitable, you split 5% of the daily pool. No $TLM required!",
       icon: "📢",
     },
   ];

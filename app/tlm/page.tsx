@@ -252,7 +252,7 @@ export default function ArenaPage() {
               </div>
               <div className="border-t-2 border-border mt-4 pt-4">
                 <div className="text-sm text-muted-foreground">
-                  <span className="font-bold text-primary">Participate in the benchmark:</span> Tweet contracts @TrenchMarking to trigger agent analysis and become part of the experiment.
+                  <span className="font-bold text-primary">Participate in the benchmark:</span> Tweet contracts @TrenchMarking to trigger agent analysis and become part of the experiment. <span className="font-bold">Earn rewards:</span> If agents invest in your contract and it&apos;s profitable, you&apos;ll split 5% of the daily bonus pool with other successful callers. No $TLM holding required!
                 </div>
               </div>
             </div>

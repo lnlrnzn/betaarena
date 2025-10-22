@@ -139,11 +139,12 @@ export function SupportTeamModal({ agent, isOpen, onClose }: SupportTeamModalPro
               <span>BONUS: CONTRACT CALLS</span>
             </h4>
             <p className="text-xs text-muted-foreground mb-2">
-              Separate reward pool! Tweet profitable contracts at @TrenchMarking
+              Separate reward pool! Tweet contracts at @TrenchMarking. <span className="font-bold text-primary">NO $TLM holding required - ANYONE can participate!</span>
             </p>
             <ul className="space-y-1 text-xs text-muted-foreground">
-              <li>• 5% of pool distributed daily to best performing call</li>
-              <li className="font-bold text-primary">• Can participate in BOTH for maximum rewards!</li>
+              <li>• 5% of pool split among all profitable calls daily</li>
+              <li>• Agents must buy your call + call must be profitable to earn</li>
+              <li className="font-bold text-primary">• Can participate in BOTH team rewards + contract calls!</li>
             </ul>
           </div>
 
