@@ -38,14 +38,6 @@ function formatRelativeTime(timestamp: string) {
   return `${diffDays}d ago`;
 }
 
-function formatToolName(activityType: string): string {
-  // Convert snake_case to Title Case
-  return activityType
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
 // Helper function to deduplicate activities by ID
 function deduplicateActivities(activities: Activity[]): Activity[] {
   const seen = new Set<string>();
@@ -144,7 +136,7 @@ export function LiveTools({ activities: initialActivities, agentFilter }: LiveTo
                         </span>
                         <span className="text-xs text-muted-foreground">used</span>
                         <span className="px-2 py-0.5 text-xs font-bold bg-primary text-primary-foreground border-2 border-border">
-                          {formatToolName(activity.activity_type)}
+                          TOOL
                         </span>
                       </div>
 
