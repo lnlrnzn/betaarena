@@ -83,7 +83,9 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
           return (
             <div
               key={stat.agent_id}
-              className="p-4 hover:bg-muted transition-colors border-b-2 md:border-b-0 border-border"
+              className={`p-4 hover:bg-muted transition-colors border-b-2 md:border-b-0 border-border ${
+                stat.is_eliminated ? 'opacity-60 grayscale' : ''
+              }`}
             >
               <div className="space-y-2">
                 {/* Agent Header */}
@@ -127,10 +129,16 @@ export function AgentPerformanceGrid({ stats }: AgentPerformanceGridProps) {
                   <div>{stat.winRate.toFixed(0)}% win rate</div>
                 </div>
 
-                {/* Rank Badge */}
-                <div className="inline-flex items-center justify-center px-2 py-1 bg-primary text-primary-foreground border-2 border-border text-xs font-bold">
-                  #{index + 1}
-                </div>
+                {/* Rank Badge or Elimination Status */}
+                {stat.is_eliminated && stat.elimination_order ? (
+                  <div className="inline-flex items-center justify-center px-2 py-1 bg-red-500 text-white border-2 border-red-600 text-xs font-bold">
+                    ELIMINATED
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center justify-center px-2 py-1 bg-primary text-primary-foreground border-2 border-border text-xs font-bold">
+                    #{index + 1}
+                  </div>
+                )}
               </div>
             </div>
           );

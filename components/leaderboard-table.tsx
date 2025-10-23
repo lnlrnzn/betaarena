@@ -120,19 +120,25 @@ export function LeaderboardTable({ stats }: LeaderboardTableProps) {
               <tr
                 key={stat.agent_id}
                 className={`border-b border-border hover:bg-muted transition-colors ${
-                  isTop3 ? "bg-muted/50" : ""
+                  stat.is_eliminated ? "opacity-60 grayscale" : isTop3 ? "bg-muted/50" : ""
                 }`}
               >
-                {/* Rank */}
+                {/* Rank or Elimination Badge */}
                 <td className="px-2 sm:px-4 py-3">
-                  <div className={`inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 border-2 border-border text-xs font-bold ${
-                    stat.rank === 1 ? "bg-yellow-500 text-white" :
-                    stat.rank === 2 ? "bg-gray-400 text-white" :
-                    stat.rank === 3 ? "bg-orange-600 text-white" :
-                    "bg-background text-foreground"
-                  }`}>
-                    #{stat.rank}
-                  </div>
+                  {stat.is_eliminated && stat.elimination_order ? (
+                    <div className="inline-flex items-center justify-center px-2 py-1 border-2 border-red-600 bg-red-500 text-white text-xs font-bold">
+                      OUT
+                    </div>
+                  ) : (
+                    <div className={`inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 border-2 border-border text-xs font-bold ${
+                      stat.rank === 1 ? "bg-yellow-500 text-white" :
+                      stat.rank === 2 ? "bg-gray-400 text-white" :
+                      stat.rank === 3 ? "bg-orange-600 text-white" :
+                      "bg-background text-foreground"
+                    }`}>
+                      #{stat.rank}
+                    </div>
+                  )}
                 </td>
 
                 {/* Model */}

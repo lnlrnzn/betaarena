@@ -58,13 +58,33 @@ export async function getAgentStats(): Promise<AgentStats[]> {
     .select('agent_id, status, pnl_usd')
     .in('agent_id', agentIds);
 
+  // Get elimination status for all agents
+  const eliminationQuery = supabaseServer
+    .from('agents')
+    .select('id, is_eliminated, eliminated_at, elimination_order')
+    .in('id', agentIds);
+
   // Execute all queries in parallel
-  const [snapshots, tradesResult] = await Promise.all([
+  const [snapshots, tradesResult, eliminationResult] = await Promise.all([
     Promise.all(snapshotQueries),
     tradesQuery,
+    eliminationQuery,
   ]);
 
   const tradeStats = tradesResult.data || [];
+  const eliminationData = eliminationResult.data || [];
+
+  // Build elimination map
+  const eliminationMap = new Map(
+    eliminationData.map((e) => [
+      e.id,
+      {
+        is_eliminated: e.is_eliminated || false,
+        eliminated_at: e.eliminated_at,
+        elimination_order: e.elimination_order,
+      },
+    ])
+  );
 
   // Build maps for first and latest snapshots
   const firstSnapshots = new Map<string, number>();
@@ -104,6 +124,12 @@ export async function getAgentStats(): Promise<AgentStats[]> {
     const trades = agentTradeStats.get(agentId) || { total: 0, wins: 0 };
     const winRate = trades.total > 0 ? (trades.wins / trades.total) * 100 : 0;
 
+    const elimination = eliminationMap.get(agentId) || {
+      is_eliminated: false,
+      eliminated_at: null,
+      elimination_order: null,
+    };
+
     return {
       agent_id: agentId,
       currentValue,
@@ -113,6 +139,9 @@ export async function getAgentStats(): Promise<AgentStats[]> {
       totalTrades: trades.total,
       winRate,
       avgHoldTime: '0m', // TODO: Calculate from trades
+      is_eliminated: elimination.is_eliminated,
+      eliminated_at: elimination.eliminated_at,
+      elimination_order: elimination.elimination_order,
     };
   });
 

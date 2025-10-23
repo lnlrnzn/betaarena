@@ -34,4 +34,7 @@ export interface AgentStats {
   totalTrades: number;
   winRate: number;
   avgHoldTime: string;
+  is_eliminated: boolean;
+  eliminated_at: string | null;
+  elimination_order: number | null;
 }
