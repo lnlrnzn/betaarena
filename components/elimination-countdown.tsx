@@ -26,8 +26,15 @@ export function EliminationCountdown({ agentStats }: EliminationCountdownProps) 
   useEffect(() => {
     const calculateTimeRemaining = () => {
       const now = new Date();
-      // Target: October 23, 2025, 21:00 UTC
-      const target = new Date('2025-10-23T21:00:00Z');
+
+      // Calculate next 21:00 UTC (daily elimination time)
+      const target = new Date(now);
+      target.setUTCHours(21, 0, 0, 0);
+
+      // If we've passed 21:00 UTC today, target tomorrow at 21:00 UTC
+      if (now.getTime() >= target.getTime()) {
+        target.setUTCDate(target.getUTCDate() + 1);
+      }
 
       return target.getTime() - now.getTime();
     };
