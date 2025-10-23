@@ -430,7 +430,7 @@ export async function GET(request: NextRequest) {
 
       if (previousValue !== null && previousValue > 0) {
         const changePercent = Math.abs((currentValue - previousValue) / previousValue);
-        const OUTLIER_THRESHOLD = 0.20; // 20% deviation threshold
+        const OUTLIER_THRESHOLD = 0.50; // 50% deviation threshold (allows volatile TLM price movements)
 
         if (changePercent > OUTLIER_THRESHOLD) {
           logger.warn(
