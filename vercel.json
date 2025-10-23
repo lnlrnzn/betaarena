@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/update-portfolios",
       "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/parse-declarations",
+      "schedule": "0 * * * *"
     }
   ]
 }
