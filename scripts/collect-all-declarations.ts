@@ -291,10 +291,19 @@ export async function runDeclarationsParser() {
 
     console.log(`\n✓ Valid declarations: ${validDeclarations.length}\n`);
 
-    // Save results
-    const outputPath = path.join(__dirname, 'all-declarations-found.json');
-    fs.writeFileSync(outputPath, JSON.stringify(validDeclarations, null, 2));
-    console.log(`✓ Saved to: ${outputPath}\n`);
+    // Save results (only in local environment where filesystem is writable)
+    try {
+      const outputPath = path.join(__dirname, 'all-declarations-found.json');
+      fs.writeFileSync(outputPath, JSON.stringify(validDeclarations, null, 2));
+      console.log(`✓ Saved to: ${outputPath}\n`);
+    } catch (error: any) {
+      // Ignore file write errors in read-only environments (e.g., Vercel)
+      if (error.code === 'EROFS') {
+        console.log('⚠️  Skipping file save (read-only filesystem)\n');
+      } else {
+        console.log(`⚠️  Could not save results file: ${error.message}\n`);
+      }
+    }
 
     // Compare with DB
     console.log('Phase 5: Comparing with database...');
