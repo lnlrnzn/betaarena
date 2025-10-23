@@ -241,7 +241,7 @@ async function insertDeclarations(declarations: TeamDeclaration[]): Promise<numb
 // MAIN
 // ====================
 
-async function main() {
+export async function runDeclarationsParser() {
   console.log('='.repeat(70));
   console.log('COMPLETE TEAM DECLARATIONS COLLECTOR');
   console.log('='.repeat(70));
@@ -333,10 +333,22 @@ async function main() {
     console.log(`Newly inserted:               ${newDeclarations.length}`);
     console.log('='.repeat(70));
 
+    return {
+      totalSearched: allUniqueTweets.length,
+      validFound: validDeclarations.length,
+      alreadyInDb: alreadyInDb.length,
+      newlyInserted: newDeclarations.length,
+    };
+
   } catch (error: any) {
     console.error('\n❌ Error:', error.message);
-    process.exit(1);
+    throw error;
   }
 }
 
-main();
+// Run directly if executed as script
+if (require.main === module) {
+  runDeclarationsParser()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}
