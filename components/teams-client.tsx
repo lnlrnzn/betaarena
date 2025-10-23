@@ -22,6 +22,9 @@ interface TeamData {
   total_following: number;
   all_members: TeamMember[];
   avg_bonus_multiplier: number;
+  is_eliminated: boolean;
+  eliminated_at: string | null;
+  elimination_order: number | null;
 }
 
 interface TeamStatsResponse {
@@ -99,6 +102,12 @@ export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
       const diffMinutes = Math.floor(diffMs / (1000 * 60));
       return `${diffMinutes}m ago`;
     }
+  };
+
+  const formatEliminationOrder = (order: number): string => {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const v = order % 100;
+    return order + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]).toUpperCase();
   };
 
   const getAgent = (agentModel: string) => {
@@ -186,16 +195,27 @@ export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
                     <div key={team.agent_id} className="space-y-2">
                       {/* Team Row */}
                       <div
-                        className="border-4 border-border bg-card hover:border-primary transition-all cursor-pointer group"
+                        className={`border-4 border-border bg-card hover:border-primary transition-all cursor-pointer group ${
+                          team.is_eliminated ? 'opacity-60 grayscale' : ''
+                        }`}
                         onClick={() => toggleTeam(team.agent_id)}
                       >
                         <div className="p-4 flex items-center gap-4">
-                          {/* Rank Badge */}
-                          <div
-                            className="w-12 h-12 flex-shrink-0 border-4 border-border bg-background flex items-center justify-center font-bold text-lg"
-                            style={{ borderColor: agent.color }}
-                          >
-                            #{team.rank}
+                          {/* Rank Badge with Elimination Indicator */}
+                          <div className="flex-shrink-0">
+                            {team.is_eliminated && team.elimination_order ? (
+                              <div className="w-12 h-12 border-4 border-red-500 bg-red-100 dark:bg-red-900 flex flex-col items-center justify-center font-bold text-xs">
+                                <div className="text-red-600 dark:text-red-300">OUT</div>
+                                <div className="text-red-600 dark:text-red-300">#{team.elimination_order}</div>
+                              </div>
+                            ) : (
+                              <div
+                                className="w-12 h-12 border-4 border-border bg-background flex items-center justify-center font-bold text-lg"
+                                style={{ borderColor: agent.color }}
+                              >
+                                #{team.rank}
+                              </div>
+                            )}
                           </div>
 
                           {/* Agent Avatar & Name */}
@@ -210,9 +230,18 @@ export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
                             <div className="min-w-0">
                               <h3 className="font-bold text-lg text-foreground truncate">
                                 {agent.name}
+                                {team.is_eliminated && team.elimination_order && (
+                                  <span className="ml-2 text-sm font-normal text-red-500">
+                                    [{formatEliminationOrder(team.elimination_order)} ELIMINATED]
+                                  </span>
+                                )}
                               </h3>
                               <div className="text-xs text-muted-foreground">
-                                Click to {isExpanded ? 'hide' : 'view'} members
+                                {team.is_eliminated && team.eliminated_at ? (
+                                  <>Eliminated {formatTimeAgo(new Date(team.eliminated_at))}</>
+                                ) : (
+                                  <>Click to {isExpanded ? 'hide' : 'view'} members</>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -244,16 +273,27 @@ export function TeamsClient({ initialTeamStats }: TeamsClientProps) {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedAgent(team.agent_model);
+                              if (!team.is_eliminated) {
+                                setSelectedAgent(team.agent_model);
+                              }
                             }}
-                            className="px-6 py-3 border-4 font-bold text-sm transition-all hover:opacity-90 whitespace-nowrap"
-                            style={{
-                              borderColor: agent.color,
-                              backgroundColor: agent.color,
-                              color: '#ffffff',
-                            }}
+                            disabled={team.is_eliminated}
+                            className={`px-6 py-3 border-4 font-bold text-sm transition-all whitespace-nowrap ${
+                              team.is_eliminated
+                                ? 'opacity-40 cursor-not-allowed bg-gray-400 border-gray-400 text-gray-700'
+                                : 'hover:opacity-90'
+                            }`}
+                            style={
+                              !team.is_eliminated
+                                ? {
+                                    borderColor: agent.color,
+                                    backgroundColor: agent.color,
+                                    color: '#ffffff',
+                                  }
+                                : undefined
+                            }
                           >
-                            JOIN
+                            {team.is_eliminated ? 'ELIMINATED' : 'JOIN'}
                           </button>
                         </div>
                       </div>

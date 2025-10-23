@@ -30,6 +30,23 @@ export async function GET() {
       );
     }
 
+    // Get elimination status for all agents
+    const { data: agentElimination } = await supabaseServer
+      .from("agents")
+      .select("id, is_eliminated, eliminated_at, elimination_order");
+
+    // Create a map of agent elimination status
+    const eliminationMap = new Map(
+      (agentElimination || []).map((a) => [
+        a.id,
+        {
+          is_eliminated: a.is_eliminated || false,
+          eliminated_at: a.eliminated_at,
+          elimination_order: a.elimination_order,
+        },
+      ])
+    );
+
     // Get stats for all teams from view
     const { data: teamStats } = await supabaseServer
       .from("team_stats")
@@ -81,6 +98,12 @@ export async function GET() {
               ) / allTeamMembers.length
             : 1.0;
 
+        const elimination = eliminationMap.get(agent.id) || {
+          is_eliminated: false,
+          eliminated_at: null,
+          elimination_order: null,
+        };
+
         return {
           agent_id: agent.id,
           agent_name: agent.name,
@@ -90,9 +113,25 @@ export async function GET() {
           total_following: stat?.total_following || 0,
           all_members: teamDeclarations, // Changed from top_members to all_members
           avg_bonus_multiplier: Number(avgBonus.toFixed(2)),
+          is_eliminated: elimination.is_eliminated,
+          eliminated_at: elimination.eliminated_at,
+          elimination_order: elimination.elimination_order,
         };
       })
-      .sort((a, b) => b.total_members - a.total_members) // Sort by members descending
+      // Sort: active teams by members DESC, then eliminated teams by elimination_order ASC
+      .sort((a, b) => {
+        // Put eliminated teams at the end
+        if (a.is_eliminated && !b.is_eliminated) return 1;
+        if (!a.is_eliminated && b.is_eliminated) return -1;
+
+        // If both eliminated, sort by elimination order (first eliminated last)
+        if (a.is_eliminated && b.is_eliminated) {
+          return (b.elimination_order || 0) - (a.elimination_order || 0);
+        }
+
+        // If both active, sort by total members descending
+        return b.total_members - a.total_members;
+      })
       .map((team, index) => ({
         ...team,
         rank: index + 1,
