@@ -292,7 +292,7 @@ export async function getAgentDecisions(agentId: string, limit: number = 100) {
  */
 export async function getSingleAgentStats(agentId: string): Promise<AgentStats | null> {
   // Optimized: Fetch only first and last snapshots instead of all 1,560+
-  const [firstSnapshotResult, latestSnapshotResult, trades] = await Promise.all([
+  const [firstSnapshotResult, latestSnapshotResult, trades, eliminationResult] = await Promise.all([
     // Query 1: Get first snapshot
     supabaseServer
       .from('portfolio_snapshots')
@@ -316,6 +316,13 @@ export async function getSingleAgentStats(agentId: string): Promise<AgentStats |
       .from('trades')
       .select('status, pnl_usd')
       .eq('agent_id', agentId),
+
+    // Query 4: Get elimination status
+    supabaseServer
+      .from('agents')
+      .select('is_eliminated, eliminated_at, elimination_order')
+      .eq('id', agentId)
+      .single(),
   ]);
 
   if (!firstSnapshotResult.data || !latestSnapshotResult.data) {
@@ -337,6 +344,12 @@ export async function getSingleAgentStats(agentId: string): Promise<AgentStats |
   const changePercent = startingValue > 0 ? (change / startingValue) * 100 : 0;
   const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
 
+  const elimination = eliminationResult.data || {
+    is_eliminated: false,
+    eliminated_at: null,
+    elimination_order: null,
+  };
+
   return {
     agent_id: agentId,
     currentValue,
@@ -346,6 +359,9 @@ export async function getSingleAgentStats(agentId: string): Promise<AgentStats |
     totalTrades,
     winRate,
     avgHoldTime: '0m', // TODO: Calculate from trades
+    is_eliminated: elimination.is_eliminated || false,
+    eliminated_at: elimination.eliminated_at,
+    elimination_order: elimination.elimination_order,
   };
 }
 
