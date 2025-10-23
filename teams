@@ -1,0 +1,2824 @@
+[
+  {
+    "tweets": [
+      {
+        "type": "tweet",
+        "id": "1981131698772291855",
+        "url": "https://x.com/voidgrainn/status/1981131698772291855",
+        "twitterUrl": "https://twitter.com/voidgrainn/status/1981131698772291855",
+        "text": "@TrenchMarking working tech and good dev team this has to go to a mil",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 0,
+        "createdAt": "Wed Oct 22 22:52:59 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981131253328818551",
+        "conversationId": "1981131253328818551",
+        "displayTextRange": [
+          15,
+          69
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "voidgrainn",
+          "url": "https://x.com/voidgrainn",
+          "twitterUrl": "https://twitter.com/voidgrainn",
+          "id": "8386472",
+          "name": "@voidgrainn",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1978637142206054401/7Vrn2KX9_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/8386472/1760578846",
+          "description": "",
+          "location": "",
+          "followers": 45,
+          "following": 200,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Thu Aug 23 16:34:08 +0000 2007",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 54,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 1,
+          "statusesCount": 19,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1945982846558192070"
+          ],
+          "profile_bio": {
+            "description": "see the vision",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981131657592918167",
+        "url": "https://x.com/dubsfisherr/status/1981131657592918167",
+        "twitterUrl": "https://twitter.com/dubsfisherr/status/1981131657592918167",
+        "text": "I declare that I will join Qwen's team in @TrenchMarking 's challenge.\n\nIf Qwen wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 0,
+        "createdAt": "Wed Oct 22 22:52:49 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981131657592918167",
+        "displayTextRange": [
+          0,
+          168
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "dubsfisherr",
+          "url": "https://x.com/dubsfisherr",
+          "twitterUrl": "https://twitter.com/dubsfisherr",
+          "id": "1780026574357626881",
+          "name": "DubsFisherr",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1783034838099836928/q-29NqRN_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1780026574357626881/1713943618",
+          "description": "",
+          "location": "",
+          "followers": 143,
+          "following": 199,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Tue Apr 16 00:13:17 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 547,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 15,
+          "statusesCount": 504,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1924528601296216558"
+          ],
+          "profile_bio": {
+            "description": "extractor || @syndaosol",
+            "entities": {
+              "description": {
+                "user_mentions": [
+                  {
+                    "id_str": "0",
+                    "indices": [
+                      13,
+                      23
+                    ],
+                    "name": "",
+                    "screen_name": "syndaosol"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                42,
+                56
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981131614634856458",
+        "url": "https://x.com/Axelantii/status/1981131614634856458",
+        "twitterUrl": "https://twitter.com/Axelantii/status/1981131614634856458",
+        "text": "I declare that I will join DeepSeek's team in @TrenchMarking 's challenge.\n\nIf DeepSeek wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees. \n\ngreat tek 3XAWJDr47NPzUfFgj3M6TamhRkJJQzgR86gizssBpump",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 0,
+        "createdAt": "Wed Oct 22 22:52:39 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981131614634856458",
+        "displayTextRange": [
+          0,
+          233
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "Axelantii",
+          "url": "https://x.com/Axelantii",
+          "twitterUrl": "https://twitter.com/Axelantii",
+          "id": "1708845795414274049",
+          "name": "Rise",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1975127350929985536/hbSGur8W_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1708845795414274049/1755120201",
+          "description": "",
+          "location": "",
+          "followers": 1044,
+          "following": 390,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Mon Oct 02 14:06:23 +0000 2023",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 2524,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 234,
+          "statusesCount": 1777,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [],
+          "profile_bio": {
+            "description": "Watch Me Win @Syndaosol",
+            "entities": {
+              "description": {
+                "user_mentions": [
+                  {
+                    "id_str": "0",
+                    "indices": [
+                      13,
+                      23
+                    ],
+                    "name": "",
+                    "screen_name": "Syndaosol"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                46,
+                60
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981131558389235771",
+        "url": "https://x.com/0xspecial/status/1981131558389235771",
+        "twitterUrl": "https://twitter.com/0xspecial/status/1981131558389235771",
+        "text": "@000kuin @TrenchMarking say less",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 1,
+        "createdAt": "Wed Oct 22 22:52:25 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981131433302511917",
+        "conversationId": "1981131433302511917",
+        "displayTextRange": [
+          24,
+          32
+        ],
+        "inReplyToUserId": "1853928069565906944",
+        "inReplyToUsername": "000kuin",
+        "author": {
+          "type": "user",
+          "userName": "0xspecial",
+          "url": "https://x.com/0xspecial",
+          "twitterUrl": "https://twitter.com/0xspecial",
+          "id": "1521627121399042048",
+          "name": "special",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1977122822452297729/iUGRiSET_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1521627121399042048/1760291243",
+          "description": "",
+          "location": "",
+          "followers": 7925,
+          "following": 5388,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": false,
+          "createdAt": "Tue May 03 23:06:05 +0000 2022",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 148605,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 1227,
+          "statusesCount": 74780,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1967624350636659045"
+          ],
+          "profile_bio": {
+            "description": "best meme trader you don't know about",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1853928069565906944",
+              "indices": [
+                0,
+                8
+              ],
+              "name": "kui ʬʬ",
+              "screen_name": "000kuin"
+            },
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                9,
+                23
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981131433302511917",
+        "url": "https://x.com/000kuin/status/1981131433302511917",
+        "twitterUrl": "https://twitter.com/000kuin/status/1981131433302511917",
+        "text": "I declare that I will join GPT-5's team in @TrenchMarking 's challenge.\n\nIf GPT-5 wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+        "source": "Twitter for iPhone",
+        "retweetCount": 2,
+        "replyCount": 1,
+        "likeCount": 3,
+        "quoteCount": 0,
+        "viewCount": 10,
+        "createdAt": "Wed Oct 22 22:51:55 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981131433302511917",
+        "displayTextRange": [
+          0,
+          170
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "000kuin",
+          "url": "https://x.com/000kuin",
+          "twitterUrl": "https://twitter.com/000kuin",
+          "id": "1853928069565906944",
+          "name": "kui ʬʬ",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1973346961295368192/lghzgBsF_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1853928069565906944/1759317521",
+          "description": "",
+          "location": "10% off fees ~",
+          "followers": 2632,
+          "following": 960,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Tue Nov 05 22:31:19 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 9287,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 267,
+          "statusesCount": 2959,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1961584086469976094"
+          ],
+          "profile_bio": {
+            "description": "pro manifesto // ceo @syndaosol",
+            "entities": {
+              "description": {
+                "user_mentions": [
+                  {
+                    "id_str": "0",
+                    "indices": [
+                      21,
+                      31
+                    ],
+                    "name": "",
+                    "screen_name": "syndaosol"
+                  }
+                ]
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "axiom.trade/@kuin",
+                    "expanded_url": "https://axiom.trade/@kuin",
+                    "indices": [
+                      0,
+                      23
+                    ],
+                    "url": "https://t.co/OdcdsCvQcF"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                43,
+                57
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981131344622010731",
+        "url": "https://x.com/Crispy_M8/status/1981131344622010731",
+        "twitterUrl": "https://twitter.com/Crispy_M8/status/1981131344622010731",
+        "text": "@TrenchMarking Oh shit",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 10,
+        "createdAt": "Wed Oct 22 22:51:34 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981131253328818551",
+        "conversationId": "1981131253328818551",
+        "displayTextRange": [
+          15,
+          22
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "Crispy_M8",
+          "url": "https://x.com/Crispy_M8",
+          "twitterUrl": "https://twitter.com/Crispy_M8",
+          "id": "1888714589715550209",
+          "name": "Crispy",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1977263892452564992/2h1OhbWQ_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1888714589715550209/1742449173",
+          "description": "",
+          "location": "",
+          "followers": 446,
+          "following": 363,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Sun Feb 09 22:20:33 +0000 2025",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 3263,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 69,
+          "statusesCount": 3354,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1977471900650545582"
+          ],
+          "profile_bio": {
+            "description": "",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981130970917978137",
+        "url": "https://x.com/david_norway11/status/1981130970917978137",
+        "twitterUrl": "https://twitter.com/david_norway11/status/1981130970917978137",
+        "text": "@iLLusionist2017 @TrenchMarking 2m Ath",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 7,
+        "createdAt": "Wed Oct 22 22:50:05 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981130887585533994",
+        "conversationId": "1981128316498432469",
+        "displayTextRange": [
+          32,
+          38
+        ],
+        "inReplyToUserId": "1849006276451143680",
+        "inReplyToUsername": "iLLusionist2017",
+        "author": {
+          "type": "user",
+          "userName": "david_norway11",
+          "url": "https://x.com/david_norway11",
+          "twitterUrl": "https://twitter.com/david_norway11",
+          "id": "1835796611202494464",
+          "name": "Charles III",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1980086464688869376/tHnelF6a_normal.jpg",
+          "coverPicture": "",
+          "description": "",
+          "location": "",
+          "followers": 91,
+          "following": 82,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Mon Sep 16 21:44:02 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 637,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 52,
+          "statusesCount": 650,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1919789747343413395"
+          ],
+          "profile_bio": {
+            "description": "",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1849006276451143680",
+              "indices": [
+                0,
+                16
+              ],
+              "name": "ILLusionist 2.0",
+              "screen_name": "iLLusionist2017"
+            },
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                17,
+                31
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981130887585533994",
+        "url": "https://x.com/iLLusionist2017/status/1981130887585533994",
+        "twitterUrl": "https://twitter.com/iLLusionist2017/status/1981130887585533994",
+        "text": "@david_norway11 @TrenchMarking What market cap is PNYX ?",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 1,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 9,
+        "createdAt": "Wed Oct 22 22:49:45 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981128710687227961",
+        "conversationId": "1981128316498432469",
+        "displayTextRange": [
+          31,
+          56
+        ],
+        "inReplyToUserId": "1835796611202494464",
+        "inReplyToUsername": "david_norway11",
+        "author": {
+          "type": "user",
+          "userName": "iLLusionist2017",
+          "url": "https://x.com/iLLusionist2017",
+          "twitterUrl": "https://twitter.com/iLLusionist2017",
+          "id": "1849006276451143680",
+          "name": "ILLusionist 2.0",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1965839534492377088/Tc2kMWDC_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1849006276451143680/1738527113",
+          "description": "",
+          "location": "",
+          "followers": 467,
+          "following": 149,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Wed Oct 23 08:33:51 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 4725,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 496,
+          "statusesCount": 5590,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1974776494431129711"
+          ],
+          "profile_bio": {
+            "description": "Just a crypto gem hunter. I post what I ape into, do your own research. Nothing I say is financial advice ! ETH at 50$ BTC at 3K$ TG: https://t.co/cKD8t9W7l3",
+            "entities": {
+              "description": {
+                "urls": [
+                  {
+                    "display_url": "t.me/TakedaERC20",
+                    "expanded_url": "https://t.me/TakedaERC20",
+                    "indices": [
+                      134,
+                      157
+                    ],
+                    "url": "https://t.co/cKD8t9W7l3"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1835796611202494464",
+              "indices": [
+                0,
+                15
+              ],
+              "name": "Charles III",
+              "screen_name": "david_norway11"
+            },
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                16,
+                30
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981130746887627219",
+        "url": "https://x.com/MR_crx_/status/1981130746887627219",
+        "twitterUrl": "https://twitter.com/MR_crx_/status/1981130746887627219",
+        "text": "@TrenchMarking Another slow rug",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 23,
+        "createdAt": "Wed Oct 22 22:49:12 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981128316498432469",
+        "conversationId": "1981128316498432469",
+        "displayTextRange": [
+          15,
+          31
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "MR_crx_",
+          "url": "https://x.com/MR_crx_",
+          "twitterUrl": "https://twitter.com/MR_crx_",
+          "id": "1927303008884273152",
+          "name": "M_crx.HL",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1967849760347328512/yb9e9Qko_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1927303008884273152/1748339892",
+          "description": "",
+          "location": "",
+          "followers": 122,
+          "following": 924,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Tue May 27 09:57:08 +0000 2025",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 759,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 46,
+          "statusesCount": 1290,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [],
+          "profile_bio": {
+            "description": "Always early. || sniper bot,PLASMA: https://t.co/cPHVmGg2R5",
+            "entities": {
+              "description": {
+                "urls": [
+                  {
+                    "display_url": "t.me/plasma_sniper_…",
+                    "expanded_url": "https://t.me/plasma_sniper_bot?start=4A5MCP",
+                    "indices": [
+                      36,
+                      59
+                    ],
+                    "url": "https://t.co/cPHVmGg2R5"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981129927098614248",
+        "url": "https://x.com/sladq_/status/1981129927098614248",
+        "twitterUrl": "https://twitter.com/sladq_/status/1981129927098614248",
+        "text": "I declare that I will join GPT-5's team in @TrenchMarking 's challenge.\n\nIf GPT-5 wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 1,
+        "quoteCount": 0,
+        "viewCount": 14,
+        "createdAt": "Wed Oct 22 22:45:56 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981129927098614248",
+        "displayTextRange": [
+          0,
+          170
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "sladq_",
+          "url": "https://x.com/sladq_",
+          "twitterUrl": "https://twitter.com/sladq_",
+          "id": "702930427363913729",
+          "name": "Sladq",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1978167104286183424/tvup0AS6_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/702930427363913729/1759877789",
+          "description": "",
+          "location": "",
+          "followers": 2187,
+          "following": 1848,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Thu Feb 25 18:57:28 +0000 2016",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 22141,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 822,
+          "statusesCount": 7074,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1974217789708636265"
+          ],
+          "profile_bio": {
+            "description": "https://t.co/QZHumQwPAv\n\n“Aspire to Be Inspired”",
+            "entities": {
+              "description": {
+                "urls": [
+                  {
+                    "display_url": "t.me/sladqjournal",
+                    "expanded_url": "https://t.me/sladqjournal",
+                    "indices": [
+                      0,
+                      23
+                    ],
+                    "url": "https://t.co/QZHumQwPAv"
+                  }
+                ]
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "gmgn.ai/r/Sladq?chain=…",
+                    "expanded_url": "https://gmgn.ai/r/Sladq?chain=bsc",
+                    "indices": [
+                      0,
+                      23
+                    ],
+                    "url": "https://t.co/ec0xxW1tbV"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                43,
+                57
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981129587531927810",
+        "url": "https://x.com/sladq_/status/1981129587531927810",
+        "twitterUrl": "https://twitter.com/sladq_/status/1981129587531927810",
+        "text": "Im Backing GPT-5 #Trenchmark @TrenchMarking",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 9,
+        "createdAt": "Wed Oct 22 22:44:35 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981129587531927810",
+        "displayTextRange": [
+          0,
+          43
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "sladq_",
+          "url": "https://x.com/sladq_",
+          "twitterUrl": "https://twitter.com/sladq_",
+          "id": "702930427363913729",
+          "name": "Sladq",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1978167104286183424/tvup0AS6_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/702930427363913729/1759877789",
+          "description": "",
+          "location": "",
+          "followers": 2187,
+          "following": 1848,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Thu Feb 25 18:57:28 +0000 2016",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 22141,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 822,
+          "statusesCount": 7074,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1974217789708636265"
+          ],
+          "profile_bio": {
+            "description": "https://t.co/QZHumQwPAv\n\n“Aspire to Be Inspired”",
+            "entities": {
+              "description": {
+                "urls": [
+                  {
+                    "display_url": "t.me/sladqjournal",
+                    "expanded_url": "https://t.me/sladqjournal",
+                    "indices": [
+                      0,
+                      23
+                    ],
+                    "url": "https://t.co/QZHumQwPAv"
+                  }
+                ]
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "gmgn.ai/r/Sladq?chain=…",
+                    "expanded_url": "https://gmgn.ai/r/Sladq?chain=bsc",
+                    "indices": [
+                      0,
+                      23
+                    ],
+                    "url": "https://t.co/ec0xxW1tbV"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "hashtags": [
+            {
+              "indices": [
+                17,
+                28
+              ],
+              "text": "Trenchmark"
+            }
+          ],
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                29,
+                43
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981128719092912620",
+        "url": "https://x.com/000kuin/status/1981128719092912620",
+        "twitterUrl": "https://twitter.com/000kuin/status/1981128719092912620",
+        "text": "@TrenchMarking we got a 10 mil + runner here",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 5,
+        "quoteCount": 0,
+        "viewCount": 87,
+        "createdAt": "Wed Oct 22 22:41:08 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981128316498432469",
+        "conversationId": "1981128316498432469",
+        "displayTextRange": [
+          15,
+          44
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "000kuin",
+          "url": "https://x.com/000kuin",
+          "twitterUrl": "https://twitter.com/000kuin",
+          "id": "1853928069565906944",
+          "name": "kui ʬʬ",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1973346961295368192/lghzgBsF_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1853928069565906944/1759317521",
+          "description": "",
+          "location": "10% off fees ~",
+          "followers": 2632,
+          "following": 960,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Tue Nov 05 22:31:19 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 9287,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 267,
+          "statusesCount": 2959,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1961584086469976094"
+          ],
+          "profile_bio": {
+            "description": "pro manifesto // ceo @syndaosol",
+            "entities": {
+              "description": {
+                "user_mentions": [
+                  {
+                    "id_str": "0",
+                    "indices": [
+                      21,
+                      31
+                    ],
+                    "name": "",
+                    "screen_name": "syndaosol"
+                  }
+                ]
+              },
+              "url": {
+                "urls": [
+                  {
+                    "display_url": "axiom.trade/@kuin",
+                    "expanded_url": "https://axiom.trade/@kuin",
+                    "indices": [
+                      0,
+                      23
+                    ],
+                    "url": "https://t.co/OdcdsCvQcF"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981128710687227961",
+        "url": "https://x.com/david_norway11/status/1981128710687227961",
+        "twitterUrl": "https://twitter.com/david_norway11/status/1981128710687227961",
+        "text": "@TrenchMarking The wallets bought first funded by pnyx dev wallet , fucking million",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 1,
+        "likeCount": 4,
+        "quoteCount": 0,
+        "viewCount": 99,
+        "createdAt": "Wed Oct 22 22:41:06 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981128316498432469",
+        "conversationId": "1981128316498432469",
+        "displayTextRange": [
+          15,
+          83
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "david_norway11",
+          "url": "https://x.com/david_norway11",
+          "twitterUrl": "https://twitter.com/david_norway11",
+          "id": "1835796611202494464",
+          "name": "Charles III",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1980086464688869376/tHnelF6a_normal.jpg",
+          "coverPicture": "",
+          "description": "",
+          "location": "",
+          "followers": 91,
+          "following": 82,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Mon Sep 16 21:44:02 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 637,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 52,
+          "statusesCount": 650,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1919789747343413395"
+          ],
+          "profile_bio": {
+            "description": "",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981128446710276220",
+        "url": "https://x.com/david_norway11/status/1981128446710276220",
+        "twitterUrl": "https://twitter.com/david_norway11/status/1981128446710276220",
+        "text": "@TrenchMarking Yo pnyx dev 💪🏼",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 3,
+        "quoteCount": 0,
+        "viewCount": 98,
+        "createdAt": "Wed Oct 22 22:40:03 +0000 2025",
+        "lang": "in",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981128316498432469",
+        "conversationId": "1981128316498432469",
+        "displayTextRange": [
+          15,
+          29
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "david_norway11",
+          "url": "https://x.com/david_norway11",
+          "twitterUrl": "https://twitter.com/david_norway11",
+          "id": "1835796611202494464",
+          "name": "Charles III",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1980086464688869376/tHnelF6a_normal.jpg",
+          "coverPicture": "",
+          "description": "",
+          "location": "",
+          "followers": 91,
+          "following": 82,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Mon Sep 16 21:44:02 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 637,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 52,
+          "statusesCount": 650,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1919789747343413395"
+          ],
+          "profile_bio": {
+            "description": "",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981128395233906970",
+        "url": "https://x.com/iLLusionist2017/status/1981128395233906970",
+        "twitterUrl": "https://twitter.com/iLLusionist2017/status/1981128395233906970",
+        "text": "@Esreicht2 @TrenchMarking Why you keep commenting rug",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 4,
+        "createdAt": "Wed Oct 22 22:39:51 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981125924537192660",
+        "conversationId": "1981125364190761056",
+        "displayTextRange": [
+          26,
+          53
+        ],
+        "inReplyToUserId": "2634967290",
+        "inReplyToUsername": "Esreicht2",
+        "author": {
+          "type": "user",
+          "userName": "iLLusionist2017",
+          "url": "https://x.com/iLLusionist2017",
+          "twitterUrl": "https://twitter.com/iLLusionist2017",
+          "id": "1849006276451143680",
+          "name": "ILLusionist 2.0",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1965839534492377088/Tc2kMWDC_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1849006276451143680/1738527113",
+          "description": "",
+          "location": "",
+          "followers": 467,
+          "following": 149,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Wed Oct 23 08:33:51 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 4725,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 496,
+          "statusesCount": 5590,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1974776494431129711"
+          ],
+          "profile_bio": {
+            "description": "Just a crypto gem hunter. I post what I ape into, do your own research. Nothing I say is financial advice ! ETH at 50$ BTC at 3K$ TG: https://t.co/cKD8t9W7l3",
+            "entities": {
+              "description": {
+                "urls": [
+                  {
+                    "display_url": "t.me/TakedaERC20",
+                    "expanded_url": "https://t.me/TakedaERC20",
+                    "indices": [
+                      134,
+                      157
+                    ],
+                    "url": "https://t.co/cKD8t9W7l3"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "2634967290",
+              "indices": [
+                0,
+                10
+              ],
+              "name": "GM",
+              "screen_name": "Esreicht2"
+            },
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                11,
+                25
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981128249683169738",
+        "url": "https://x.com/0xniiki/status/1981128249683169738",
+        "twitterUrl": "https://twitter.com/0xniiki/status/1981128249683169738",
+        "text": "@TrenchMarking Send it",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 41,
+        "createdAt": "Wed Oct 22 22:39:16 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981126745307930714",
+        "conversationId": "1981126745307930714",
+        "displayTextRange": [
+          15,
+          22
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "0xniiki",
+          "url": "https://x.com/0xniiki",
+          "twitterUrl": "https://twitter.com/0xniiki",
+          "id": "1774848268289331200",
+          "name": "Niki",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1892284962050621441/ouQlGzar_normal.jpg",
+          "coverPicture": "",
+          "description": "",
+          "location": "#web3",
+          "followers": 1344,
+          "following": 3736,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Mon Apr 01 17:16:29 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 993,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 81,
+          "statusesCount": 1816,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [],
+          "profile_bio": {
+            "description": "smooth charts never made skilled traders 📈",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981127094798340478",
+        "url": "https://x.com/nftmeliodas/status/1981127094798340478",
+        "twitterUrl": "https://twitter.com/nftmeliodas/status/1981127094798340478",
+        "text": "@TrenchMarking  buy T5q5M76LMtU1nrEGAkLzDZKqPLFXBPD1YdvF6Tdpump",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 6,
+        "createdAt": "Wed Oct 22 22:34:41 +0000 2025",
+        "lang": "in",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981127094798340478",
+        "displayTextRange": [
+          0,
+          63
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "nftmeliodas",
+          "url": "https://x.com/nftmeliodas",
+          "twitterUrl": "https://twitter.com/nftmeliodas",
+          "id": "1477942634576584706",
+          "name": "NFT Meliodas 🕸",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1477942804466782210/X_vVanBQ_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1477942634576584706/1644105861",
+          "description": "",
+          "location": "",
+          "followers": 95,
+          "following": 1510,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Mon Jan 03 09:59:31 +0000 2022",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 1113,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 49,
+          "statusesCount": 2265,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1522561631754256384"
+          ],
+          "profile_bio": {
+            "description": "#ETH #web3 #Blockchain #Metaverse #NFTs #NFT #crypto",
+            "entities": {
+              "description": {
+                "hashtags": [
+                  {
+                    "indices": [
+                      0,
+                      4
+                    ],
+                    "text": "ETH"
+                  },
+                  {
+                    "indices": [
+                      5,
+                      10
+                    ],
+                    "text": "web3"
+                  },
+                  {
+                    "indices": [
+                      11,
+                      22
+                    ],
+                    "text": "Blockchain"
+                  },
+                  {
+                    "indices": [
+                      23,
+                      33
+                    ],
+                    "text": "Metaverse"
+                  },
+                  {
+                    "indices": [
+                      34,
+                      39
+                    ],
+                    "text": "NFTs"
+                  },
+                  {
+                    "indices": [
+                      40,
+                      44
+                    ],
+                    "text": "NFT"
+                  },
+                  {
+                    "indices": [
+                      45,
+                      52
+                    ],
+                    "text": "crypto"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981126311285576009",
+        "url": "https://x.com/coasty_sol/status/1981126311285576009",
+        "twitterUrl": "https://twitter.com/coasty_sol/status/1981126311285576009",
+        "text": "@TrenchMarking All insider wallets funded by the pynx bundle, fucking send it https://t.co/4BHCiSJcVC",
+        "source": "Twitter for iPhone",
+        "retweetCount": 1,
+        "replyCount": 0,
+        "likeCount": 3,
+        "quoteCount": 0,
+        "viewCount": 97,
+        "createdAt": "Wed Oct 22 22:31:34 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981125549406715935",
+        "conversationId": "1981125549406715935",
+        "displayTextRange": [
+          15,
+          77
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "coasty_sol",
+          "url": "https://x.com/coasty_sol",
+          "twitterUrl": "https://twitter.com/coasty_sol",
+          "id": "1844314744075046912",
+          "name": "Coasty",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1914536287295639552/HgfhlCjq_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1844314744075046912/1758794976",
+          "description": "",
+          "location": "",
+          "followers": 927,
+          "following": 865,
+          "status": "",
+          "canDm": true,
+          "canMediaTag": true,
+          "createdAt": "Thu Oct 10 09:51:35 +0000 2024",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 1707,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 40,
+          "statusesCount": 808,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1973215188196401558"
+          ],
+          "profile_bio": {
+            "description": "If you want to win the lottery you have to make the money to buy a ticket\n\nDMA @RivalFNF | @67FnF https://t.co/tMwtWzWlBn",
+            "entities": {
+              "description": {
+                "urls": [
+                  {
+                    "display_url": "axiom.trade/@dma",
+                    "expanded_url": "https://axiom.trade/@dma",
+                    "indices": [
+                      98,
+                      121
+                    ],
+                    "url": "https://t.co/tMwtWzWlBn"
+                  }
+                ],
+                "user_mentions": [
+                  {
+                    "id_str": "0",
+                    "indices": [
+                      79,
+                      88
+                    ],
+                    "name": "",
+                    "screen_name": "RivalFNF"
+                  },
+                  {
+                    "id_str": "0",
+                    "indices": [
+                      91,
+                      97
+                    ],
+                    "name": "",
+                    "screen_name": "67FnF"
+                  }
+                ]
+              }
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {
+          "media": [
+            {
+              "allow_download_status": {
+                "allow_download": true
+              },
+              "display_url": "pic.twitter.com/4BHCiSJcVC",
+              "expanded_url": "https://twitter.com/coasty_sol/status/1981126311285576009/photo/1",
+              "ext_media_availability": {
+                "status": "Available"
+              },
+              "features": {
+                "large": {},
+                "orig": {}
+              },
+              "id_str": "1981126304578621440",
+              "indices": [
+                78,
+                101
+              ],
+              "media_key": "3_1981126304578621440",
+              "media_results": {
+                "id": "QXBpTWVkaWFSZXN1bHRzOgwAAQoAARt+X+Cnl1AACgACG35f4jdbUUkAAA==",
+                "result": {
+                  "__typename": "ApiMedia",
+                  "id": "QXBpTWVkaWE6DAABCgABG35f4KeXUAAKAAIbfl/iN1tRSQAA",
+                  "media_key": "3_1981126304578621440"
+                }
+              },
+              "media_url_https": "https://pbs.twimg.com/media/G35f4KeXUAAE1HJ.jpg",
+              "original_info": {
+                "focus_rects": [
+                  {
+                    "h": 753,
+                    "w": 1345,
+                    "x": 0,
+                    "y": 0
+                  },
+                  {
+                    "h": 753,
+                    "w": 753,
+                    "x": 145,
+                    "y": 0
+                  },
+                  {
+                    "h": 753,
+                    "w": 661,
+                    "x": 191,
+                    "y": 0
+                  },
+                  {
+                    "h": 753,
+                    "w": 377,
+                    "x": 333,
+                    "y": 0
+                  },
+                  {
+                    "h": 753,
+                    "w": 1391,
+                    "x": 0,
+                    "y": 0
+                  }
+                ],
+                "height": 753,
+                "width": 1391
+              },
+              "sizes": {
+                "large": {
+                  "h": 753,
+                  "w": 1391
+                }
+              },
+              "type": "photo",
+              "url": "https://t.co/4BHCiSJcVC"
+            }
+          ]
+        },
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981126282244198492",
+        "url": "https://x.com/Wickedcause/status/1981126282244198492",
+        "twitterUrl": "https://twitter.com/Wickedcause/status/1981126282244198492",
+        "text": "@TrenchMarking wen moby banner chad let’s cook\n\nhttps://t.co/1eoVtLIgkm",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 100,
+        "createdAt": "Wed Oct 22 22:31:27 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981126282244198492",
+        "displayTextRange": [
+          0,
+          71
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "Wickedcause",
+          "url": "https://x.com/Wickedcause",
+          "twitterUrl": "https://twitter.com/Wickedcause",
+          "id": "1966898925262041088",
+          "name": "Wicked",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1966899217479213056/Uc13QHrf_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1966898925262041088/1757780322",
+          "description": "",
+          "location": "Trenches",
+          "followers": 8,
+          "following": 0,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Sat Sep 13 16:17:21 +0000 2025",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 28,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 0,
+          "statusesCount": 611,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [],
+          "profile_bio": {
+            "description": "Wicked cause it’s the best way to be relevant",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": {
+          "binding_values": [
+            {
+              "key": "photo_image_full_size_large",
+              "value": {
+                "image_value": {
+                  "height": 419,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=800x419",
+                  "width": 800
+                }
+              }
+            },
+            {
+              "key": "thumbnail_image",
+              "value": {
+                "image_value": {
+                  "height": 147,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=280x150",
+                  "width": 280
+                }
+              }
+            },
+            {
+              "key": "description",
+              "value": {
+                "string_value": "Track TLM the second it moves: live prices, lightning-fast charts, deep whale metrics, and instant swaps—all in one sleek dashboard."
+              }
+            },
+            {
+              "key": "domain",
+              "value": {
+                "string_value": "mobyscreener.com"
+              }
+            },
+            {
+              "key": "thumbnail_image_large",
+              "value": {
+                "image_value": {
+                  "height": 315,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=600x600",
+                  "width": 600
+                }
+              }
+            },
+            {
+              "key": "summary_photo_image_small",
+              "value": {
+                "image_value": {
+                  "height": 202,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=386x202",
+                  "width": 386
+                }
+              }
+            },
+            {
+              "key": "thumbnail_image_original",
+              "value": {
+                "image_value": {
+                  "height": 630,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=orig",
+                  "width": 1200
+                }
+              }
+            },
+            {
+              "key": "site",
+              "value": {
+                "scribe_key": "publisher_id",
+                "user_value": {
+                  "id_str": "1878834956891299841"
+                }
+              }
+            },
+            {
+              "key": "photo_image_full_size_small",
+              "value": {
+                "image_value": {
+                  "height": 202,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=386x202",
+                  "width": 386
+                }
+              }
+            },
+            {
+              "key": "summary_photo_image_large",
+              "value": {
+                "image_value": {
+                  "height": 419,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=800x419",
+                  "width": 800
+                }
+              }
+            },
+            {
+              "key": "thumbnail_image_small",
+              "value": {
+                "image_value": {
+                  "height": 76,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=144x144",
+                  "width": 144
+                }
+              }
+            },
+            {
+              "key": "creator",
+              "value": {
+                "user_value": {
+                  "id_str": "1878834956891299841"
+                }
+              }
+            },
+            {
+              "key": "thumbnail_image_x_large",
+              "value": {
+                "image_value": {
+                  "height": 630,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=png&name=2048x2048_2_exp",
+                  "width": 1200
+                }
+              }
+            },
+            {
+              "key": "photo_image_full_size_original",
+              "value": {
+                "image_value": {
+                  "height": 630,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=orig",
+                  "width": 1200
+                }
+              }
+            },
+            {
+              "key": "photo_image_full_size_alt_text",
+              "value": {
+                "string_value": "TRENCHMARK AI (TLM) at MobyScreener — Real-Time Token Radar & One-Tap Trading"
+              }
+            },
+            {
+              "key": "vanity_url",
+              "value": {
+                "scribe_key": "vanity_url",
+                "string_value": "mobyscreener.com"
+              }
+            },
+            {
+              "key": "photo_image_full_size",
+              "value": {
+                "image_value": {
+                  "height": 314,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=600x314",
+                  "width": 600
+                }
+              }
+            },
+            {
+              "key": "summary_photo_image_alt_text",
+              "value": {
+                "string_value": "TRENCHMARK AI (TLM) at MobyScreener — Real-Time Token Radar & One-Tap Trading"
+              }
+            },
+            {
+              "key": "thumbnail_image_color",
+              "value": {
+                "image_color_value": {
+                  "palette": [
+                    {
+                      "percentage": 93.09,
+                      "rgb": {
+                        "blue": 38,
+                        "green": 29,
+                        "red": 25
+                      }
+                    },
+                    {
+                      "percentage": 3.38,
+                      "rgb": {
+                        "blue": 143,
+                        "green": 138,
+                        "red": 136
+                      }
+                    },
+                    {
+                      "percentage": 2.12,
+                      "rgb": {
+                        "blue": 141,
+                        "green": 78,
+                        "red": 24
+                      }
+                    },
+                    {
+                      "percentage": 0.76,
+                      "rgb": {
+                        "blue": 85,
+                        "green": 100,
+                        "red": 28
+                      }
+                    },
+                    {
+                      "percentage": 0.29,
+                      "rgb": {
+                        "blue": 136,
+                        "green": 179,
+                        "red": 31
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "key": "title",
+              "value": {
+                "string_value": "TRENCHMARK AI (TLM) at MobyScreener — Real-Time Token Radar & One-Tap Trading"
+              }
+            },
+            {
+              "key": "summary_photo_image_color",
+              "value": {
+                "image_color_value": {
+                  "palette": [
+                    {
+                      "percentage": 93.09,
+                      "rgb": {
+                        "blue": 38,
+                        "green": 29,
+                        "red": 25
+                      }
+                    },
+                    {
+                      "percentage": 3.38,
+                      "rgb": {
+                        "blue": 143,
+                        "green": 138,
+                        "red": 136
+                      }
+                    },
+                    {
+                      "percentage": 2.12,
+                      "rgb": {
+                        "blue": 141,
+                        "green": 78,
+                        "red": 24
+                      }
+                    },
+                    {
+                      "percentage": 0.76,
+                      "rgb": {
+                        "blue": 85,
+                        "green": 100,
+                        "red": 28
+                      }
+                    },
+                    {
+                      "percentage": 0.29,
+                      "rgb": {
+                        "blue": 136,
+                        "green": 179,
+                        "red": 31
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "key": "summary_photo_image_x_large",
+              "value": {
+                "image_value": {
+                  "height": 630,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=png&name=2048x2048_2_exp",
+                  "width": 1200
+                }
+              }
+            },
+            {
+              "key": "summary_photo_image",
+              "value": {
+                "image_value": {
+                  "height": 314,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=600x314",
+                  "width": 600
+                }
+              }
+            },
+            {
+              "key": "photo_image_full_size_color",
+              "value": {
+                "image_color_value": {
+                  "palette": [
+                    {
+                      "percentage": 93.09,
+                      "rgb": {
+                        "blue": 38,
+                        "green": 29,
+                        "red": 25
+                      }
+                    },
+                    {
+                      "percentage": 3.38,
+                      "rgb": {
+                        "blue": 143,
+                        "green": 138,
+                        "red": 136
+                      }
+                    },
+                    {
+                      "percentage": 2.12,
+                      "rgb": {
+                        "blue": 141,
+                        "green": 78,
+                        "red": 24
+                      }
+                    },
+                    {
+                      "percentage": 0.76,
+                      "rgb": {
+                        "blue": 85,
+                        "green": 100,
+                        "red": 28
+                      }
+                    },
+                    {
+                      "percentage": 0.29,
+                      "rgb": {
+                        "blue": 136,
+                        "green": 179,
+                        "red": 31
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "key": "photo_image_full_size_x_large",
+              "value": {
+                "image_value": {
+                  "height": 630,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=png&name=2048x2048_2_exp",
+                  "width": 1200
+                }
+              }
+            },
+            {
+              "key": "card_url",
+              "value": {
+                "scribe_key": "card_url",
+                "string_value": "https://t.co/1eoVtLIgkm"
+              }
+            },
+            {
+              "key": "summary_photo_image_original",
+              "value": {
+                "image_value": {
+                  "height": 630,
+                  "url": "https://pbs.twimg.com/card_img/1981126275835035648/s7CShLWi?format=jpg&name=orig",
+                  "width": 1200
+                }
+              }
+            }
+          ],
+          "card_platform": {
+            "platform": {
+              "audience": {
+                "name": "production"
+              },
+              "device": {
+                "name": "iPhone",
+                "version": "13"
+              }
+            }
+          },
+          "name": "summary_large_image",
+          "url": "https://t.co/1eoVtLIgkm",
+          "user_refs_results": [
+            {
+              "rest_id": "1878834956891299841",
+              "result": {
+                "__typename": "User",
+                "action_counts": {
+                  "favorites_count": 2973
+                },
+                "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/1897771159573110784/MyGL15Y0_normal.jpg"
+                },
+                "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/1878834956891299841/1741046540"
+                },
+                "core": {
+                  "created_at": "Mon Jan 13 16:02:23 +0000 2025",
+                  "name": "MobyScreener",
+                  "screen_name": "mobyagent"
+                },
+                "dm_permissions": {
+                  "can_dm": true
+                },
+                "exclusive_tweet_following": false,
+                "identity_profile_labels_highlighted_label": {
+                  "label": {
+                    "badge": {
+                      "url": "https://pbs.twimg.com/semantic_core_img/1428827730364096519/4ZXpTBhS?format=png&name=orig"
+                    },
+                    "description": "Automated",
+                    "long_description": {
+                      "entities": [
+                        {
+                          "from_index": 13,
+                          "ref": {
+                            "__typename": "TimelineRichTextMention",
+                            "screen_name": "assetdash",
+                            "user_results": {
+                              "rest_id": "1279918106111025153",
+                              "result": {
+                                "__typename": "User",
+                                "rest_id": "1279918106111025153"
+                              }
+                            }
+                          },
+                          "to_index": 23
+                        }
+                      ],
+                      "text": "Automated by @assetdash"
+                    },
+                    "user_label_type": "AutomatedLabel"
+                  }
+                },
+                "location": {
+                  "location": ""
+                },
+                "media_permissions": {
+                  "can_media_tag": true
+                },
+                "notifications_settings": {},
+                "pinned_items": {
+                  "tweet_ids_str": [
+                    "1943003555561926944"
+                  ]
+                },
+                "privacy": {},
+                "private_super_following": false,
+                "profile_bio": {
+                  "description": "The only token screener powered by smart money • Born in the trenches, built for the future of finance. CA: Cy1GS2FqefgaMbi45UunrUzin1rfEmTUYnomddzBpump",
+                  "entities": {
+                    "description": {},
+                    "url": {
+                      "urls": [
+                        {
+                          "display_url": "MobyScreener.com",
+                          "expanded_url": "http://www.MobyScreener.com",
+                          "indices": [
+                            0,
+                            23
+                          ],
+                          "url": "https://t.co/lbaaUT8tDw"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "profile_metadata": {
+                  "profile_interstitial_type": "",
+                  "profile_link_color": "1DA1F2"
+                },
+                "profile_translation": {
+                  "translator_type_enum": "None"
+                },
+                "properties": {
+                  "has_extended_profile": true
+                },
+                "relationship_counts": {
+                  "followers": 108593,
+                  "following": 132
+                },
+                "relationship_perspectives": {},
+                "rest_id": "1878834956891299841",
+                "super_follow_eligible": false,
+                "super_followed_by": false,
+                "super_following": false,
+                "tweet_counts": {
+                  "media_tweets": 454,
+                  "tweets": 14273
+                },
+                "website": {
+                  "url": "https://t.co/lbaaUT8tDw"
+                },
+                "verification": {
+                  "is_blue_verified": true
+                }
+              }
+            },
+            {
+              "rest_id": "1878834956891299841",
+              "result": {
+                "__typename": "User",
+                "action_counts": {
+                  "favorites_count": 2973
+                },
+                "avatar": {
+                  "image_url": "https://pbs.twimg.com/profile_images/1897771159573110784/MyGL15Y0_normal.jpg"
+                },
+                "banner": {
+                  "image_url": "https://pbs.twimg.com/profile_banners/1878834956891299841/1741046540"
+                },
+                "core": {
+                  "created_at": "Mon Jan 13 16:02:23 +0000 2025",
+                  "name": "MobyScreener",
+                  "screen_name": "mobyagent"
+                },
+                "dm_permissions": {
+                  "can_dm": true
+                },
+                "exclusive_tweet_following": false,
+                "identity_profile_labels_highlighted_label": {
+                  "label": {
+                    "badge": {
+                      "url": "https://pbs.twimg.com/semantic_core_img/1428827730364096519/4ZXpTBhS?format=png&name=orig"
+                    },
+                    "description": "Automated",
+                    "long_description": {
+                      "entities": [
+                        {
+                          "from_index": 13,
+                          "ref": {
+                            "__typename": "TimelineRichTextMention",
+                            "screen_name": "assetdash",
+                            "user_results": {
+                              "rest_id": "1279918106111025153",
+                              "result": {
+                                "__typename": "User",
+                                "rest_id": "1279918106111025153"
+                              }
+                            }
+                          },
+                          "to_index": 23
+                        }
+                      ],
+                      "text": "Automated by @assetdash"
+                    },
+                    "user_label_type": "AutomatedLabel"
+                  }
+                },
+                "location": {
+                  "location": ""
+                },
+                "media_permissions": {
+                  "can_media_tag": true
+                },
+                "notifications_settings": {},
+                "pinned_items": {
+                  "tweet_ids_str": [
+                    "1943003555561926944"
+                  ]
+                },
+                "privacy": {},
+                "private_super_following": false,
+                "profile_bio": {
+                  "description": "The only token screener powered by smart money • Born in the trenches, built for the future of finance. CA: Cy1GS2FqefgaMbi45UunrUzin1rfEmTUYnomddzBpump",
+                  "entities": {
+                    "description": {},
+                    "url": {
+                      "urls": [
+                        {
+                          "display_url": "MobyScreener.com",
+                          "expanded_url": "http://www.MobyScreener.com",
+                          "indices": [
+                            0,
+                            23
+                          ],
+                          "url": "https://t.co/lbaaUT8tDw"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "profile_metadata": {
+                  "profile_interstitial_type": "",
+                  "profile_link_color": "1DA1F2"
+                },
+                "profile_translation": {
+                  "translator_type_enum": "None"
+                },
+                "properties": {
+                  "has_extended_profile": true
+                },
+                "relationship_counts": {
+                  "followers": 108593,
+                  "following": 132
+                },
+                "relationship_perspectives": {},
+                "rest_id": "1878834956891299841",
+                "super_follow_eligible": false,
+                "super_followed_by": false,
+                "super_following": false,
+                "tweet_counts": {
+                  "media_tweets": 454,
+                  "tweets": 14273
+                },
+                "website": {
+                  "url": "https://t.co/lbaaUT8tDw"
+                },
+                "verification": {
+                  "is_blue_verified": true
+                }
+              }
+            }
+          ]
+        },
+        "place": {},
+        "entities": {
+          "urls": [
+            {
+              "display_url": "Mobyscreener.com/solana/3XAWJDr…",
+              "expanded_url": "http://Mobyscreener.com/solana/3XAWJDr47NPzUfFgj3M6TamhRkJJQzgR86gizssBpump",
+              "indices": [
+                48,
+                71
+              ],
+              "url": "https://t.co/1eoVtLIgkm"
+            }
+          ],
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      },
+      {
+        "type": "tweet",
+        "id": "1981125924537192660",
+        "url": "https://x.com/Esreicht2/status/1981125924537192660",
+        "twitterUrl": "https://twitter.com/Esreicht2/status/1981125924537192660",
+        "text": "@TrenchMarking RUG",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 1,
+        "likeCount": 0,
+        "quoteCount": 0,
+        "viewCount": 15,
+        "createdAt": "Wed Oct 22 22:30:02 +0000 2025",
+        "lang": "und",
+        "bookmarkCount": 0,
+        "isReply": true,
+        "inReplyToId": "1981125382301765873",
+        "conversationId": "1981125364190761056",
+        "displayTextRange": [
+          15,
+          18
+        ],
+        "inReplyToUserId": "1980645240286650368",
+        "inReplyToUsername": "TrenchMarking",
+        "author": {
+          "type": "user",
+          "userName": "Esreicht2",
+          "url": "https://x.com/Esreicht2",
+          "twitterUrl": "https://twitter.com/Esreicht2",
+          "id": "2634967290",
+          "name": "GM",
+          "isVerified": false,
+          "isBlueVerified": true,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1977847317597433856/RnG5t5Ur_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/2634967290/1725903728",
+          "description": "",
+          "location": "Berlin, Deutschland",
+          "followers": 254,
+          "following": 621,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Sun Jul 13 05:40:53 +0000 2014",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 826,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 948,
+          "statusesCount": 9641,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1970517497133805958"
+          ],
+          "profile_bio": {
+            "description": "GOOD MORNING",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                0,
+                14
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      }
+    ],
+    "has_next_page": true,
+    "next_cursor": "DAADDAABCgABG35kyJaWsQ8KAAIbfl-IK1tQ1AAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUbfmTMg8AnEAoABht-ZMyDv9jwAAA",
+    "status": "success",
+    "msg": "success"
+  }
+]

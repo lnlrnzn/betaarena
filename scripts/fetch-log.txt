@@ -1,0 +1,55 @@
+============================================================
+Twitter Mentions Fetcher & Team Declaration Importer
+============================================================
+
+Step 1: Fetching current cycle ID...
+✓ Current cycle ID: 2d7a0eb2-63dc-48fe-8f53-48831c9374a1
+
+Step 2: Fetching all Twitter mentions...
+Fetching mentions... (first page)
+  Page 1: Found 14 mentions (Total: 14)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfwNs2xtRaAAIAAIAAAACCAADAAAAAAgABAAAAAAKAAUbf0LcX0AnEAoABht_QtxfP9jwAAA)
+  Page 2: Found 11 mentions (Total: 25)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbftMdiNaxBQAIAAIAAAACCAADAAAAAAgABAAAAAEKAAUbf0LcX0AnEAoABht_QtxfP7HgAAA)
+  Page 3: Found 14 mentions (Total: 39)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfrFGehtQoAAIAAIAAAACCAADAAAAAAgABAAAAAIKAAUbf0LcX0AnEAoABht_QtxfP4rQAAA)
+  Page 4: Found 14 mentions (Total: 53)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfp9RMhtRXAAIAAIAAAACCAADAAAAAAgABAAAAAMKAAUbf0LcX0AnEAoABht_QtxfP2PAAAA)
+  Page 5: Found 16 mentions (Total: 69)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfod62Juh9AAIAAIAAAACCAADAAAAAAgABAAAAAQKAAUbf0LcX0AnEAoABht_QtxfPzywAAA)
+  Page 6: Found 12 mentions (Total: 81)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfnxbupphkgAIAAIAAAACCAADAAAAAAgABAAAAAUKAAUbf0LcX0AnEAoABht_QtxfPxWgAAA)
+  Page 7: Found 16 mentions (Total: 97)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfnTRxxtQKQAIAAIAAAACCAADAAAAAAgABAAAAAYKAAUbf0LcX0AnEAoABht_QtxfPu6QAAA)
+  Page 8: Found 15 mentions (Total: 112)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfnFJCZtBhgAIAAIAAAACCAADAAAAAAgABAAAAAcKAAUbf0LcX0AnEAoABht_QtxfPseAAAA)
+  Page 9: Found 12 mentions (Total: 124)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfm0bmZtQPQAIAAIAAAACCAADAAAAAAgABAAAAAgKAAUbf0LcX0AnEAoABht_QtxfPqBwAAA)
+  Page 10: Found 11 mentions (Total: 135)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfmS_ABtQlwAIAAIAAAACCAADAAAAAAgABAAAAAkKAAUbf0LcX0AnEAoABht_QtxfPnlgAAA)
+  Page 11: Found 17 mentions (Total: 152)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbfl93ohqxegAIAAIAAAACCAADAAAAAAgABAAAAAoKAAUbf0LcX0AnEAoABht_QtxfPlJQAAA)
+  Page 12: Found 3 mentions (Total: 155)
+Fetching mentions... (cursor: DAADDAABCgABG39CHx7WENMKAAIbflXA21rBggAIAAIAAAACCAADAAAAAAgABAAAAAsKAAUbf0LcX0AnEAoABht_QtxfPitAAAA)
+  No more tweets found.
+
+✓ Fetched 155 total mentions across 12 pages
+
+✓ Saved raw mentions to: C:\Users\loren\betaarena\scripts\twitter-mentions-backup.json
+
+Step 3: Validating and parsing team declarations...
+
+✓ Found 0 valid declarations
+✗ Skipped 155 invalid tweets
+
+✓ Saved validation report to: C:\Users\loren\betaarena\scripts\validation-report.json
+
+Step 4: No valid declarations to insert.
+
+============================================================
+SUMMARY
+============================================================
+Total mentions fetched:       155
+Valid declarations found:     0
+Invalid tweets:               155
+============================================================

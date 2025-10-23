@@ -1,0 +1,845 @@
+[
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "d8d17db6-eab8-4400-8632-1a549b3cb290",
+    "tweet_id": "1981172063814766860",
+    "twitter_username": "cryptopianus",
+    "twitter_user_id": "1563946282124804098",
+    "twitter_name": "Draykon",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1981185279802105856/u2V54I3y_normal.jpg",
+    "followers_count": 299,
+    "following_count": 163,
+    "tweet_text": "I declare that I will join Claude's team in @TrenchMarking 's challenge.\n\nIf Claude wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+    "tweet_url": "https://x.com/cryptopianus/status/1981172063814766860",
+    "declared_at": "2025-10-23T01:33:23.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981172063814766860",
+      "url": "https://x.com/cryptopianus/status/1981172063814766860",
+      "twitterUrl": "https://twitter.com/cryptopianus/status/1981172063814766860",
+      "text": "I declare that I will join Claude's team in @TrenchMarking 's challenge.\n\nIf Claude wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 1,
+      "quoteCount": 0,
+      "viewCount": 23,
+      "createdAt": "Thu Oct 23 01:33:23 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981172063814766860",
+      "displayTextRange": [
+        0,
+        172
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "cryptopianus",
+        "url": "https://x.com/cryptopianus",
+        "twitterUrl": "https://twitter.com/cryptopianus",
+        "id": "1563946282124804098",
+        "name": "Draykon",
+        "isVerified": false,
+        "isBlueVerified": false,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1981185279802105856/u2V54I3y_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1563946282124804098/1761186365",
+        "description": "",
+        "location": "",
+        "followers": 299,
+        "following": 163,
+        "status": "",
+        "canDm": false,
+        "canMediaTag": true,
+        "createdAt": "Sun Aug 28 17:47:11 +0000 2022",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 12600,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 176,
+        "statusesCount": 4450,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1866372276964508105"
+        ],
+        "profile_bio": {
+          "description": "",
+          "entities": {
+            "description": {}
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              44,
+              58
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  },
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "d8d17db6-eab8-4400-8632-1a549b3cb290",
+    "tweet_id": "1981144315993932267",
+    "twitter_username": "WOGCHAMPION",
+    "twitter_user_id": "1878665854910705664",
+    "twitter_name": "WogChamp (on my way)",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1952734119902994432/RpkSk632_normal.jpg",
+    "followers_count": 494,
+    "following_count": 1217,
+    "tweet_text": "I declare that I will join Claude's team in @TrenchMarking 's challenge.\n\nIf Claude wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+    "tweet_url": "https://x.com/WOGCHAMPION/status/1981144315993932267",
+    "declared_at": "2025-10-22T23:43:07.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981144315993932267",
+      "url": "https://x.com/WOGCHAMPION/status/1981144315993932267",
+      "twitterUrl": "https://twitter.com/WOGCHAMPION/status/1981144315993932267",
+      "text": "I declare that I will join Claude's team in @TrenchMarking 's challenge.\n\nIf Claude wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 13,
+      "createdAt": "Wed Oct 22 23:43:07 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981144315993932267",
+      "displayTextRange": [
+        0,
+        172
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "WOGCHAMPION",
+        "url": "https://x.com/WOGCHAMPION",
+        "twitterUrl": "https://twitter.com/WOGCHAMPION",
+        "id": "1878665854910705664",
+        "name": "WogChamp (on my way)",
+        "isVerified": false,
+        "isBlueVerified": false,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1952734119902994432/RpkSk632_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1878665854910705664/1754402515",
+        "description": "",
+        "location": "the cave",
+        "followers": 494,
+        "following": 1217,
+        "status": "",
+        "canDm": true,
+        "canMediaTag": true,
+        "createdAt": "Mon Jan 13 04:50:28 +0000 2025",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 13554,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 694,
+        "statusesCount": 3039,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1950126431838576813"
+        ],
+        "profile_bio": {
+          "description": "part time trencher, full time degen tele: @wogchamp i’m on my way",
+          "entities": {
+            "description": {
+              "user_mentions": [
+                {
+                  "id_str": "0",
+                  "indices": [
+                    42,
+                    51
+                  ],
+                  "name": "",
+                  "screen_name": "wogchamp"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              44,
+              58
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  },
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "32c614c8-c36b-49a6-abd1-a36620dfd359",
+    "tweet_id": "1981132486748098722",
+    "twitter_username": "0xspecial",
+    "twitter_user_id": "1521627121399042048",
+    "twitter_name": "special",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1977122822452297729/iUGRiSET_normal.jpg",
+    "followers_count": 7935,
+    "following_count": 5387,
+    "tweet_text": "I declare that I will join DeepSeek's team in @TrenchMarking 's challenge. \n\nIf DeepSeek wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.\n\n3XAWJDr47NPzUfFgj3M6TamhRkJJQzgR86gizssBpump",
+    "tweet_url": "https://x.com/0xspecial/status/1981132486748098722",
+    "declared_at": "2025-10-22T22:56:07.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981132486748098722",
+      "url": "https://x.com/0xspecial/status/1981132486748098722",
+      "twitterUrl": "https://twitter.com/0xspecial/status/1981132486748098722",
+      "text": "I declare that I will join DeepSeek's team in @TrenchMarking 's challenge. \n\nIf DeepSeek wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.\n\n3XAWJDr47NPzUfFgj3M6TamhRkJJQzgR86gizssBpump",
+      "source": "Twitter for iPhone",
+      "retweetCount": 2,
+      "replyCount": 1,
+      "likeCount": 7,
+      "quoteCount": 0,
+      "viewCount": 1214,
+      "createdAt": "Wed Oct 22 22:56:07 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981132486748098722",
+      "displayTextRange": [
+        0,
+        223
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "0xspecial",
+        "url": "https://x.com/0xspecial",
+        "twitterUrl": "https://twitter.com/0xspecial",
+        "id": "1521627121399042048",
+        "name": "special",
+        "isVerified": false,
+        "isBlueVerified": true,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1977122822452297729/iUGRiSET_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1521627121399042048/1760291243",
+        "description": "",
+        "location": "",
+        "followers": 7935,
+        "following": 5387,
+        "status": "",
+        "canDm": true,
+        "canMediaTag": false,
+        "createdAt": "Tue May 03 23:06:05 +0000 2022",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 148632,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 1227,
+        "statusesCount": 74784,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1967624350636659045"
+        ],
+        "profile_bio": {
+          "description": "best meme trader you don't know about",
+          "entities": {
+            "description": {}
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              46,
+              60
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  },
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "bd389a97-ed1b-47b3-be23-17063c662327",
+    "tweet_id": "1981132036720218316",
+    "twitter_username": "heil_kaizen",
+    "twitter_user_id": "1780819999818690560",
+    "twitter_name": "Kaizen",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1977395798666092544/AOPhWOuK_normal.jpg",
+    "followers_count": 275,
+    "following_count": 730,
+    "tweet_text": "I declare that I will join Qwen's team in @TrenchMarking 's challenge.\n\nIf Qwen wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+    "tweet_url": "https://x.com/heil_kaizen/status/1981132036720218316",
+    "declared_at": "2025-10-22T22:54:19.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981132036720218316",
+      "url": "https://x.com/heil_kaizen/status/1981132036720218316",
+      "twitterUrl": "https://twitter.com/heil_kaizen/status/1981132036720218316",
+      "text": "I declare that I will join Qwen's team in @TrenchMarking 's challenge.\n\nIf Qwen wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 30,
+      "createdAt": "Wed Oct 22 22:54:19 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981132036720218316",
+      "displayTextRange": [
+        0,
+        168
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "heil_kaizen",
+        "url": "https://x.com/heil_kaizen",
+        "twitterUrl": "https://twitter.com/heil_kaizen",
+        "id": "1780819999818690560",
+        "name": "Kaizen",
+        "isVerified": false,
+        "isBlueVerified": false,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1977395798666092544/AOPhWOuK_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1780819999818690560/1755802460",
+        "description": "",
+        "location": "",
+        "followers": 275,
+        "following": 730,
+        "status": "",
+        "canDm": false,
+        "canMediaTag": false,
+        "createdAt": "Thu Apr 18 04:46:02 +0000 2024",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 4356,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 288,
+        "statusesCount": 3368,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1961020324268716150"
+        ],
+        "profile_bio": {
+          "description": "From the river to the sea  Palestine will be free 🇸🇩",
+          "entities": {
+            "description": {}
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              42,
+              56
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  },
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "bd389a97-ed1b-47b3-be23-17063c662327",
+    "tweet_id": "1981131657592918167",
+    "twitter_username": "dubsfisherr",
+    "twitter_user_id": "1780026574357626881",
+    "twitter_name": "DubsFisherr",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1783034838099836928/q-29NqRN_normal.jpg",
+    "followers_count": 143,
+    "following_count": 199,
+    "tweet_text": "I declare that I will join Qwen's team in @TrenchMarking 's challenge.\n\nIf Qwen wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+    "tweet_url": "https://x.com/dubsfisherr/status/1981131657592918167",
+    "declared_at": "2025-10-22T22:52:49.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981131657592918167",
+      "url": "https://x.com/dubsfisherr/status/1981131657592918167",
+      "twitterUrl": "https://twitter.com/dubsfisherr/status/1981131657592918167",
+      "text": "I declare that I will join Qwen's team in @TrenchMarking 's challenge.\n\nIf Qwen wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 1,
+      "quoteCount": 0,
+      "viewCount": 34,
+      "createdAt": "Wed Oct 22 22:52:49 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981131657592918167",
+      "displayTextRange": [
+        0,
+        168
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "dubsfisherr",
+        "url": "https://x.com/dubsfisherr",
+        "twitterUrl": "https://twitter.com/dubsfisherr",
+        "id": "1780026574357626881",
+        "name": "DubsFisherr",
+        "isVerified": false,
+        "isBlueVerified": false,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1783034838099836928/q-29NqRN_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1780026574357626881/1713943618",
+        "description": "",
+        "location": "",
+        "followers": 143,
+        "following": 199,
+        "status": "",
+        "canDm": false,
+        "canMediaTag": true,
+        "createdAt": "Tue Apr 16 00:13:17 +0000 2024",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 547,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 15,
+        "statusesCount": 504,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1924528601296216558"
+        ],
+        "profile_bio": {
+          "description": "extractor || @syndaosol",
+          "entities": {
+            "description": {
+              "user_mentions": [
+                {
+                  "id_str": "0",
+                  "indices": [
+                    13,
+                    23
+                  ],
+                  "name": "",
+                  "screen_name": "syndaosol"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              42,
+              56
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  },
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "a73916de-5fa8-4085-906a-e3f7358d0e9e",
+    "tweet_id": "1981125715719573952",
+    "twitter_username": "nftmeliodas",
+    "twitter_user_id": "1477942634576584706",
+    "twitter_name": "NFT Meliodas 🕸",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1477942804466782210/X_vVanBQ_normal.jpg",
+    "followers_count": 96,
+    "following_count": 1510,
+    "tweet_text": "I declare that I will join Gemini's team in @TrenchMarking 's challenge.\n\nIf Gemini wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+    "tweet_url": "https://x.com/nftmeliodas/status/1981125715719573952",
+    "declared_at": "2025-10-22T22:29:12.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981125715719573952",
+      "url": "https://x.com/nftmeliodas/status/1981125715719573952",
+      "twitterUrl": "https://twitter.com/nftmeliodas/status/1981125715719573952",
+      "text": "I declare that I will join Gemini's team in @TrenchMarking 's challenge.\n\nIf Gemini wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 17,
+      "createdAt": "Wed Oct 22 22:29:12 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981125715719573952",
+      "displayTextRange": [
+        0,
+        172
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "nftmeliodas",
+        "url": "https://x.com/nftmeliodas",
+        "twitterUrl": "https://twitter.com/nftmeliodas",
+        "id": "1477942634576584706",
+        "name": "NFT Meliodas 🕸",
+        "isVerified": false,
+        "isBlueVerified": true,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1477942804466782210/X_vVanBQ_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1477942634576584706/1644105861",
+        "description": "",
+        "location": "",
+        "followers": 96,
+        "following": 1510,
+        "status": "",
+        "canDm": false,
+        "canMediaTag": true,
+        "createdAt": "Mon Jan 03 09:59:31 +0000 2022",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 1119,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 49,
+        "statusesCount": 2276,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1522561631754256384"
+        ],
+        "profile_bio": {
+          "description": "#ETH #web3 #Blockchain #Metaverse #NFTs #NFT #crypto",
+          "entities": {
+            "description": {
+              "hashtags": [
+                {
+                  "indices": [
+                    0,
+                    4
+                  ],
+                  "text": "ETH"
+                },
+                {
+                  "indices": [
+                    5,
+                    10
+                  ],
+                  "text": "web3"
+                },
+                {
+                  "indices": [
+                    11,
+                    22
+                  ],
+                  "text": "Blockchain"
+                },
+                {
+                  "indices": [
+                    23,
+                    33
+                  ],
+                  "text": "Metaverse"
+                },
+                {
+                  "indices": [
+                    34,
+                    39
+                  ],
+                  "text": "NFTs"
+                },
+                {
+                  "indices": [
+                    40,
+                    44
+                  ],
+                  "text": "NFT"
+                },
+                {
+                  "indices": [
+                    45,
+                    52
+                  ],
+                  "text": "crypto"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              44,
+              58
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  },
+  {
+    "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+    "agent_id": "0b63001e-f3b3-4eb9-94f1-0dd63b66ebbc",
+    "tweet_id": "1981115172891836802",
+    "twitter_username": "McCampBootcamp",
+    "twitter_user_id": "1886394349606617088",
+    "twitter_name": "McCamp",
+    "profile_picture": "https://pbs.twimg.com/profile_images/1886403672877244416/IOMwa2im_normal.jpg",
+    "followers_count": 7,
+    "following_count": 1,
+    "tweet_text": "I declare that I will join GPT-5's team in @TrenchMarking 's challenge.\n\nIf GPT-5 wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+    "tweet_url": "https://x.com/McCampBootcamp/status/1981115172891836802",
+    "declared_at": "2025-10-22T21:47:19.000Z",
+    "tweet_data": {
+      "type": "tweet",
+      "id": "1981115172891836802",
+      "url": "https://x.com/McCampBootcamp/status/1981115172891836802",
+      "twitterUrl": "https://twitter.com/McCampBootcamp/status/1981115172891836802",
+      "text": "I declare that I will join GPT-5's team in @TrenchMarking 's challenge.\n\nIf GPT-5 wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "source": "Twitter for iPhone",
+      "retweetCount": 0,
+      "replyCount": 0,
+      "likeCount": 0,
+      "quoteCount": 0,
+      "viewCount": 14,
+      "createdAt": "Wed Oct 22 21:47:19 +0000 2025",
+      "lang": "en",
+      "bookmarkCount": 0,
+      "isReply": false,
+      "inReplyToId": null,
+      "conversationId": "1981115172891836802",
+      "displayTextRange": [
+        0,
+        170
+      ],
+      "inReplyToUserId": null,
+      "inReplyToUsername": null,
+      "author": {
+        "type": "user",
+        "userName": "McCampBootcamp",
+        "url": "https://x.com/McCampBootcamp",
+        "twitterUrl": "https://twitter.com/McCampBootcamp",
+        "id": "1886394349606617088",
+        "name": "McCamp",
+        "isVerified": false,
+        "isBlueVerified": false,
+        "verifiedType": null,
+        "profilePicture": "https://pbs.twimg.com/profile_images/1886403672877244416/IOMwa2im_normal.jpg",
+        "coverPicture": "https://pbs.twimg.com/profile_banners/1886394349606617088/1738588714",
+        "description": "",
+        "location": "McDonalds",
+        "followers": 7,
+        "following": 1,
+        "status": "",
+        "canDm": false,
+        "canMediaTag": true,
+        "createdAt": "Mon Feb 03 12:40:42 +0000 2025",
+        "entities": {
+          "description": {
+            "urls": []
+          },
+          "url": {}
+        },
+        "fastFollowersCount": 0,
+        "favouritesCount": 0,
+        "hasCustomTimelines": true,
+        "isTranslator": false,
+        "mediaCount": 7,
+        "statusesCount": 17,
+        "withheldInCountries": [],
+        "affiliatesHighlightedLabel": {},
+        "possiblySensitive": false,
+        "pinnedTweetIds": [
+          "1886459759718547626"
+        ],
+        "profile_bio": {
+          "description": "The official onboarding website for Memecoin Traders to @McDonalds. \n\nApplications open!\nCA: EXroXzdfVmA71NdrUshwzGMmWQC1n8ooYw3HKNiBpump",
+          "entities": {
+            "description": {
+              "user_mentions": [
+                {
+                  "id_str": "0",
+                  "indices": [
+                    56,
+                    66
+                  ],
+                  "name": "",
+                  "screen_name": "McDonalds"
+                }
+              ]
+            },
+            "url": {
+              "urls": [
+                {
+                  "display_url": "memedonalds.com",
+                  "expanded_url": "https://www.memedonalds.com",
+                  "indices": [
+                    0,
+                    23
+                  ],
+                  "url": "https://t.co/qcynC0v9D8"
+                }
+              ]
+            }
+          }
+        },
+        "isAutomated": false,
+        "automatedBy": null
+      },
+      "extendedEntities": {},
+      "card": null,
+      "place": {},
+      "entities": {
+        "user_mentions": [
+          {
+            "id_str": "1980645240286650368",
+            "indices": [
+              43,
+              57
+            ],
+            "name": "TrenchMark",
+            "screen_name": "TrenchMarking"
+          }
+        ]
+      },
+      "quoted_tweet": null,
+      "retweeted_tweet": null,
+      "isLimitedReply": false,
+      "article": null
+    }
+  }
+]

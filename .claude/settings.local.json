@@ -44,7 +44,20 @@
       "mcp__vercel__get_deployment_build_logs",
       "mcp__vercel__web_fetch_vercel_url",
       "Bash(find:*)",
-      "WebFetch(domain:trenchmark.ai)"
+      "WebFetch(domain:trenchmark.ai)",
+      "Bash(node:*)",
+      "Bash(set -a)",
+      "Bash(source:*)",
+      "Bash(set +a)",
+      "Bash(timeout 90 bash:*)",
+      "WebFetch(domain:api.twitterapi.io)",
+      "Bash(tee:*)",
+      "Bash(cat:*)",
+      "Bash(timeout 10 bash:*)",
+      "Bash(timeout 15 bash -c 'while ! netstat -ano | findstr \"\":3003.*LISTENING\"\" > /dev/null 2>&1; do sleep 1; done && echo \"\"Server ready\"\"')",
+      "Bash(cmd /c \"for /f \"\"tokens=5\"\" %a in (''netstat -ano ^| findstr :3003'') do taskkill /F /PID %a\")",
+      "Bash(cmd /c \"taskkill /F /IM node.exe /T\")",
+      "Bash(ps:*)"
     ],
     "deny": [],
     "ask": []

@@ -23,8 +23,11 @@ export const metadata: Metadata = {
 // Fetch team stats server-side for fast initial render
 async function getTeamStats() {
   try {
-    // Use production URL in production, localhost in development
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://trenchmark.ai';
+    // Use localhost in development, production URL in production
+    const baseUrl = process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3003'
+      : (process.env.NEXT_PUBLIC_SITE_URL || 'https://trenchmark.ai');
+
     const response = await fetch(`${baseUrl}/api/teams/stats`, {
       next: { revalidate: 30 },
     });

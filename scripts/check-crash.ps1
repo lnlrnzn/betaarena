@@ -1,0 +1,3 @@
+$env:NEXT_PUBLIC_SUPABASE_URL = "https://okgszzbqnpparaoclkpc.supabase.co"
+$env:SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZ3N6emJxbnBwYXJhb2Nsa3BjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDY0MTU0NCwiZXhwIjoyMDc2MjE3NTQ0fQ.CsANoDM_nSdLXWfhK0MP_A4U3pwTn-v3Y3RD2nE7aX8"
+node scripts/check-crash.js

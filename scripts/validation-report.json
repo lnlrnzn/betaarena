@@ -1,0 +1,435 @@
+{
+  "total_mentions": 81,
+  "valid_declarations": 1,
+  "invalid_tweets": 80,
+  "valid_declarations_list": [
+    {
+      "cycle_id": "2d7a0eb2-63dc-48fe-8f53-48831c9374a1",
+      "agent_id": "d8d17db6-eab8-4400-8632-1a549b3cb290",
+      "tweet_id": "1981172063814766860",
+      "twitter_username": "cryptopianus",
+      "twitter_user_id": "1563946282124804098",
+      "twitter_name": "Draykon",
+      "profile_picture": "https://pbs.twimg.com/profile_images/1981185279802105856/u2V54I3y_normal.jpg",
+      "followers_count": 299,
+      "following_count": 163,
+      "tweet_text": "I declare that I will join Claude's team in @TrenchMarking 's challenge.\n\nIf Claude wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+      "tweet_url": "https://x.com/cryptopianus/status/1981172063814766860",
+      "declared_at": "2025-10-23T01:33:23.000Z",
+      "tweet_data": {
+        "type": "tweet",
+        "id": "1981172063814766860",
+        "url": "https://x.com/cryptopianus/status/1981172063814766860",
+        "twitterUrl": "https://twitter.com/cryptopianus/status/1981172063814766860",
+        "text": "I declare that I will join Claude's team in @TrenchMarking 's challenge.\n\nIf Claude wins the Solana Trenching Benchmark, I'll be eligible for SOL rewards from creator fees.",
+        "source": "Twitter for iPhone",
+        "retweetCount": 0,
+        "replyCount": 0,
+        "likeCount": 1,
+        "quoteCount": 0,
+        "viewCount": 23,
+        "createdAt": "Thu Oct 23 01:33:23 +0000 2025",
+        "lang": "en",
+        "bookmarkCount": 0,
+        "isReply": false,
+        "inReplyToId": null,
+        "conversationId": "1981172063814766860",
+        "displayTextRange": [
+          0,
+          172
+        ],
+        "inReplyToUserId": null,
+        "inReplyToUsername": null,
+        "author": {
+          "type": "user",
+          "userName": "cryptopianus",
+          "url": "https://x.com/cryptopianus",
+          "twitterUrl": "https://twitter.com/cryptopianus",
+          "id": "1563946282124804098",
+          "name": "Draykon",
+          "isVerified": false,
+          "isBlueVerified": false,
+          "verifiedType": null,
+          "profilePicture": "https://pbs.twimg.com/profile_images/1981185279802105856/u2V54I3y_normal.jpg",
+          "coverPicture": "https://pbs.twimg.com/profile_banners/1563946282124804098/1761186365",
+          "description": "",
+          "location": "",
+          "followers": 299,
+          "following": 163,
+          "status": "",
+          "canDm": false,
+          "canMediaTag": true,
+          "createdAt": "Sun Aug 28 17:47:11 +0000 2022",
+          "entities": {
+            "description": {
+              "urls": []
+            },
+            "url": {}
+          },
+          "fastFollowersCount": 0,
+          "favouritesCount": 12600,
+          "hasCustomTimelines": true,
+          "isTranslator": false,
+          "mediaCount": 176,
+          "statusesCount": 4450,
+          "withheldInCountries": [],
+          "affiliatesHighlightedLabel": {},
+          "possiblySensitive": false,
+          "pinnedTweetIds": [
+            "1866372276964508105"
+          ],
+          "profile_bio": {
+            "description": "",
+            "entities": {
+              "description": {}
+            }
+          },
+          "isAutomated": false,
+          "automatedBy": null
+        },
+        "extendedEntities": {},
+        "card": null,
+        "place": {},
+        "entities": {
+          "user_mentions": [
+            {
+              "id_str": "1980645240286650368",
+              "indices": [
+                44,
+                58
+              ],
+              "name": "TrenchMark",
+              "screen_name": "TrenchMarking"
+            }
+          ]
+        },
+        "quoted_tweet": null,
+        "retweeted_tweet": null,
+        "isLimitedReply": false,
+        "article": null
+      }
+    }
+  ],
+  "invalid_tweets_list": [
+    {
+      "tweet_id": "1981375062495072467",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981345319897223178",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981337678671953949",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981331572331569192",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981323819983000005",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981322887488557222",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981319551368515682",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981318184969130427",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981313926991163509",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981313087878861280",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981311811652551137",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981310300361281896",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981307552110346311",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981306127133659496",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981306091490480278",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981293363719459143",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981286753634799786",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981284895290016176",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981284041241534969",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981278396593426859",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981275263549001809",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981273103767326926",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981263505798898118",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981261961578107233",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981253009892880645",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981250046197977207",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981250019887108545",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981249460555698549",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981247889071624483",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981241789349777796",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981241753375297723",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981241714829586881",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981236734714400798",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981236617521336333",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981235665225601027",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981233829680730437",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981218898830582119",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981216936202842527",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981215802344034464",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981212762685554709",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981209075850629597",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981208978869907857",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981208485141660145",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981202537761165723",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981201239770894511",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981201234049789980",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981201230459510784",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981201200788729943",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981200975227449626",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981200954663063731",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981199431979716666",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981197905089442270",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981196057171415388",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981195436452172163",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981190302993092608",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981190063552942378",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981186252339909010",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981184314323980499",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981180655410303110",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981178802589094267",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981177982309044676",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981175617589490172",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981175162235212165",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981174877504884850",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981174726543511628",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981174555516473530",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981170838910226445",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981169847779434996",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981166475617640911",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981163745914343505",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981162678723989747",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981160604368052707",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981160412210188773",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981159893395787880",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981159323285016989",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981158924897460609",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981158889954693610",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981158288160150015",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981157923398307896",
+      "reason": "Tweet does not match the required template format"
+    },
+    {
+      "tweet_id": "1981157619504144786",
+      "reason": "Tweet does not match the required template format"
+    }
+  ]
+}
